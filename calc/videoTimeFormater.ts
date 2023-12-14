@@ -8,10 +8,10 @@ const videoTimeFormater = (time: number) => {
       let sec = Math.floor(time%60);
       newTime = `${min >= 10 ? min : '0' + min}:${sec >= 10 ? sec : '0' + sec}`
     } else {
-      let hour = Math.floor(time/60*60);
+      let hour = Math.floor(time/(60*60));
       let min = Math.floor((time%60*60)/60);
       let sec = Math.floor((time%60*60)%60);
-      newTime = `${hour >= 10 ? hour : '0' + hour}:${min >= 10 ? min : '0' + min}:${sec >= 10 ? sec : '0' + sec}`
+      newTime = `${hour}:${min >= 10 ? min : '0' + min}:${sec >= 10 ? sec : '0' + sec}`
     }
   } else {
     newTime = `00:${time >= 10 ? time : '0' + time}`
