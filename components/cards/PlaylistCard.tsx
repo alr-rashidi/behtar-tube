@@ -4,11 +4,13 @@ import React from "react";
 import videoTimeFormater from "../../calc/videoTimeFormater";
 import numberCounter from "../../calc/numberCounter";
 import { MdVideoLibrary } from "react-icons/md";
+import Link from "next/link";
 
 const PlaylistCard = ({ playlist }: { playlist: PlayListType }) => {
   return (
     <div className="flex flex-col gap-2" aria-label="videoCard">
-      <div
+      <Link
+        href={`/playlist/${playlist.playlistId}`}
         aria-label="imageBox"
         className={`relative cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl mt-3`}
       >
@@ -45,16 +47,19 @@ const PlaylistCard = ({ playlist }: { playlist: PlayListType }) => {
         />
         <div
           aria-label="playlistVideosCount"
-          className="absolute flex flex-row gap-1 px-1 pt-1 text-sm font-bold text-white bg-black rounded  bottom-2 left-2 bg-opacity-60 w-fit"
+          className="absolute flex flex-row gap-1 px-1 pt-1 text-sm font-bold text-white bg-black rounded bottom-2 left-2 bg-opacity-60 w-fit"
         >
           {numberCounter(playlist.videoCount)} video
           {playlist.videoCount > 1 ? "s" : ""} <MdVideoLibrary />
         </div>
-      </div>
+      </Link>
       <div aria-label="info" className="flex flex-col gap-2 text-start">
-        <div className="font-bold cursor-pointer text-trim max-h-12">
+        <Link
+          href={`/playlist/${playlist.playlistId}`}
+          className="font-bold cursor-pointer text-trim max-h-12"
+        >
           {playlist.title}
-        </div>
+        </Link>
         <div className="text-xs underline text-subtitle-color">
           Playlist - {playlist.author}
         </div>

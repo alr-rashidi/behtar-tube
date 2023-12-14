@@ -68,6 +68,10 @@ export const getVideoData = async (query: string, signal?: AbortSignal) => {
   return await getData(`${instance}/api/v1/videos/${query}`, signal);
 };
 
+export const getPlaylistData = async (query: string, signal?: AbortSignal) => {
+  return await getData(`${instance}/api/v1/playlists/${query}`, signal);
+};
+
 export const getChannelVideos = async (query: string, signal?: AbortSignal) => {
   return await getData(`${instance}/api/v1/channels/${query}/videos/`, signal);
 };

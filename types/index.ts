@@ -42,7 +42,7 @@ export type CommunityPostAttachmentType =
   | MultiImageAttachmentType
   | VideoType
   | PollAttachmentType
-  | PlayListType;
+  | SearchedPlayListType;
 
 export type CommentType = {
   author: string;
@@ -122,6 +122,23 @@ export type VideoType = {
   liveNow: boolean;
   premium: boolean;
   isUpcoming: boolean;
+};
+
+export type PlaylistType = {
+  title: string;
+  playlistId: string;
+
+  author: string;
+  authorId: string;
+  authorThumbnails: ImageObjectType[];
+  description: string;
+  descriptionHtml: string;
+
+  videoCount: number;
+  viewCount: number;
+  updated: number;
+
+  videos: VideoType[];
 };
 
 export type DetailedVideoType = {
@@ -220,7 +237,7 @@ export type SearchedChannelType = {
   descriptionHtml: string;
 };
 
-export type PlayListType = {
+export type SearchedPlayListType = {
   type: "playlist";
 
   title: string;
@@ -233,17 +250,17 @@ export type PlayListType = {
   authorVerified: boolean;
 
   videoCount: number;
-  videos: [
-    {
-      title: string;
-      videoId: string;
-      lengthSeconds: number;
-      videoThumbnails: ThumbnailObjectType[];
-    }
-  ];
+  videos: {
+    title: string;
+    videoId: string;
+    lengthSeconds: number;
+    videoThumbnails: ThumbnailObjectType[];
+  }[];
 };
 
-export type searchDataType = [VideoType | SearchedChannelType | PlayListType];
+export type searchDataType = [
+  VideoType | SearchedChannelType | SearchedPlayListType
+];
 
 export type searchSuggestionsType = {
   query: string;
@@ -286,6 +303,6 @@ export type ChannelVideosType = {
 };
 
 export type ChannelPlaylistsType = {
-  playlists: PlayListType[];
+  playlists: SearchedPlayListType[];
   continuation: string;
 };

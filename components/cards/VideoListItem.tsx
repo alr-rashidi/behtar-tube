@@ -7,7 +7,7 @@ import Link from "next/link";
 import dateCounter from "../../calc/dateCounter";
 
 type PropsType = {
-  video: VideoType;
+  video: VideoType
   size?: "small";
 };
 const VideoListItem = ({ video, size }: PropsType) => {
@@ -63,8 +63,8 @@ const VideoListItem = ({ video, size }: PropsType) => {
             size == "small" ? "text-xs" : "text-sm"
           }`}
         >
-          {numberCounter(video.viewCount) + " views"}
-          {video.published && ` - ${dateCounter(video.published)}`}
+          {video.viewCount ? numberCounter(video.viewCount) + " views" : null}
+          {video.published ? ` - ${dateCounter(video.published)}` : null}
         </div>
         <div>{video.description}</div>
       </div>

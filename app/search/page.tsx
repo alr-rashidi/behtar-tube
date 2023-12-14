@@ -2,7 +2,6 @@ import React from "react";
 import { Metadata } from "next";
 import { searchDataType } from "@/types";
 import { getSearchData } from "@/components/getData";
-import { PageProps } from "@/.next/types/app/page";
 import InfiniteScroll from "./InfiniteScroll";
 import MapSearchData from "./MapSearchData";
 import ErrorCard from "@/components/cards/ErrorCard";
@@ -18,7 +17,7 @@ export function generateMetadata({
   } as Metadata;
 }
 
-const page = async ({ params, searchParams }: PageProps) => {
+const page = async ({ params, searchParams }: any) => {
   const query = searchParams["q"];
 
   const data: searchDataType | null = await getSearchData(query);
