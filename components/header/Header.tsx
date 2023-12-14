@@ -74,7 +74,7 @@ const Header = () => {
         <div className="flex flex-row items-center justify-around w-full h-full">
           <button
             className="customButton"
-            onClick={() => setSmallScreenSearching(true)}
+            onClick={() => setSmallScreenSearching(false)}
           >
             <MdArrowForward className="w-7 h-7" />
           </button>
