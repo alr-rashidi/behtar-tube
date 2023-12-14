@@ -22,7 +22,6 @@ const SearchBar = () => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key == "Enter") {
       if (inputText != "") {
-        console.log("Searching...");
         router.push("/search?q=" + inputText);
         inputRef.current?.blur();
       } else {
@@ -37,7 +36,6 @@ const SearchBar = () => {
   };
 
   const handleSearch = () => {
-    console.log("Searching...");
     router.push("/search?q=" + inputText);
   };
 
@@ -47,7 +45,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-row h-full" dir="ltr">
+    <div className="flex flex-row h-full ltr:ml-20 rtl:mr-20" dir="ltr">
       <button
         className="flex items-center justify-center w-16 transition bg-gray-300 border border-gray-400 rounded-l-full dark:bg-gray-700 dark:border-gray-600"
         onClick={handleSearch}

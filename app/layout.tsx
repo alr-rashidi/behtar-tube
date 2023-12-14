@@ -30,11 +30,11 @@ export default function RootLayout({
       <body className={`${vazir.className}`}>
         <ThemeProvider>
           <SidebarToggleProvider>
-            <div className="dark:bg-darkBG dark:text-white text-black bg-white transition">
+            <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">
               <Header />
-              <div className="min-h-screen flex flex-col pt-14 md:ltr:pl-64 md:rtl:pr-64">
+              <div className="flex flex-col min-h-screen pt-10 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
                 <Sidebar />
-                <div className="container pt-4 px-6 mx-auto">{children}</div>
+                <div className="container pt-4 mx-auto lg:px-6">{children}</div>
               </div>
             </div>
           </SidebarToggleProvider>

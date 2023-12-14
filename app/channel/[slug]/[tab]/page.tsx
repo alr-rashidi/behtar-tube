@@ -41,7 +41,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
         width={data.authorBanners[1].width}
         height={data.authorBanners[1].height}
         alt="Channel thumbnail"
-        className="w-full bg-gray-500 rounded-xl"
+        className="w-full bg-gray-500 md:rounded-xl"
       />
       <div className="flex flex-row gap-4 p-4">
         <Image
@@ -49,10 +49,10 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
           width={data.authorThumbnails[4].width}
           height={data.authorThumbnails[4].height}
           alt="Profile pic"
-          className="w-1/3 max-w-[14rem] flex- bg-gray-500 rounded-full"
+          className="w-1/3 h-fit max-w-[11rem] bg-gray-500 rounded-full"
         />
         <div className="flex flex-col justify-center gap-2">
-          <div className="text-4xl font-extrabold">{data.author}</div>
+          <div className="text-3xl font-extrabold md:text-4xl">{data.author}</div>
           <div className="text-subtitle-color">
             {numberCounter(data.subCount) + " Subscribers"} - Family Friendly:{" "}
             {data.isFamilyFriendly ? "True" : "False"}
@@ -66,7 +66,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
             </div>
           )}
           <div>
-            <button className="subButton">Subscribe</button>
+            {/* <button className="subButton">Subscribe</button> */}
           </div>
         </div>
       </div>

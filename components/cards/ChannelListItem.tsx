@@ -12,14 +12,14 @@ const ChannelListItem = ({channel}: {channel: SearchedChannelType}) => {
       <Link href={`/channel/${channel.authorId}/videos`} key={channel.authorId} className="flex flex-row pt-2 cursor-pointer">
         <div
           aria-label="ImageBox"
-          className="flex channels-center justify-center flex-shrink-0 flex-grow-0 basis-[320px] h-[140px]"
+          className="flex channels-center justify-center flex-shrink-0 flex-grow-0 w-52 md:basis-[320px] h-20 md:h-[140px]"
         >
           <Image
             src={`${ProfilePictureHttpsSolver(channel.authorThumbnails[4].url)}`}
             width={channel.authorThumbnails[4].width}
             height={channel.authorThumbnails[4].height}
             alt="Profile picture"
-            className="my-auto rounded-full w-36 h-36"
+            className="my-auto rounded-full w-fit h-full"
           />
         </div>
         <div

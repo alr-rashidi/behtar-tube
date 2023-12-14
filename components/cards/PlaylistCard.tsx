@@ -45,27 +45,27 @@ const PlaylistCard = ({ playlist }: { playlist: PlayListType }) => {
         />
         <div
           aria-label="playlistVideosCount"
-          className=" flex flex-row gap-1 absolute bottom-2 left-2 bg-black text-white rounded bg-opacity-60 font-bold px-1 text-sm pt-1 w-fit"
+          className="absolute flex flex-row gap-1 px-1 pt-1 text-sm font-bold text-white bg-black rounded  bottom-2 left-2 bg-opacity-60 w-fit"
         >
           {numberCounter(playlist.videoCount)} video
           {playlist.videoCount > 1 ? "s" : ""} <MdVideoLibrary />
         </div>
       </div>
       <div aria-label="info" className="flex flex-col gap-2 text-start">
-        <div className="cursor-pointer text-trim max-h-12 font-bold">
+        <div className="font-bold cursor-pointer text-trim max-h-12">
           {playlist.title}
         </div>
-        <div className="underline text-subtitle-color text-xs">
+        <div className="text-xs underline text-subtitle-color">
           Playlist - {playlist.author}
         </div>
-        <div className="dark:text-gray-200 text-gray-700 text-sm">
+        <div className="text-sm text-gray-700 dark:text-gray-200">
           {playlist.videos.map((video) => (
             <div key={video.videoId}>
               {video.title} - {videoTimeFormater(video.lengthSeconds)}
             </div>
           ))}
         </div>
-        <div className="text-subtitle-color text-sm">Show playlist</div>
+        <div className="text-sm text-subtitle-color">Show playlist</div>
       </div>
     </div>
   );

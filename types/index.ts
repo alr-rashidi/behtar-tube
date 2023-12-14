@@ -12,7 +12,7 @@ type ThumbnailObjectType = {
   height: number;
 };
 
-type ImageObjectType = {
+export type ImageObjectType = {
   url: string;
   width: number;
   height: number;

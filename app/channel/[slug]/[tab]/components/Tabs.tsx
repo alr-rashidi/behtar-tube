@@ -22,7 +22,7 @@ const Tabs = ({
   };
 
   return (
-    <div className="flex flex-row border-b text-subtitle-color border-gray-600">
+    <div className="flex flex-row overflow-x-scroll border-b border-gray-600 text-subtitle-color">
       {removeInvalidTabs(tabs).map((tab) => (
         <Link
           key={tab}

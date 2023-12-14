@@ -35,7 +35,7 @@ const Header = () => {
   }, [windowWidth]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 flex flex-row items-center justify-between py-2 transition bg-white h-14 dark:bg-darkBG">
+    <div className="fixed top-0 left-0 right-0 z-40 flex flex-row items-center justify-between h-12 py-2 transition bg-white md:h-14 dark:bg-darkBG">
       {!smallScreenSearching ? (
         <>
           <Logo showMenuIcon={true} />

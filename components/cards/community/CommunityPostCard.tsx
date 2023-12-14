@@ -9,20 +9,20 @@ import dateCounter from "@/calc/dateCounter";
 const CommunityPostCard = ({ item }: { item: CommunityPostCommentsType }) => {
 
   return (
-    <div className="flex flex-row gap-4 border dark:border-gray-700 border-gray-300 rounded-xl p-4 w-4xl max-w-4xl">
+    <div className="flex flex-row w-full max-w-4xl gap-4 p-4 overflow-hidden border border-gray-300 dark:border-gray-700 rounded-xl">
       <div aria-label="ImageBox" className="flex-shrink-0">
         <Image
           src={ProfilePictureHttpsSolver(item.authorThumbnails[1].url)}
           width={item.authorThumbnails[1].width}
           height={item.authorThumbnails[1].height}
           alt="Channel pic"
-          className="rounded-full w-12"
+          className="w-12 rounded-full"
         />
       </div>
       <div aria-label="main" className="w-full">
         <div aria-label="author" className="flex flex-row gap-3">
           <div className="font-extrabold">{item.author}</div>{" "}
-          <div className="text-subtitle-color text-sm">
+          <div className="text-sm text-subtitle-color">
             {dateCounter(item.published)} {item.isEdited && "(edited)"}
           </div>
         </div>

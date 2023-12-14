@@ -8,7 +8,7 @@ const Community = async ({ channelId }: { channelId: string }) => {
   console.log(data)
 
   return (
-    <section className="flex flex-col gap-4 p-4 mx-auto">
+    <section className="flex flex-col w-full gap-4 p-4 mx-auto">
       {data.comments.map((item) => (
         <CommunityPostCard key={item.commentId} item={item} />
       ))}

@@ -10,19 +10,19 @@ const PlaylistListItem = ({ playlist }: { playlist: PlayListType }) => {
     <div className="flex flex-row gap-5">
       <div
         aria-label="imageBox"
-        className="relative cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl basis-[320px] h-[180px] flex-shrink-0"
+        className={`relative w-2/6 max-w-xs h-max flex-shrink-0 cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl`}
       >
         <div
           aria-label="imageBox"
-          className={`absolute -top-1.5 left-1/2 -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-700 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-[300px] h-[4px]`}
+          className={`absolute -top-1.5 left-1/2 -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-700 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-11/12 h-[4px]`}
         ></div>
         <div
           aria-label="imageBox"
-          className={`absolute -top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-800 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-[280px] h-[3px]`}
+          className={`absolute -top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-200 dark:bg-gray-800 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-5/6 h-[3px]`}
         ></div>
         <div
           aria-label="imageBox"
-          className={`absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-900 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-[260px] h-[2px]`}
+          className={`absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 bg-gray-100 dark:bg-gray-900 bg-[url('${playlist.playlistThumbnail})'] rounded-t-xl w-2/3 h-[2px]`}
         ></div>
         <Image
           src={playlist.playlistThumbnail}
@@ -33,27 +33,27 @@ const PlaylistListItem = ({ playlist }: { playlist: PlayListType }) => {
         />
         <div
           aria-label="playlistVideosCount"
-          className=" flex flex-row gap-1 absolute bottom-2 left-2 bg-black text-white rounded bg-opacity-60 font-bold px-1 text-sm pt-1 w-fit"
+          className="absolute flex flex-row gap-1 px-1 pt-1 text-sm font-bold text-white bg-black rounded bottom-2 left-2 bg-opacity-60 w-fit"
         >
           {numberCounter(playlist.videoCount)} video
           {playlist.videoCount > 1 ? "s" : ""} <MdVideoLibrary />
         </div>
       </div>
       <div aria-label="info" className="flex flex-col gap-2 text-start">
-        <div className="cursor-pointer text-trim max-h-12 font-bold">
+        <div className="font-bold cursor-pointer text-trim max-h-12">
           {playlist.title}
         </div>
-        <div className="underline text-subtitle-color text-xs">
+        <div className="text-xs underline text-subtitle-color">
           Playlist - {playlist.author}
         </div>
-        <div className="dark:text-gray-200 text-gray-700 text-sm">
+        <div className="text-sm text-gray-700 dark:text-gray-200">
           {playlist.videos.map((video) => (
             <div key={video.videoId}>
               {video.title} - {videoTimeFormater(video.lengthSeconds)}
             </div>
           ))}
         </div>
-        <div className="text-subtitle-color text-sm">Show playlist</div>
+        <div className="text-sm text-subtitle-color">Show playlist</div>
       </div>
     </div>
   );
