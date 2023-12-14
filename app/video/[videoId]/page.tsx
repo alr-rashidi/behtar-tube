@@ -38,7 +38,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
                 </div>
               </div>
               <div className="flex items-center mx-10">
-                <button className="subButton">Subscribe</button>
+                {/* <button className="subButton">Subscribe</button> */}
               </div>
             </div>
             <div>{/* <button className="customButton"></button> */}</div>
