@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input, select {
+  outline: none !important;
+}
+
+.subButton {
+  @apply px-4 py-2 text-white transition bg-black rounded-full dark:bg-white dark:text-black;
+}
+
+.customButton {
+  @apply px-3 py-2 text-black transition bg-gray-200 rounded-full dark:bg-slate-700 dark:text-white hover:brightness-90 active:scale-95;
+}
+
+.text-subtitle-color {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+.grid-items {
+  @apply grid grid-cols-1 gap-6 p-4 xl:px-8 place-content-around md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.loadingBg {
+  @apply bg-gray-300 dark:bg-gray-700
+}
+
+.text-trim {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-all;
+}
+
+.text-lines-1 {
+  -webkit-line-clamp: 1;
+}
+.text-lines-2 {
+  -webkit-line-clamp: 2;
+}
+.text-lines-3 {
+  -webkit-line-clamp: 3;
+}
+
+.default-links a {
+  color: deepskyblue;
+}
+
+.default-links a:visited {
+  color: mediumpurple;
+}
