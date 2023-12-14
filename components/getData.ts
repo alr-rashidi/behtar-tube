@@ -7,7 +7,7 @@ const getData = async (
 ) => {
   const response = await fetch(url, {
     signal,
-    cache: "no-cache",
+    // cache: "no-cache",
   });
 
   try {

@@ -59,15 +59,13 @@ const Sidebar = () => {
         &nbsp;
       </div>
       <div
-        className={`z-40 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:translate-x-0 md:rtl:translate-x-0 ${
+        className={`z-40 py-1 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:translate-x-0 md:rtl:translate-x-0 ${
           sidebarState
             ? "translate-x-0"
             : "ltr:-translate-x-full rtl:translate-x-full"
         } md:rtl:right-0 md:ltr:left-0 top-0 h-full text-right`}
       >
-        <div>
-          <Logo showMenuIcon />
-        </div>
+        <Logo showMenuIcon />
         <ul className="flex flex-col p-2">
           {items.map((item) => (
             <button
