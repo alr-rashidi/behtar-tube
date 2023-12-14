@@ -1,14 +1,19 @@
 import React, { Suspense } from "react";
 import Loading from "./Loading";
-import { VideoType } from "@/types";
-import { PageProps } from "@/.next/types/app/layout";
+import { TrendVideoCategories, VideoType } from "@/types";
 import { getTrendVideos } from "@/components/getData";
 import { VideoCard } from "@/components/cards";
 
-const RootPage = async ({ params, searchParams }: PageProps) => {
+type PropsType = {
+  params: any;
+  searchParams: { [key: string]: string };
+};
+const RootPage = async ({ params, searchParams }: PropsType) => {
   const category = searchParams["category"] || "trending";
 
-  let data: VideoType[] | null = await getTrendVideos(category);
+  let data: VideoType[] | null = await getTrendVideos(
+    category as TrendVideoCategories
+  );
 
   return (
     <div>
