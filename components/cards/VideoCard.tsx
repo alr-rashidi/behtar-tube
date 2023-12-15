@@ -38,7 +38,7 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
         />
         <div
           aria-label="videoLengthSeconds"
-          className="absolute px-1 pt-1 text-sm font-bold text-white bg-black rounded bottom-1 left-1 bg-opacity-80 w-fit"
+          className="absolute px-1 text-sm font-bold text-white bg-black rounded bottom-1 left-1 bg-opacity-80 w-fit"
         >
           {videoTimeFormater(video.lengthSeconds)}
         </div>
