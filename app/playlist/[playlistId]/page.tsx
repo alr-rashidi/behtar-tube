@@ -1,7 +1,7 @@
 import numberCounter from "@/calc/numberCounter";
 import { VideoListItem } from "@/components/cards";
 import { getPlaylistData } from "@/components/getData";
-import { PlaylistType } from "@/types";
+import { PlaylistType, VideoType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -59,7 +59,7 @@ const page = async ({ params }: any) => {
           <div className="flex flex-col gap-4 p-4">
             {validVideos.map((video) =>
               video.title != "[Private video]" ? (
-                <VideoListItem key={video.videoId} video={video} />
+                <VideoListItem key={video.videoId} video={video as VideoType} />
               ) : null
             )}
           </div>
