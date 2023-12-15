@@ -46,7 +46,7 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
       <div aria-label="info" className="flex flex-col w-full gap-2 text-start">
         <Link
           href={`/video/${video.videoId}`}
-          className="cursor-pointer hover:underline text-trim max-h-12"
+          className="cursor-pointer hover:underline text-trim text-lines-1 max-h-12"
         >
           {video.title}
         </Link>

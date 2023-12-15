@@ -11,7 +11,7 @@ input, select {
 }
 
 .customButton {
-  @apply px-2 py-1 sm:px-3 sm:py-2 text-black transition bg-gray-200 rounded-full dark:bg-slate-700 dark:text-white hover:brightness-90 active:scale-95;
+  @apply px-3 py-2 text-black transition bg-gray-200 rounded-full dark:bg-slate-700 dark:text-white hover:brightness-90 active:scale-95;
 }
 
 .text-subtitle-color {
