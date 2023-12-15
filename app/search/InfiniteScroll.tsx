@@ -40,7 +40,12 @@ const InfiniteScroll = ({ query }: PropsType) => {
 
   return (
     <>
-      {data?.[0] ? <MapSearchData data={data} /> : <ErrorCard />}
+      {data?.[0] ? (
+        <MapSearchData data={data} />
+        // Not showing ErrorCard in first load that data is null
+      ) : page == 3 ? (
+        <ErrorCard />
+      ) : null}
       <div ref={ref} className="p-10">
         <Loading />
       </div>
