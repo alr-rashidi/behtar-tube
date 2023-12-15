@@ -20,7 +20,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
     <div className="flex flex-col justify-center w-full gap-5 xl:flex-row">
       <div className="basis-2/3">
         <Player data={data} />
-        <div aria-label="Info" className="flex flex-col gap-4 py-4">
+        <div aria-label="Info" className="flex flex-col gap-4 p-4">
           <div className="text-lg font-extrabold">{data.title}</div>
           <div className="flex flex-row justify-between gap-2">
             <div className="flex flex-row gap-2">
@@ -56,7 +56,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 xl:w-96">
+      <div className="flex flex-col gap-3 xl:w-96 px-2">
         <p className="text-xl font-bold text-gray-400">Recommended videos:</p>
         {data.recommendedVideos.map((video) => (
           <VideoListItem

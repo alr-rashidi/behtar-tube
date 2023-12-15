@@ -45,7 +45,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-row h-full ltr:ml-20 rtl:mr-20" dir="ltr">
+    <div className="flex flex-row h-full lg:ltr:ml-20 lg:rtl:mr-20" dir="ltr">
       <button
         className="flex items-center justify-center w-16 transition bg-gray-300 border border-gray-400 rounded-l-full dark:bg-gray-700 dark:border-gray-600"
         onClick={handleSearch}

@@ -34,7 +34,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   console.log(videoSource);
 
   return (
-    <div className="overflow-hidden rounded-xl">
+    <div className="overflow-hidden md:rounded-xl">
       <Plyr source={videoSource} options={videoOptions} />
     </div>
   );
