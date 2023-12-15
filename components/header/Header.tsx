@@ -46,7 +46,7 @@ const Header = () => {
               className="flex flex-row items-center gap-1 customButton"
             >
               <MdOutlineAccountCircle className="w-6 h-6" />
-              <span className="text-sm md:text-base">Login / SignUp</span>
+              <span className="text-sm md:text-base">Login</span>
             </button>
             <button
               className="customButton"

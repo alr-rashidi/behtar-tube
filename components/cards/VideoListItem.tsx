@@ -51,7 +51,7 @@ const VideoListItem = ({ video, size }: PropsType) => {
           {video.title}
         </Link>
         <Link
-          href={`channel/${video.authorId}/videos`}
+          href={`/channel/${video.authorId}/videos`}
           className={`underline text-subtitle-color  ${
             size == "small" ? "text-xs" : "text-sm"
           } w-max`}

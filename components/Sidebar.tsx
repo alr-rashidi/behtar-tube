@@ -45,7 +45,7 @@ const Sidebar = () => {
 
   const handleClickItem = (itemId: string) => {
     router.push(itemId != "trending" ? "/?category=" + itemId : "/");
-    console.log("Clicked!");
+    toggleSidebar(false)
   };
 
   return (

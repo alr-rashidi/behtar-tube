@@ -37,7 +37,7 @@ const page = async ({ params }: any) => {
             {data.title}
           </div>
           <Link
-            href={`channel/${data.authorId}/videos`}
+            href={`/channel/${data.authorId}/videos`}
             className="flex flex-row gap-4"
           >
             <Image
@@ -54,7 +54,7 @@ const page = async ({ params }: any) => {
               </div>
             </div>
           </Link>
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-2 p-2 md:gap-4 md:p-4">
             {validVideos.map((video) =>
               video.title != "[Private video]" ? (
                 <VideoListItem key={video.videoId} video={video as VideoType} />
