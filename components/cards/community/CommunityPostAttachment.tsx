@@ -11,10 +11,10 @@ const Attachment = ({
   const ImageAttachmentElement = ({ image }: { image: ImageObjectType[] }) => (
     <div className="relative max-w-full">
       <Image
-        src={image[1].url}
-        width={image[1].width}
-        height={image[1].height}
-        className="bg-gray-600 w-fit rounded-xl"
+        src={image[0].url}
+        width={image[0].width}
+        height={image[0].height}
+        className="bg-gray-600 min-w-[5rem] w-fit rounded-xl"
         alt="Attachment image"
       />
       <div className="absolute bottom-0 flex flex-row max-w-full gap-2 px-2 pb-2 overflow-x-scroll rtl:right-0 ltr:left-0">
