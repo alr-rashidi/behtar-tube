@@ -20,7 +20,7 @@ export const ThemeProvider = ({ children }: PropsType) => {
   const [selectedTheme, setSelectedTheme] = useState<themeType>("dark");
 
   const switchTheme = () => {
-    console.log("DarkMode button clicked!")
+    
     setSelectedTheme(selectedTheme == "dark" ? "light" : "dark");
   };
 

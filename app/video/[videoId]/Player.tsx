@@ -9,7 +9,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     (item) => item.resolution != undefined
   );
 
-  console.log(data);
+  
 
   const videoSource: PlyrSource = {
     type: "video",
@@ -31,7 +31,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     ratio: '16:9'
   };
 
-  console.log(videoSource);
+  
 
   return (
     <div className="overflow-hidden md:rounded-xl">

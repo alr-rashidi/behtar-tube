@@ -15,7 +15,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
   const videoId = params.videoId;
   const data: DetailedVideoType = await getVideoData(videoId);
 
-  console.log(data);
+  
 
   return (
     <div className="flex flex-col justify-center w-full gap-5 xl:flex-row">
