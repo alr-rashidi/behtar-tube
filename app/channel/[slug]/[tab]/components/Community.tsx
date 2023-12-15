@@ -5,7 +5,7 @@ import React from "react";
 
 const Community = async ({ channelId }: { channelId: string }) => {
   const data: CommunityPostType = await getChannelCommunity(channelId);
-  console.log(data)
+  
 
   return (
     <section className="flex flex-col w-full gap-4 p-4 mx-auto">
