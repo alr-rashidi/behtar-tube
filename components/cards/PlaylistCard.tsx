@@ -1,4 +1,4 @@
-import { PlayListType } from "@/types";
+import { SearchedPlayListType } from "@/types";
 import Image from "next/image";
 import React from "react";
 import videoTimeFormater from "../../calc/videoTimeFormater";
@@ -6,7 +6,7 @@ import numberCounter from "../../calc/numberCounter";
 import { MdVideoLibrary } from "react-icons/md";
 import Link from "next/link";
 
-const PlaylistCard = ({ playlist }: { playlist: PlayListType }) => {
+const PlaylistCard = ({ playlist }: { playlist: SearchedPlayListType }) => {
   return (
     <div className="flex flex-col gap-2" aria-label="videoCard">
       <Link
