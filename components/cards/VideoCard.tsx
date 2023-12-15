@@ -52,7 +52,7 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
         </Link>
         <Link
           href={`/channel/${video.videoId}/videos`}
-          className="text-sm text-gray-500 hover:underline cursor-pointer dark:text-gray-400"
+          className="text-sm text-gray-500 cursor-pointer hover:underline dark:text-gray-400"
         >
           {video.author}
         </Link>
