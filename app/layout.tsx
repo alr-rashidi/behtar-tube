@@ -1,7 +1,7 @@
 import React from "react";
 import "./global.css";
 import { Metadata } from "next";
-import LocalFont from "next/font/local";
+import { Vazirmatn } from "next/font/google";
 import { ThemeProvider } from "@/contexts/themeContext";
 import Header from "@/components/header/Header";
 import Sidebar from "@/components/Sidebar";
@@ -12,8 +12,9 @@ export const metadata: Metadata = {
   description: "Unofficial Youtube Client",
 };
 
-const vazir = LocalFont({
-  src: "./Vazirmatn.ttf",
+const lato = Vazirmatn({
+  weight: ["100", "300", "400", "700", "900"],
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -27,14 +28,16 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
       </head>
-      <body className={`font-sans rtl:${vazir.className} `}>
+      <body className={`rtl:${lato.className} font-[Arial]`}>
         <ThemeProvider>
           <SidebarToggleProvider>
             <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">
               <Header />
               <div className="flex flex-col min-h-screen pt-10 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
                 <Sidebar />
-                <div className="container pt-4 mx-auto cursor-default lg:px-6">{children}</div>
+                <div className="container pt-4 mx-auto cursor-default lg:px-6">
+                  {children}
+                </div>
               </div>
             </div>
           </SidebarToggleProvider>
