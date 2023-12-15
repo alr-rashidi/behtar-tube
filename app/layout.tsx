@@ -34,7 +34,7 @@ export default function RootLayout({
               <Header />
               <div className="flex flex-col min-h-screen pt-10 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
                 <Sidebar />
-                <div className="container pt-4 mx-auto lg:px-6">{children}</div>
+                <div className="container pt-4 mx-auto lg:px-6 cursor-default">{children}</div>
               </div>
             </div>
           </SidebarToggleProvider>

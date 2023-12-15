@@ -10,12 +10,12 @@ type ParamsType = { video: VideoType; type?: "short" };
 
 const VideoCard = ({ video, type: videoType }: ParamsType) => {
   return (
-    <Link
-      href={`/video/${video.videoId}`}
+    <div
       className="flex flex-col items-center w-full max-w-sm gap-2 mx-auto"
       aria-label="videoCard"
     >
-      <div
+      <Link
+        href={`/video/${video.videoId}`}
         aria-label="imageBox"
         className={`relative w-full cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl overflow-hidden`}
       >
@@ -42,18 +42,26 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
         >
           {videoTimeFormater(video.lengthSeconds)}
         </div>
-      </div>
+      </Link>
       <div aria-label="info" className="flex flex-col w-full gap-2 text-start">
-        <div className="cursor-pointer text-trim max-h-12">{video.title}</div>
-        <div className="text-sm text-gray-500 underline cursor-pointer dark:text-gray-400">
+        <Link
+          href={`/video/${video.videoId}`}
+          className="cursor-pointer hover:underline text-trim max-h-12"
+        >
+          {video.title}
+        </Link>
+        <Link
+          href={`/channel/${video.videoId}/videos`}
+          className="text-sm text-gray-500 hover:underline cursor-pointer dark:text-gray-400"
+        >
           {video.author}
-        </div>
+        </Link>
         <div className="text-sm text-gray-500 dark:text-gray-400">
           {numberCounter(video.viewCount)} views -&nbsp;
           {dateCounter(video.published)}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
