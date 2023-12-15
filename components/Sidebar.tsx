@@ -45,13 +45,13 @@ const Sidebar = () => {
 
   const handleClickItem = (itemId: string) => {
     router.push(itemId != "trending" ? "/?category=" + itemId : "/");
-    toggleSidebar(false)
+    toggleSidebar(false);
   };
 
   return (
     <>
       <div
-        className={`absolute z-40 translate-x-0 transition left-0 right-0 top-0 bottom-0 opacity-0 pointer-events-none ${
+        className={`absolute z-40 translate-x-0 transition md:opacity-0 md:pointer-events-none left-0 right-0 top-0 bottom-0 opacity-0 pointer-events-none ${
           sidebarState && "pointer-events-auto opacity-60"
         } bg-black w-full`}
         onClick={() => toggleSidebar(false)}

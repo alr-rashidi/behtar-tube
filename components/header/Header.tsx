@@ -12,13 +12,14 @@ import {
 import { themeContext } from "../../contexts/themeContext";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 
 const Header = () => {
   const { theme, switchTheme } = useContext(themeContext);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [smallScreenSearching, setSmallScreenSearching] =
     useState<boolean>(false);
-  const pathname = usePathname();
+  const { sidebarState ,toggleSidebar } = useContext(SidebarToggleContext);
   const smallScreenSearchWidth = 850;
 
   useEffect(() => {
@@ -28,6 +29,10 @@ const Header = () => {
 
     window.addEventListener("resize", windowWidthHandler);
 
+    if (windowWidth <= smallScreenSearchWidth && sidebarState) {
+      toggleSidebar(false);
+    }
+    
     windowWidthHandler();
     return () => {
       window.removeEventListener("resize", windowWidthHandler);
