@@ -66,7 +66,7 @@ const PlaylistCard = ({ playlist }: { playlist: SearchedPlayListType }) => {
         </Link>
         <div className="text-xs text-subtitle-color">
           Playlist -&nbsp;
-          <Link className="underline" href={`/channel/${playlist.authorId}/videos`}>
+          <Link className="hover:underline" href={`/channel/${playlist.authorId}/videos`}>
             {playlist.author}
           </Link>
         </div>

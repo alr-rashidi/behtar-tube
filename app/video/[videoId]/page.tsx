@@ -37,7 +37,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
               <div className="flex flex-col justify-center">
                 <Link
                   href={`/channel/${data.authorId}/videos`}
-                  className="font-bold underline"
+                  className="font-bold hover:underline"
                 >
                   {data.author}
                 </Link>

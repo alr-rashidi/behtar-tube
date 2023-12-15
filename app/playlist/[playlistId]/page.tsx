@@ -48,7 +48,7 @@ const page = async ({ params }: any) => {
               alt="Profile Pic"
             />
             <div className="flex flex-col justify-center gap-2">
-              <div className="text-lg font-bold underline">{data.author}</div>
+              <div className="text-lg font-bold hover:underline">{data.author}</div>
               <div className="text-sm">
                 {numberCounter(data.videoCount)} Videos
               </div>
