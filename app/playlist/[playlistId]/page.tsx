@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import playlistValidVideos from "../../../calc/playlistValidVideos";
+import ErrorCard from "@/components/cards/ErrorCard";
 
 const page = async ({ params }: any) => {
   const playlistId = params.playlistId;
@@ -63,7 +64,7 @@ const page = async ({ params }: any) => {
           </div>
         </div>
       ) : (
-        <></>
+        <ErrorCard />
       )}
     </div>
   );
