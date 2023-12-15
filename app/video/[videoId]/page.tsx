@@ -8,6 +8,7 @@ import { VideoListItem } from "@/components/cards";
 import numberCounter from "@/calc/numberCounter";
 import dateCounter from "@/calc/dateCounter";
 import Description from "./components/Description";
+import Link from "next/link";
 // import Comments from "./components/Comments";
 
 const page = async ({ params }: { params: { videoId: string } }) => {
@@ -24,15 +25,22 @@ const page = async ({ params }: { params: { videoId: string } }) => {
           <div className="text-lg font-extrabold">{data.title}</div>
           <div className="flex flex-row justify-between gap-2">
             <div className="flex flex-row gap-2">
-              <Image
-                src={data.authorThumbnails[1].url}
-                width={data.authorThumbnails[1].width}
-                height={data.authorThumbnails[1].height}
-                className="rounded-full loadingBg"
-                alt="Profile image"
-              />
+              <Link href={`/channel/${data.authorId}/videos`}>
+                <Image
+                  src={data.authorThumbnails[1].url}
+                  width={data.authorThumbnails[1].width}
+                  height={data.authorThumbnails[1].height}
+                  className="rounded-full loadingBg"
+                  alt="Profile image"
+                />
+              </Link>
               <div className="flex flex-col justify-center">
-                <div className="font-bold">{data.author}</div>
+                <Link
+                  href={`/channel/${data.authorId}/videos`}
+                  className="font-bold underline"
+                >
+                  {data.author}
+                </Link>
                 <div className="text-sm text-subtitle-color">
                   {data.subCountText} Subscribers
                 </div>
