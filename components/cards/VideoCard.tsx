@@ -49,7 +49,7 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
           {video.author}
         </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">
-          {numberCounter(video.viewCount)} views -
+          {numberCounter(video.viewCount)} views -&nbsp;
           {dateCounter(video.published)}
         </div>
       </div>

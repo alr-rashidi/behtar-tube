@@ -32,7 +32,7 @@ const CommentCard = ({ comment }: { comment: CommentType }) => {
         <div>
           <div className="flex flex-row gap-2">
             <Link
-              href={`/channel/${comment.authorId}`}
+              href={`/channel/${comment.authorId}/videos`}
               className={`flex flex-row gap-1 ${
                 comment.authorIsChannelOwner &&
                 "bg-gray-200 dark:bg-gray-800 rounded-full px-1 pt-1"
@@ -50,7 +50,7 @@ const CommentCard = ({ comment }: { comment: CommentType }) => {
         </div>
         <div>{comment.content}</div>
         <div>
-          <MdOutlineThumbUp className="inline-block" />{" "}
+          <MdOutlineThumbUp className="inline-block" />&nbsp;
           {numberCounter(comment.likeCount)}
         </div>
         <div>

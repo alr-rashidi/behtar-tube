@@ -27,7 +27,9 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       src: data.videoThumbnails[3].url,
     },
   };
-  const videoOptions: PlyrOptions = {};
+  const videoOptions: PlyrOptions = {
+    ratio: '16:9'
+  };
 
   console.log(videoSource);
 

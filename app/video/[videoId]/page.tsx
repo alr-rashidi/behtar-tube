@@ -45,7 +45,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
           </div>
           <div className="flex flex-col gap-2 dark:bg-[#ffffff20] bg-[#00000020] rounded-xl p-3">
             <div className="flex flex-row">
-              {numberCounter(data.viewCount)} views -{" "}
+              {numberCounter(data.viewCount)} views -&nbsp;
               {dateCounter(data.published)}
             </div>
             {data.description && (

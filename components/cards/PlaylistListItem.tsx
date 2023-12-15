@@ -66,7 +66,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
         </Link>
         <div className="text-xs text-subtitle-color">
           Playlist -&nbsp;
-          <Link className="underline" href={`/channel/${playlist.authorId}`}>
+          <Link className="underline" href={`/channel/${playlist.authorId}/videos`}>
             {playlist.author}
           </Link>
         </div>

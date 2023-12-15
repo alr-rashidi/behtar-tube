@@ -54,7 +54,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
         <div className="flex flex-col justify-center gap-2">
           <div className="text-3xl font-extrabold md:text-4xl">{data.author}</div>
           <div className="text-subtitle-color">
-            {numberCounter(data.subCount) + " Subscribers"} - Family Friendly:{" "}
+            {numberCounter(data.subCount) + " Subscribers"} - Family Friendly:&nbsp;
             {data.isFamilyFriendly ? "True" : "False"}
           </div>
           {data.description && (

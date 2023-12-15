@@ -52,7 +52,7 @@ const Attachment = ({
       return (
         <>
           <div className="text-sm text-subtitle-color">
-            {numberCounter(attachment.totalVotes)}{" "}
+            {numberCounter(attachment.totalVotes)}&nbsp;
             {attachment.totalVotes == 1 ? "vote" : "votes"}
           </div>
           <div className="flex flex-col gap-1">

@@ -21,7 +21,7 @@ const CommunityPostCard = ({ item }: { item: CommunityPostCommentsType }) => {
       </div>
       <div aria-label="main" className="w-full">
         <div aria-label="author" className="flex flex-row gap-3">
-          <div className="font-extrabold">{item.author}</div>{" "}
+          <div className="font-extrabold">{item.author}</div>&nbsp;
           <div className="text-sm text-subtitle-color">
             {dateCounter(item.published)} {item.isEdited && "(edited)"}
           </div>

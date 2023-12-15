@@ -36,7 +36,10 @@ const page = async ({ params }: any) => {
           <div className="mb-8 text-2xl font-extrabold md:text-3xl">
             {data.title}
           </div>
-          <div className="flex flex-row gap-4">
+          <Link
+            href={`channel/${data.authorId}/videos`}
+            className="flex flex-row gap-4"
+          >
             <Image
               src={data.authorThumbnails[1].url}
               width={data.authorThumbnails[1].width}
@@ -45,17 +48,12 @@ const page = async ({ params }: any) => {
               alt="Profile Pic"
             />
             <div className="flex flex-col justify-center gap-2">
-              <Link
-                href={`/channel/${data.authorId}`}
-                className="text-lg font-bold underline"
-              >
-                {data.author}
-              </Link>
+              <div className="text-lg font-bold underline">{data.author}</div>
               <div className="text-sm">
                 {numberCounter(data.videoCount)} Videos
               </div>
             </div>
-          </div>
+          </Link>
           <div className="flex flex-col gap-4 p-4">
             {validVideos.map((video) =>
               video.title != "[Private video]" ? (
