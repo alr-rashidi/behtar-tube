@@ -9,8 +9,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     (item) => item.resolution != undefined
   );
 
-  
-
   const videoSource: PlyrSource = {
     type: "video",
     title: data.title,
@@ -26,12 +24,18 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     previewThumbnails: {
       src: data.videoThumbnails[3].url,
     },
+    tracks: data.captions.map((caption) => {
+      return {
+        kind: "captions",
+        src: instance + caption.url,
+        srcLang: caption.languageCode,
+        label: caption.label,
+      };
+    }),
   };
   const videoOptions: PlyrOptions = {
-    ratio: '16:9'
+    ratio: "16:9",
   };
-
-  
 
   return (
     <div className="overflow-hidden md:rounded-xl">
