@@ -7,6 +7,7 @@ import {
   MdMusicNote,
   MdMovie,
   MdClose,
+  MdSettings,
 } from "react-icons/md";
 import { FaYoutube } from "react-icons/fa";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -15,13 +16,13 @@ import Link from "next/link";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import Logo from "./header/Logo";
 
-interface itemInterface {
+type itemType = {
   id: string;
   icon: IconType;
-}
+};
 
 const Sidebar = () => {
-  const items: itemInterface[] = [
+  const items: itemType[] = [
     { id: "trending", icon: MdStar },
     { id: "gaming", icon: MdVideogameAsset },
     { id: "music", icon: MdMusicNote },
@@ -30,12 +31,12 @@ const Sidebar = () => {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathName = usePathname();
+  const pathname = usePathname();
 
   const { sidebarState, toggleSidebar } = useContext(SidebarToggleContext);
 
   let category: string;
-  if (pathName == "/") {
+  if (pathname == "/") {
     if (searchParams.get("category")) {
       category = searchParams.get("category") as string;
     } else {
@@ -44,7 +45,11 @@ const Sidebar = () => {
   }
 
   const handleClickItem = (itemId: string) => {
-    router.push(itemId != "trending" ? "/?category=" + itemId : "/");
+    if (items.find((item) => item.id == itemId)) {
+      router.push(itemId != "trending" ? "/?category=" + itemId : "/");
+    } else {
+      router.push(itemId);
+    }
     toggleSidebar(false);
   };
 
@@ -66,34 +71,53 @@ const Sidebar = () => {
         } md:rtl:right-0 md:ltr:left-0 top-0 h-full text-right`}
       >
         <Logo showMenuIcon />
-        <ul className="flex flex-col p-2">
+        <div className="flex flex-col p-2">
           {items.map((item) => (
-            <button
+            <SidebarItem
               key={item.id}
-              className={`flex flex-row px-4 py-3 my-1 gap-4 cursor-pointer rounded-lg hover:bg-[#ff000040] active:scale-90 transition ${
-                category == item.id ? "bg-[#ff000020]" : ""
-              }`}
-              onClick={() => {
-                handleClickItem(item.id);
-              }}
-            >
-              <item.icon
-                className="w-6 h-6"
-                color={category == item.id ? "red" : ""}
-              />
-              <span
-                className={`${
-                  category == item.id && "text-red-500"
-                } first-letter:uppercase`}
-              >
-                {item.id}
-              </span>
-            </button>
+              itemId={item.id}
+              Icon={item.icon}
+              selected={item.id == category}
+              onClick={handleClickItem}
+            />
           ))}
-        </ul>
+          <hr className="border-gray-500 my-2" />
+          <SidebarItem
+            itemId={"settings"}
+            Icon={MdSettings}
+            selected={"/settings" == pathname}
+            onClick={handleClickItem}
+          />
+        </div>
       </div>
     </>
   );
 };
+type SidebarItemPropsType = {
+  itemId: string;
+  Icon: IconType;
+  onClick: Function;
+  selected: boolean;
+};
+const SidebarItem = ({
+  itemId,
+  Icon,
+  selected,
+  onClick: handleClick,
+}: SidebarItemPropsType) => (
+  <button
+    className={`flex flex-row px-4 py-3 my-1 gap-4 cursor-pointer rounded-lg hover:bg-[#ff000040] active:scale-90 transition ${
+      selected ? "bg-[#ff000020]" : ""
+    }`}
+    onClick={() => {
+      handleClick && handleClick(itemId);
+    }}
+  >
+    <Icon className="w-6 h-6" color={selected ? "red" : ""} />
+    <span className={`${selected && "text-red-500"} first-letter:uppercase`}>
+      {itemId}
+    </span>
+  </button>
+);
 
 export default Sidebar;
