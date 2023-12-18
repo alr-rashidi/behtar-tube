@@ -1,9 +1,9 @@
 export const getLocalStorageSetting = (key: string) => {
-  let settings = localStorage.getItem("settings");
-  if (settings) {
-    let settingsObj = JSON.parse(settings);
+  try {
+    let settings = localStorage.getItem("settings");
+    let settingsObj = JSON.parse(settings!);
     return settingsObj[key];
-  } else {
+  } catch (error) {
     return null;
   }
 };
@@ -11,9 +11,9 @@ export const getLocalStorageSetting = (key: string) => {
 export const setLocalStorageSetting = (key: string, value: string) => {
   let settings = localStorage.getItem("settings");
   if (!settings) {
-    settings = '{}';
+    settings = "{}";
   }
   let settingsObj = JSON.parse(settings);
   settingsObj[key] = value;
-  localStorage.setItem('settings', JSON.stringify(settingsObj));
+  localStorage.setItem("settings", JSON.stringify(settingsObj));
 };

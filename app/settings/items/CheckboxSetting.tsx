@@ -14,7 +14,7 @@ type PropsType = {
   defaultVal: boolean;
 };
 const CheckboxSetting = ({ title, itemId, help, defaultVal }: PropsType) => {
-  const defaultValue = getLocalStorageSetting(itemId) || defaultVal;
+  const defaultValue = getLocalStorageSetting(itemId) == 'true' ? true : false || defaultVal;
 
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
