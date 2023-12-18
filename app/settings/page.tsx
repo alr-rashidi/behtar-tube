@@ -5,10 +5,13 @@ import SelectSetting from "./items/SelectSetting";
 import { YTMonitizedCountries } from "./data/YTMonitizedCountires";
 
 const page = () => {
+  const sectionClassName = "flex flex-col gap-3";
+  const sectionTitleClassName = "text-2xl font-bold";
+
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <section className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">General</h1>
+    <div className="flex flex-col gap-10 p-4">
+      <section className={sectionClassName}>
+        <h1 className={sectionTitleClassName}>General</h1>
         <CheckboxSetting
           title="Enable Search Suggestions"
           itemId="searchSuggestions"
@@ -30,8 +33,8 @@ const page = () => {
           defaultVal="US"
         />
       </section>
-      <section className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">Player</h1>
+      <section className={sectionClassName}>
+        <h1 className={sectionTitleClassName}>Player</h1>
         <CheckboxSetting
           title="Proxy Videos Through Invidious"
           itemId="proxyVideos"
