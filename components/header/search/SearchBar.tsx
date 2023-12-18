@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchSuggestions from "./SearchSuggestions";
+import { getLocalStorageSetting } from "@/calc/localStorageSettings";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -12,6 +13,7 @@ const SearchBar = () => {
   const defaultValue: string = searchParams.get("q") || "";
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputText, setInputText] = useState<string>(defaultValue as string);
+  const showSuggestion = getLocalStorageSetting('searchSuggestions') == 'true' ? true : false;
 
   useEffect(() => {
     if (searchParams.get("q") != null) {
@@ -44,6 +46,8 @@ const SearchBar = () => {
     inputRef.current!.focus();
   };
 
+  console.log(showSuggestion);  
+
   return (
     <div className="flex flex-row h-full lg:ltr:ml-20 lg:rtl:mr-20" dir="ltr">
       <button
@@ -54,7 +58,7 @@ const SearchBar = () => {
       </button>
       <div className="relative">
         <input
-          className="h-full pl-10 pr-4 text-right transition bg-gray-100 border border-gray-300 rounded-r-full peer dark:border-gray-600 focus:border-gray-400 dark:bg-stone-900 w-60 lg:w-96"
+          className={`h-full pl-10 pr-4 ${showSuggestion ? 'peer' : null} text-right transition bg-gray-100 border border-gray-300 rounded-r-full dark:border-gray-600 focus:border-gray-400 dark:bg-stone-900 w-60 lg:w-96`}
           placeholder="جستجو"
           value={inputText}
           onChange={(e) => handleChange(e)}

@@ -1,4 +1,4 @@
-import { getVideoData, instance } from "@/components/getData";
+import { getVideoData } from "@/components/getData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
 import React from "react";
