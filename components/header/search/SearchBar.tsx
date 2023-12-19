@@ -46,8 +46,6 @@ const SearchBar = () => {
     inputRef.current!.focus();
   };
 
-  console.log(showSuggestion);  
-
   return (
     <div className="flex flex-row h-full lg:ltr:ml-20 lg:rtl:mr-20" dir="ltr">
       <button

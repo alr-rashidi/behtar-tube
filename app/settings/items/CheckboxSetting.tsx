@@ -5,7 +5,7 @@ import {
   getLocalStorageSetting,
   setLocalStorageSetting,
 } from "@/calc/localStorageSettings";
-import HelpBubble from "./components/HelpBubble";
+import HelpBubble from "@/components/HelpBubble";
 
 type PropsType = {
   title: string;

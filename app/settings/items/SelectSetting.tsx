@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import HelpBubble from "./components/HelpBubble";
+import HelpBubble from "@/components/HelpBubble";
 import { getLocalStorageSetting, setLocalStorageSetting } from "@/calc/localStorageSettings";
 
 type PropsType = {

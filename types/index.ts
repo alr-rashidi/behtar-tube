@@ -190,8 +190,12 @@ export type DetailedVideoType = {
     projectionType: number;
     container: string;
     encoding: string;
+    fps?: number;
     qualityLabel?: string;
     resolution?: string;
+    audioQuality?: string;
+    audioSampleRate?: number;
+    audioChannels?: number; 
   }[];
   formatStreams: {
     url: string;
