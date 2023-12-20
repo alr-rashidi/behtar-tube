@@ -1,10 +1,37 @@
 import React from "react";
 import CheckboxSetting from "./items/CheckboxSetting";
 import TextSetting from "./items/TextSetting";
+import SelectSetting, { SelectSettingListType } from "./items/SelectSetting";
 
 const page = () => {
   const sectionClassName = "flex flex-col gap-3";
   const sectionTitleClassName = "text-2xl font-bold";
+  const videoResolutionsList: SelectSettingListType[] = [
+    {
+      name: "144p",
+      value: "144p",
+    },
+    {
+      name: "240p",
+      value: "240p",
+    },
+    {
+      name: "360p",
+      value: "360p",
+    },
+    {
+      name: "480p",
+      value: "480p",
+    },
+    {
+      name: "720p",
+      value: "720p",
+    },
+    {
+      name: "1080p",
+      value: "1080p",
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-10 p-4">
@@ -36,6 +63,12 @@ const page = () => {
           title="Autoplay Videos"
           itemId="autoplayVideos"
           defaultVal={false}
+        />
+        <SelectSetting
+          title="Default video resolution"
+          itemId="defaultVideoResolution"
+          list={videoResolutionsList}
+          defaultVal="240p"
         />
       </section>
     </div>
