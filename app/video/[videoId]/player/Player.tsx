@@ -14,10 +14,13 @@ import PlayBtn from "./components/PlayBtn";
 import videoTimeFormater from "@/calc/videoTimeFormater";
 import SettingsBtn from "./components/SettingsBtn";
 
-type settingItemType = {
-  label: string;
-  value: string;
-} | null | undefined;
+type settingItemType =
+  | {
+      label: string;
+      value: string;
+    }
+  | null
+  | undefined;
 
 export type settingType = {
   name: string;
@@ -46,21 +49,20 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     "w-full h-full flex items-center justify-center";
 
   var filterSettingItems = (obj: settingItemType[]) => {
-  const uniqueItems = Array.from(new Set(obj.map(item => item?.value)));
-  return uniqueItems.map(value => {
-    const matchingItem = obj.find(item => item?.value === value);
-    if (matchingItem) {
-      return {
-        value: matchingItem.value,
-        label: matchingItem.label
-      };
-    }
-    return null;
-  });
-};
+    const uniqueItems = Array.from(new Set(obj.map((item) => item?.value)));
+    return uniqueItems.map((value) => {
+      const matchingItem = obj.find((item) => item?.value === value);
+      if (matchingItem) {
+        return {
+          value: matchingItem.value,
+          label: matchingItem.label,
+        };
+      }
+      return null;
+    });
+  };
 
-
-  const availableQualities = data.adaptiveFormats.map((item) => {
+  const listOfQualities: settingItemType[] = data.adaptiveFormats.map((item) => {
     if ("resolution" in item) {
       return {
         label: item.qualityLabel,
@@ -71,7 +73,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     }
   });
 
-  const availableAudios = data.adaptiveFormats.map((item) => {
+  const listOfAudios: settingItemType[] = data.adaptiveFormats.map((item) => {
     if ("audioQuality" in item) {
       return {
         label: item.audioQuality,
@@ -82,14 +84,20 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     }
   });
 
+  const listOfCaptions: settingItemType[] = data.captions.map(caption => ({
+    label: caption.label,
+    value: caption.languageCode
+  }));
+
   // set videoSettings to state
   useEffect(() => {
     setVideoSettings([
       {
         name: "Video Qualities",
-        items: filterSettingItems(availableQualities),
+        items: filterSettingItems(listOfQualities),
       },
-      { name: "Audio Qualities", items: filterSettingItems(availableAudios) },
+      { name: "Audio Qualities", items: filterSettingItems(listOfAudios) },
+      { name: "Captions", items: listOfCaptions },
     ]);
   }, []);
 
