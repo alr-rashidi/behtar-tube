@@ -20,8 +20,8 @@ const getData = async (
   }
 };
 
-// export const instance = "https://vid.puffyan.us";
-export const instance = "https://yt.artemislena.eu";
+export const instance = "https://vid.puffyan.us";
+// export const instance = "https://yt.artemislena.eu";
 
 export const getChannelInfo = async (query: string, signal?: AbortSignal) => {
   return await getData(`${instance}/api/v1/channels/${query}`, signal);
