@@ -1,56 +1,26 @@
 import React, { useState } from "react";
-import { MdSettings } from "react-icons/md";
+import { MdArrowBack, MdSettings } from "react-icons/md";
 import { settingType } from "../Player";
+import { helpBubbleClassName } from "@/components/HelpBubble";
 
 const SettingsBtn = ({ settings }: { settings: settingType[] }) => {
   const [showSettings, setShowSettings] = useState<boolean>(false);
-  const [secondList, setSecondList] = useState<string>("");
+  const [selectedList, setSelectedList] = useState<string>("");
 
   const handleSettingsClick = () => {
     setShowSettings((prev) => !prev);
   };
 
   const handleItemClick = (listName: string, itemValue: string) => {
-    alert(itemValue);
-    setSecondList("");
+    setSelectedList("");
   };
-
-  type SettingsType = {
-    name: string;
-    items: { label: string; value: string }[];
-  }[];
-  const settingsArray: SettingsType = [
-    {
-      name: "Video quality",
-      items: [
-        { label: "Item Label 1", value: "item1" },
-        { label: "Item Label 2", value: "item2" },
-        { label: "Item Label 3", value: "item3" },
-        { label: "Item Label 4", value: "item4" },
-      ],
-    },
-    {
-      name: "Audio quality",
-      items: [
-        { label: "Item Label 1", value: "item1" },
-        { label: "Item Label 2", value: "item2" },
-        { label: "Item Label 3", value: "item3" },
-      ],
-    },
-    {
-      name: "caption",
-      items: [
-        { label: "Item Label 1", value: "item1" },
-        { label: "Item Label 2", value: "item2" },
-      ],
-    },
-  ];
 
   return (
     <div className="relative">
-      <MdSettings className="w-6 h-full" onClick={handleSettingsClick} />
+      <MdSettings className="w-6 h-full peer" onClick={handleSettingsClick} />
+      <div className={`${!showSettings ? helpBubbleClassName : 'hidden'} bottom-10`}>Settings</div>
       <div
-        className={`absolute bottom-10 right-0 w-40 h-40 overflow-scroll flex flex-row py-2 gap-1 transition bg-black bg-opacity-80 rounded ${
+        className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 max-h-96 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded ${
           showSettings
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -58,13 +28,13 @@ const SettingsBtn = ({ settings }: { settings: settingType[] }) => {
       >
         <div
           className={` ${
-            secondList == "" ? "block" : "hidden"
+            selectedList == "" ? "block" : "hidden"
           } flex flex-col flex-shrink-0 w-40 px-2`}
         >
           {settings.map((setting) => (
             <button
               key={setting.name}
-              onClick={() => setSecondList(setting.name)}
+              onClick={() => setSelectedList(setting.name)}
             >
               {setting.name}
             </button>
@@ -75,23 +45,27 @@ const SettingsBtn = ({ settings }: { settings: settingType[] }) => {
           <div
             key={setting.name}
             className={` ${
-              secondList == "" ? "hidden" : "block"
-            } flex flex-col w-40 px-2`}
+              selectedList == setting.name ? "block" : "hidden"
+            } flex flex-col min-w-min w-full px-2`}
           >
-            {setting.items.map((item) => {
-              if (item) {
-                return (
-                  <div key={item.value}>
+            <button className="p-1 bg-white rounded-full bg-opacity-10 w-min" onClick={() => setSelectedList('')}><MdArrowBack className="w-5 h-5" /></button>
+            <div className="my-1">{setting.name}:</div>
+            <div className="flex flex-col gap-1">
+              <hr className="my-1 border-gray-600" />
+              {setting.items.map((item) => {
+                if (item) {
+                  return (
                     <button
-                      className="cursor-pointer"
+                      key={item.value}
+                      className="w-full py-1 text-sm cursor-pointer"
                       onClick={() => handleItemClick(setting.name, item.value)}
                     >
                       {item.label}
                     </button>
-                  </div>
-                );
-              }
-            })}
+                  );
+                }
+              })}
+            </div>
           </div>
         ))}
       </div>
