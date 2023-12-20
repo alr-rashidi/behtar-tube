@@ -1,17 +1,28 @@
-'use client'
+"use client";
 
 import React, { useEffect, useState } from "react";
 import HelpBubble from "@/components/HelpBubble";
-import { getLocalStorageSetting, setLocalStorageSetting } from "@/calc/localStorageSettings";
+import {
+  getLocalStorageSetting,
+  setLocalStorageSetting,
+} from "@/calc/localStorageSettings";
+
+export type SelectSettingListType = { name: string; value: string };
 
 type PropsType = {
   title: string;
   itemId: string;
-  list: { name: string; value: string }[];
+  list: SelectSettingListType[];
+  defaultVal: string;
   help?: string;
-  defaultVal: string
 };
-const SelectSetting = ({ title, itemId, list, help, defaultVal }: PropsType) => {
+const SelectSetting = ({
+  title,
+  itemId,
+  list,
+  help,
+  defaultVal,
+}: PropsType) => {
   const defaultValue = getLocalStorageSetting(itemId) || defaultVal;
 
   const [selectedItem, setSelectedItem] = useState(defaultValue);
