@@ -14,12 +14,14 @@ import PlayBtn from "./components/PlayBtn";
 import videoTimeFormater from "@/calc/videoTimeFormater";
 import SettingsBtn from "./components/SettingsBtn";
 
+type settingItemType = {
+  label: string;
+  value: string;
+} | null | undefined;
+
 export type settingType = {
   name: string;
-  items: ({
-    label: string;
-    value: string;
-  } | null)[];
+  items: settingItemType[];
 };
 
 const Player = ({ data }: { data: DetailedVideoType }) => {
@@ -43,19 +45,23 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const videoUnderLayerClassName =
     "w-full h-full flex items-center justify-center";
 
-  var filteredData = (obj: settingType) => {
-    if (obj.items) {
-      obj.items.filter((item, index, array) => {
-        return (
-          item &&
-          array.slice(0, index).some((subItem) => item.value === subItem?.value)
-        );
-      });
-    }
-  };
+  var filterSettingItems = (obj: settingItemType[]) => {
+  const uniqueItems = Array.from(new Set(obj.map(item => item?.value)));
+  return uniqueItems.map(value => {
+    const matchingItem = obj.find(item => item?.value === value);
+    if (matchingItem) {
+      return {
+        value: matchingItem.value,
+        label: matchingItem.label
+      };
+    }
+    return null;
+  });
+};
+
 
   const availableQualities = data.adaptiveFormats.map((item) => {
-    if (item.resolution && item.qualityLabel) {
+    if ("resolution" in item) {
       return {
         label: item.qualityLabel,
         value: item.resolution,
@@ -64,32 +70,28 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       return null;
     }
   });
-  // .filter((item, index, array) => {
-  //   array.find((subItem) => item?.value == subItem?.value);
-  // });
 
   const availableAudios = data.adaptiveFormats.map((item) => {
-    if (
-      item.type.indexOf("audio") != -1 &&
-      item.qualityLabel &&
-      item.audioQuality
-    ) {
+    if ("audioQuality" in item) {
       return {
-        label: item.qualityLabel,
+        label: item.audioQuality,
         value: item.audioQuality,
       };
     } else {
       return null;
     }
   });
-  // .filter((item, index, array) => array.indexOf(item) == index && item);
 
+  // set videoSettings to state
   useEffect(() => {
     setVideoSettings([
-      { name: "Video Qualities", items: availableQualities },
-      { name: "Audio Qualities", items: availableAudios },
+      {
+        name: "Video Qualities",
+        items: filterSettingItems(availableQualities),
+      },
+      { name: "Audio Qualities", items: filterSettingItems(availableAudios) },
     ]);
-  }, [availableQualities, availableAudios]);
+  }, []);
 
   const handlePlayBtn = () => {
     if (videoRef.current?.paused) {
@@ -247,14 +249,14 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           type={data.formatStreams[1].type}
         /> */}
         <source src="https://www.w3schools.com/html/mov_bbb.mp4" />
-        {data.captions.map((item) => (
+        {/* {data.captions.map((item) => (
           <track
             key={item.languageCode}
             src={proxyInstance + item.url}
             kind={item.label}
             srcLang={item.languageCode}
           />
-        ))}
+        ))} */}
       </video>
       <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col gap-1">
         <div
@@ -303,25 +305,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             fullscreen={fullscreen}
             handleFullscreenBtn={handleFullscreenBtn}
           />
-        </div>
-        <div>
-          <select className="p-2 bg-gray-100 dark:bg-gray-900">
-            {availableQualities.map((item) => {
-              return <option key={item?.value}>{item?.label}</option>;
-            })}
-          </select>
-          {showControls ? "true" : "false"}
-          <select className="p-2 bg-gray-100 dark:bg-gray-900">
-            {availableAudios.map((item) => {
-              return <option key={item?.value}>{item?.label}</option>;
-            })}
-          </select>
-          <select className="p-2 bg-gray-100 dark:bg-gray-900">
-            <option value="">Nothing</option>
-            {data.captions.map((item) => {
-              return <option key={item.languageCode}>{item.label}</option>;
-            })}
-          </select>
         </div>
       </div>
     </div>
