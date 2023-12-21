@@ -13,6 +13,7 @@ import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
 import videoTimeFormater from "@/calc/videoTimeFormater";
 import SettingsBtn from "./components/SettingsBtn";
+import ReactPlayer from "react-player";
 
 type settingItemType =
   | {
@@ -269,30 +270,25 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   return (
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
-      <video ref={videoRef} className="w-full" controls>
-        {/* <source
-          src={data.formatStreams[1].url.replace(
-            /https:\/\/.+\//i,
-            proxyInstance + "/"
-          )}
-          type={data.formatStreams[1].type}
-        /> */}
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" />
-        {videoSelectedSettings.caption !== "" &&
-          data.captions.map((caption) => {
-            if (caption.label === videoSelectedSettings.caption) {
-              return (
-                <track
-                  key={caption.label}
-                  src={proxyInstance + caption.url}
-                  kind={caption.label}
-                  srcLang={caption.languageCode}
-                />
-              );
-            }
-            return null;
-          })}
-      </video>
+      <ReactPlayer
+        url="https://www.w3schools.com/html/mov_bbb.mp4"
+      />
+      {videoSelectedSettings.caption !== "" &&
+        data.captions.map((caption) => {
+          if (caption.label === videoSelectedSettings.caption) {
+            return (
+              <track
+                key={caption.label}
+                src="./subtitle.vtt"
+                kind="subtitles"
+                label={caption.label}
+                srcLang={caption.languageCode}
+                default
+              />
+            );
+          }
+          return null;
+        })}
       <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col gap-1">
         <div
           className={`absolute w-full h-full bg-opacity-60 flex items-center justify-center transition ${
