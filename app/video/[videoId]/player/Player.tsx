@@ -236,9 +236,18 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         style={{ aspectRatio: "16/9" }}
         progressInterval={7}
         pip={false}
-        url="https://yt.artemislena.eu/videoplayback?expire=1703179205&ei=ZR-EZcjTBcOW1gK60oToCg&ip=2a02%3A8109%3A928f%3A4a00%3A922%3A505e%3Ad71a%3Ae14c&id=o-AH8F6TM27IzVnDhTMphs2BGMuv4EfnOU6gTgxgroyeJF&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=YY&mm=31%2C29&mn=sn-i5h7lner%2Csn-i5heen7d&ms=au%2Crdu&mv=m&mvi=2&pl=45&initcwndbps=2211250&spc=UWF9f5H4YpPWujUveoIptcZzZliuHXs&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=79162640&ratebypass=yes&dur=1052.630&lmt=1696521526889259&mt=1703157415&fvip=3&fexp=24007246&c=ANDROID&txp=5538434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgVnSQMq0H3siSvhb-U8wc5tNohbZ3OsNPWK4Qftha2QgCIHK8aB9nWjz30opDAegxEZ4T9Aj6aC1Zt5IbwawWmsGF&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRAIgdv17pkRT8BQ_GVqRea5c2lTSreEnRwIybYSzLbwNGtICIDL1wlh667OUwSUuN-gdVqr7SvhoFqX_rQ67qB4D0b31&host=rr2---sn-i5h7lner.googlevideo.com"
+        url={data.adaptiveFormats
+          .filter((item) => {
+            if ("resolution" in item) {
+              return item.resolution == videoSelectedSettings.videoResolution;
+            }
+          })
+          .map((item) =>
+            item.url.replace(/https:\/\/.+\//i, proxyInstance + "/")
+          )}
         onReady={() => console.log(videoConfig)}
         onEnded={() => setPlaying(false)}
+        onError={() => setLoading(false)}
         onProgress={(progress) => handleVideoProgress(progress)}
         onBuffer={() => setLoading(true)}
         onBufferEnd={() => setLoading(false)}
@@ -271,10 +280,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           } hover:opacity-100 transition bg-black bg-opacity-80`}
         >
           <PlayBtn handlePlayBtn={handlePlayBtn} playing={playing} />
-          <TimelineInput
-            videoRef={videoRef}
-            currentTime={currentTime}
-          />
+          <TimelineInput videoRef={videoRef} currentTime={currentTime} />
           <div className="my-auto">{videoTimeFormater(currentTime)}</div>
           <VolumeInput videoRef={videoRef} />
           {videoSettings ? (
