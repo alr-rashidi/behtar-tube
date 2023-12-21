@@ -1,20 +1,50 @@
-import React, { FC, RefObject } from "react";
+import React, { FC, RefObject, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 
 type PropsType = {
   videoRef: RefObject<ReactPlayer>;
-  timelineInputRef: RefObject<HTMLInputElement>;
-  timelineBGRef: RefObject<HTMLDivElement>;
-  timelineThumbRef: RefObject<HTMLDivElement>;
-  handleTimeline: Function;
+  currentTime: number;
 };
-const TimelineInput = ({
-  videoRef,
-  timelineInputRef,
-  timelineBGRef,
-  timelineThumbRef,
-  handleTimeline,
-}: PropsType) => {
+const TimelineInput = ({ videoRef, currentTime }: PropsType) => {
+  const timelineInputRef = useRef<HTMLInputElement>(null);
+  const timelineBGRef = useRef<HTMLDivElement>(null);
+  const timelineThumbRef = useRef<HTMLDivElement>(null);
+
+  const handleTimeline = (value: number) => {
+    if (videoRef.current) {
+      const internalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
+      if (value >= 0 && value <= videoRef.current.getDuration()) {
+        internalPlayer.currentTime = value;
+      } else if (value < 0) {
+        internalPlayer.currentTime = 0;
+      } else {
+        internalPlayer.currentTime = videoRef.current.getDuration();
+      }
+    }
+    ChangeTimelineThumbPosition();
+  };
+
+  useEffect(() => {
+    ChangeTimelineThumbPosition();
+  }, [currentTime]);
+
+  const ChangeTimelineThumbPosition = () => {
+    if (
+      timelineThumbRef.current &&
+      timelineInputRef.current &&
+      videoRef.current
+    ) {
+      timelineThumbRef.current.style.left = `${
+        // Timeline width - Thumb width / Video time(max value of input) = One percent of the width of input
+        ((timelineInputRef.current.clientWidth - 16) /
+          videoRef.current.getDuration()) *
+        // ... * Timeline value (parseInt for TS intellisense)
+        videoRef.current.getCurrentTime()
+      }px`;
+    }
+  };
+
   return (
     <div aria-label="Timeline" className="relative w-full h-full">
       <input
@@ -26,6 +56,10 @@ const TimelineInput = ({
         defaultValue={0}
         className="w-full h-full opacity-0 cursor-pointer peer"
       />
+      <div
+        ref={timelineBGRef}
+        className="absolute w-full h-1 -translate-y-1/2 bg-gray-500 border-white pointer-events-none top-1/2"
+      ></div>
       <div
         ref={timelineBGRef}
         className="absolute w-full h-1 -translate-y-1/2 bg-gray-500 border-white pointer-events-none top-1/2"
