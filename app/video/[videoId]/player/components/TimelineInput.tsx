@@ -1,7 +1,8 @@
 import React, { FC, RefObject } from "react";
+import ReactPlayer from "react-player";
 
 type PropsType = {
-  videoRef: RefObject<HTMLVideoElement>;
+  videoRef: RefObject<ReactPlayer>;
   timelineInputRef: RefObject<HTMLInputElement>;
   timelineBGRef: RefObject<HTMLDivElement>;
   timelineThumbRef: RefObject<HTMLDivElement>;
@@ -18,7 +19,7 @@ const TimelineInput = ({
     <div aria-label="Timeline" className="relative w-full h-full">
       <input
         type="range"
-        max={videoRef.current?.duration}
+        max={videoRef.current?.getDuration()}
         onChange={(e) => handleTimeline(parseInt(e.target.value))}
         onKeyDown={(e) => e.preventDefault()}
         ref={timelineInputRef}

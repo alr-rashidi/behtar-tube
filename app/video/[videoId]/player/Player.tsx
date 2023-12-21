@@ -13,7 +13,8 @@ import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
 import videoTimeFormater from "@/calc/videoTimeFormater";
 import SettingsBtn from "./components/SettingsBtn";
-import ReactPlayer from "react-player";
+import ReactPlayer, { Config, ReactPlayerProps } from "react-player";
+import { OnProgressProps } from "react-player/base";
 
 type settingItemType =
   | {
@@ -37,7 +38,7 @@ export type VideoSelectedSettingsType = {
 
 const Player = ({ data }: { data: DetailedVideoType }) => {
   const videoDivRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<ReactPlayer>(null);
   const timelineInputRef = useRef<HTMLInputElement>(null);
   const timelineBGRef = useRef<HTMLDivElement>(null);
   const videoUnderLayerRef = useRef<HTMLDivElement>(null);
@@ -101,10 +102,16 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     }
   });
 
-  const listOfCaptions: settingItemType[] = data.captions.map((caption) => ({
+  const mappedCaptions = data.captions.map((caption) => ({
     label: caption.label,
     value: caption.label,
   }));
+  mappedCaptions.unshift({
+    label: "",
+    value: "None",
+  });
+
+  const listOfCaptions: settingItemType[] = mappedCaptions;
 
   // set videoSettings to state
   useEffect(() => {
@@ -124,12 +131,16 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   }, []);
 
   const handlePlayBtn = () => {
-    if (videoRef.current?.paused) {
-      videoRef.current.play();
-      setPlaying(true);
-    } else {
-      videoRef.current?.pause();
-      setPlaying(false);
+    if (videoRef.current) {
+      const internalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
+      if (internalPlayer.paused) {
+        internalPlayer.play();
+        setPlaying(true);
+      } else {
+        internalPlayer.pause();
+        setPlaying(false);
+      }
     }
   };
 
@@ -149,12 +160,14 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       timelineInputRef.current &&
       videoRef.current
     ) {
-      if (value >= 0 && value <= videoRef.current.duration) {
-        videoRef.current.currentTime = value;
+      const internalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
+      if (value >= 0 && value <= videoRef.current.getDuration()) {
+        internalPlayer.currentTime = value;
       } else if (value < 0) {
-        videoRef.current.currentTime = 0;
+        internalPlayer.currentTime = 0;
       } else {
-        videoRef.current.currentTime = videoRef.current.duration;
+        // videoRef.current.getCurrentTime() = videoRef.current.duration;
       }
 
       ChangeTimelineThumbPosition();
@@ -170,9 +183,9 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       timelineThumbRef.current.style.left = `${
         // Timeline width - Thumb width / Video time(max value of input) = One percent of the width of input
         ((timelineInputRef.current.clientWidth - 16) /
-          videoRef.current.duration) *
+          videoRef.current.getDuration()) *
         // ... * Timeline value (parseInt for TS intellisense)
-        videoRef.current.currentTime
+        videoRef.current.getCurrentTime()
       }px`;
     }
   };
@@ -180,42 +193,35 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (videoRef.current) {
+      const internalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
       if (value == 0) {
         setMuted(true);
       } else {
         setMuted(false);
       }
-      videoRef.current.volume = value / 100;
+      internalPlayer.volume = value / 100;
     }
   };
 
   const handleMute = () => {
     if (videoRef.current && volumeInputRef.current) {
+      const internalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
       if (muted) {
-        videoRef.current.volume = parseInt(volumeInputRef.current.value) / 100;
+        internalPlayer.volume = parseInt(volumeInputRef.current.value) / 100;
         setMuted(false);
       } else {
-        videoRef.current.volume = 0;
+        internalPlayer.volume = 0;
         setMuted(true);
       }
     }
   };
 
-  videoRef.current?.addEventListener("waiting", () => {
-    setLoading(true);
-  });
-  videoRef.current?.addEventListener("canplay", () => {
-    setLoading(false);
-  });
-  videoRef.current?.addEventListener("timeupdate", (e: any) => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current?.currentTime);
-      ChangeTimelineThumbPosition();
-    }
-  });
-  videoRef.current?.addEventListener("ended", (e: any) => {
-    setPlaying(false);
-  });
+  const handleVideoDuration = (progress: OnProgressProps) => {
+    setCurrentTime(progress.playedSeconds);
+    ChangeTimelineThumbPosition();
+  };
   // Handle pointer moves on videoDiv
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -242,25 +248,21 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   useEffect(() => {
     const keyPressFunction = (e: any) => {
       const key = e.key;
-      if (key == "k") {
-        handlePlayBtn();
-      } else if (key == "j") {
-        if (videoRef.current) {
-          videoRef.current.currentTime = videoRef.current.currentTime - 5;
-        }
-      } else if (key == "l") {
-        if (videoRef.current) {
-          videoRef.current.currentTime = videoRef.current.currentTime + 5;
-        }
-      } else if (key == "f") {
-        handleFullscreenBtn();
-      } else if (key == "ArrowLeft") {
-        if (videoRef.current) {
-          videoRef.current.currentTime = videoRef.current.currentTime - 10;
-        }
-      } else if (key == "ArrowRight") {
-        if (videoRef.current) {
-          videoRef.current.currentTime = videoRef.current.currentTime + 10;
+      if (videoRef.current) {
+        const internalPlayer: Record<string, any> =
+          videoRef.current.getInternalPlayer();
+        if (key == "k") {
+          handlePlayBtn();
+        } else if (key == "j") {
+          internalPlayer.currentTime = videoRef.current.getCurrentTime() - 5;
+        } else if (key == "l") {
+          internalPlayer.currentTime = videoRef.current.getCurrentTime() + 5;
+        } else if (key == "f") {
+          handleFullscreenBtn();
+        } else if (key == "ArrowLeft") {
+          internalPlayer.currentTime = videoRef.current.getCurrentTime() - 10;
+        } else if (key == "ArrowRight") {
+          internalPlayer.currentTime = videoRef.current.getCurrentTime() + 10;
         }
       }
     };
@@ -268,27 +270,50 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     return () => window.removeEventListener("keydown", keyPressFunction);
   }, []);
 
+  const videoConfig: Config =
+    videoSelectedSettings.caption !== ""
+      ? data.captions.reduce((config, caption) => {
+          if (caption.label === videoSelectedSettings.caption) {
+            return {
+              file: {
+                attributes: {
+                  crossOrigin: "anonymous",
+                },
+                tracks: [
+                  {
+                    kind: "subtitles",
+                    src: proxyInstance + caption.url,
+                    srcLang: "en",
+                    label: caption.label,
+                    default: true,
+                    mode: "showing",
+                  },
+                ],
+              },
+            };
+          } else {
+            return config;
+          }
+        }, {})
+      : {};
+
   return (
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
       <ReactPlayer
-        url="https://www.w3schools.com/html/mov_bbb.mp4"
+        ref={videoRef}
+        key={JSON.stringify(videoSelectedSettings)}
+        width="100%"
+        height="100%"
+        config={videoConfig}
+        style={{ aspectRatio: "16/9" }}
+        progressInterval={7}
+        url="https://yt.artemislena.eu/videoplayback?expire=1703179205&ei=ZR-EZcjTBcOW1gK60oToCg&ip=2a02%3A8109%3A928f%3A4a00%3A922%3A505e%3Ad71a%3Ae14c&id=o-AH8F6TM27IzVnDhTMphs2BGMuv4EfnOU6gTgxgroyeJF&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=YY&mm=31%2C29&mn=sn-i5h7lner%2Csn-i5heen7d&ms=au%2Crdu&mv=m&mvi=2&pl=45&initcwndbps=2211250&spc=UWF9f5H4YpPWujUveoIptcZzZliuHXs&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=79162640&ratebypass=yes&dur=1052.630&lmt=1696521526889259&mt=1703157415&fvip=3&fexp=24007246&c=ANDROID&txp=5538434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgVnSQMq0H3siSvhb-U8wc5tNohbZ3OsNPWK4Qftha2QgCIHK8aB9nWjz30opDAegxEZ4T9Aj6aC1Zt5IbwawWmsGF&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRAIgdv17pkRT8BQ_GVqRea5c2lTSreEnRwIybYSzLbwNGtICIDL1wlh667OUwSUuN-gdVqr7SvhoFqX_rQ67qB4D0b31&host=rr2---sn-i5h7lner.googlevideo.com"
+        onReady={() => console.log(videoConfig)}
+        onEnded={() => setPlaying(false)}
+        onProgress={(progress) => handleVideoDuration(progress)}
+        onBuffer={() => setLoading(true)}
+        onBufferEnd={() => setLoading(false)}
       />
-      {videoSelectedSettings.caption !== "" &&
-        data.captions.map((caption) => {
-          if (caption.label === videoSelectedSettings.caption) {
-            return (
-              <track
-                key={caption.label}
-                src="./subtitle.vtt"
-                kind="subtitles"
-                label={caption.label}
-                srcLang={caption.languageCode}
-                default
-              />
-            );
-          }
-          return null;
-        })}
       <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col gap-1">
         <div
           className={`absolute w-full h-full bg-opacity-60 flex items-center justify-center transition ${
