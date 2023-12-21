@@ -35,7 +35,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
           showSettings
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
-        }}`}
+        }`}
       >
         <div
           className={` ${
