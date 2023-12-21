@@ -24,7 +24,14 @@ type settingItemType =
 
 export type settingType = {
   name: string;
+  id: string;
   items: settingItemType[];
+};
+
+export type VideoSelectedSettingsType = {
+  videoResolution: string;
+  audioQuality: string;
+  caption: string;
 };
 
 const Player = ({ data }: { data: DetailedVideoType }) => {
@@ -42,8 +49,15 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [muted, setMuted] = useState<boolean>(false);
   const [videoSettings, setVideoSettings] = useState<settingType[]>();
+  const [videoSelectedSettings, setVideoSelectedSettings] =
+    useState<VideoSelectedSettingsType>({
+      videoResolution:
+        getLocalStorageSetting("defaultVideoResolution") || "240p",
+      audioQuality: "AUDIO_QUALITY_LOW",
+      caption: "",
+    });
 
-  const proxyInstance = getLocalStorageSetting("instance") || instance;
+  const proxyInstance = getLocalStorageSetting("proxyInstance") || instance;
 
   const videoUnderLayerClassName =
     "w-full h-full flex items-center justify-center";
@@ -62,16 +76,18 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     });
   };
 
-  const listOfQualities: settingItemType[] = data.adaptiveFormats.map((item) => {
-    if ("resolution" in item) {
-      return {
-        label: item.qualityLabel,
-        value: item.resolution,
-      };
-    } else {
-      return null;
+  const listOfQualities: settingItemType[] = data.adaptiveFormats.map(
+    (item) => {
+      if ("resolution" in item) {
+        return {
+          label: item.qualityLabel,
+          value: item.resolution,
+        };
+      } else {
+        return null;
+      }
     }
-  });
+  );
 
   const listOfAudios: settingItemType[] = data.adaptiveFormats.map((item) => {
     if ("audioQuality" in item) {
@@ -84,20 +100,25 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     }
   });
 
-  const listOfCaptions: settingItemType[] = data.captions.map(caption => ({
+  const listOfCaptions: settingItemType[] = data.captions.map((caption) => ({
     label: caption.label,
-    value: caption.languageCode
+    value: caption.label,
   }));
 
   // set videoSettings to state
   useEffect(() => {
     setVideoSettings([
       {
-        name: "Video Qualities",
+        name: "Video Resolution",
+        id: "videoResolution",
         items: filterSettingItems(listOfQualities),
       },
-      { name: "Audio Qualities", items: filterSettingItems(listOfAudios) },
-      { name: "Captions", items: listOfCaptions },
+      {
+        name: "Audio Qualities",
+        id: "audioQuality",
+        items: filterSettingItems(listOfAudios),
+      },
+      { name: "Caption", id: "caption", items: listOfCaptions },
     ]);
   }, []);
 
@@ -248,7 +269,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   return (
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
-      <video ref={videoRef} className="w-full">
+      <video ref={videoRef} className="w-full" controls>
         {/* <source
           src={data.formatStreams[1].url.replace(
             /https:\/\/.+\//i,
@@ -257,14 +278,20 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           type={data.formatStreams[1].type}
         /> */}
         <source src="https://www.w3schools.com/html/mov_bbb.mp4" />
-        {/* {data.captions.map((item) => (
-          <track
-            key={item.languageCode}
-            src={proxyInstance + item.url}
-            kind={item.label}
-            srcLang={item.languageCode}
-          />
-        ))} */}
+        {videoSelectedSettings.caption !== "" &&
+          data.captions.map((caption) => {
+            if (caption.label === videoSelectedSettings.caption) {
+              return (
+                <track
+                  key={caption.label}
+                  src={proxyInstance + caption.url}
+                  kind={caption.label}
+                  srcLang={caption.languageCode}
+                />
+              );
+            }
+            return null;
+          })}
       </video>
       <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col gap-1">
         <div
@@ -274,6 +301,8 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           ref={videoUnderLayerRef}
           onClick={handlePlayBtn}
         >
+          {JSON.stringify(videoSelectedSettings)}
+
           {loading ? (
             <div className={videoUnderLayerClassName}>
               <Loading />
@@ -308,7 +337,12 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             handleVolume={handleVolume}
             muted={muted}
           />
-          {videoSettings ? <SettingsBtn settings={videoSettings} /> : null}
+          {videoSettings ? (
+            <SettingsBtn
+              settings={videoSettings}
+              setVideoSelectedSettings={setVideoSelectedSettings}
+            />
+          ) : null}
           <FullscreenBtn
             fullscreen={fullscreen}
             handleFullscreenBtn={handleFullscreenBtn}
