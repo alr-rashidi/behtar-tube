@@ -22,7 +22,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
 
   return (
     <div className="relative">
-      <MdSettings className="w-6 h-full peer" onClick={handleSettingsClick} />
+      <MdSettings className="w-8 px-1 h-full peer" onClick={handleSettingsClick} />
       <div
         className={`${
           !showSettings ? helpBubbleClassName : "hidden"
