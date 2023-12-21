@@ -8,7 +8,6 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import TimelineInput from "./components/TimelineInput";
 import VolumeInput from "./components/VolumeInput";
-import MuteBtn from "./components/MuteBtn";
 import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
 import videoTimeFormater from "@/calc/videoTimeFormater";
@@ -40,13 +39,11 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const videoDivRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<ReactPlayer>(null);
   const videoUnderLayerRef = useRef<HTMLDivElement>(null);
-  const volumeInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [showControls, setShowControls] = useState<boolean>();
   const [playing, setPlaying] = useState<boolean>(false);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [muted, setMuted] = useState<boolean>(false);
   const [videoSettings, setVideoSettings] = useState<settingType[]>();
   const [videoSelectedSettings, setVideoSelectedSettings] =
     useState<VideoSelectedSettingsType>({
@@ -147,34 +144,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     } else {
       videoDivRef.current?.requestFullscreen();
       setFullscreen(true);
-    }
-  };
-
-  const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (videoRef.current) {
-      const internalPlayer: Record<string, any> =
-        videoRef.current.getInternalPlayer();
-      if (value == 0) {
-        setMuted(true);
-      } else {
-        setMuted(false);
-      }
-      internalPlayer.volume = value / 100;
-    }
-  };
-
-  const handleMute = () => {
-    if (videoRef.current && volumeInputRef.current) {
-      const internalPlayer: Record<string, any> =
-        videoRef.current.getInternalPlayer();
-      if (muted) {
-        internalPlayer.volume = parseInt(volumeInputRef.current.value) / 100;
-        setMuted(false);
-      } else {
-        internalPlayer.volume = 0;
-        setMuted(true);
-      }
     }
   };
 
@@ -307,12 +276,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             currentTime={currentTime}
           />
           <div className="my-auto">{videoTimeFormater(currentTime)}</div>
-          <MuteBtn muted={muted} handleMute={handleMute} />
-          <VolumeInput
-            volumeInputRef={volumeInputRef}
-            handleVolume={handleVolume}
-            muted={muted}
-          />
+          <VolumeInput videoRef={videoRef} />
           {videoSettings ? (
             <SettingsBtn
               settings={videoSettings}
