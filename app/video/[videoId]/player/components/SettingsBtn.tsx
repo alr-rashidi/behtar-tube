@@ -31,7 +31,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
         Settings
       </div>
       <div
-        className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 max-h-96 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded ${
+        className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 max-h-96 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded-t-xl ${
           showSettings
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
