@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getSearchSuggestionsData } from "@/components/getData";
 import localTextDecoder from "@/calc/textDecoder";
 import { useRouter } from "next/navigation";
+import { getLocalStorageSetting } from "@/calc/localStorageSettings";
 
 type PropsType = {
   inputText: string;
@@ -49,7 +50,7 @@ const SearchSuggestions = ({ inputText }: PropsType) => {
   };
 
   return (
-    <ul className="absolute hidden peer-focus:flex active:flex text-right transition left-0 flex-col gap-2 bg-white dark:bg-black shadow backdrop-blur bg-opacity-60 dark:bg-opacity-60 w-full rounded-lg p-2">
+    <ul className='absolute peer-focus:flex active:flex flex-col hidden text-right transition left-0 gap-2 bg-white dark:bg-black shadow backdrop-blur bg-opacity-60 dark:bg-opacity-60 w-full rounded-lg p-2'>
       {!loading ? (
         data &&
         data.suggestions.map((item) => (

@@ -48,7 +48,7 @@ const Sidebar = () => {
     if (items.find((item) => item.id == itemId)) {
       router.push(itemId != "trending" ? "/?category=" + itemId : "/");
     } else {
-      router.push(itemId);
+      router.push('/' + itemId);
     }
     toggleSidebar(false);
   };

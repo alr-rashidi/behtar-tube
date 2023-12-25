@@ -178,21 +178,32 @@ export type DetailedVideoType = {
   premiereTimestamp?: number;
 
   hlsUrl?: string;
-  adaptiveFormats: {
+  adaptiveFormats: ({
+    init: string;
     index: string;
     bitrate: string;
-    init: string;
     url: string;
     itag: string;
     type: string;
     clen: string;
     lmt: string;
     projectionType: number;
-    container: string;
-    encoding: string;
-    qualityLabel?: string;
-    resolution?: string;
-  }[];
+  } & (
+    // audio
+    | {
+        audioQuality: string;
+        audioSampleRate: number;
+        audioChannels: number;
+      }
+      // video
+    | {
+        container: string;
+        encoding: string;
+        fps: number;
+        qualityLabel: string;
+        resolution: string;
+      }
+  ))[];
   formatStreams: {
     url: string;
     itag: string;

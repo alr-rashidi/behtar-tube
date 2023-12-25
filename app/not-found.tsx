@@ -1,5 +1,5 @@
 import Link from "next/link";
-import error404image from "@/contents/error404image.png"
+import error404image from "@/assets/error404image.png"
 import Image from "next/image";
 
 const Page = function Custom404() {

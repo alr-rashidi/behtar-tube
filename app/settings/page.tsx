@@ -1,12 +1,37 @@
 import React from "react";
 import CheckboxSetting from "./items/CheckboxSetting";
 import TextSetting from "./items/TextSetting";
-import SelectSetting from "./items/SelectSetting";
-import { YTMonitizedCountries } from "./data/YTMonitizedCountires";
+import SelectSetting, { SelectSettingListType } from "./items/SelectSetting";
 
 const page = () => {
   const sectionClassName = "flex flex-col gap-3";
   const sectionTitleClassName = "text-2xl font-bold";
+  const videoResolutionsList: SelectSettingListType[] = [
+    {
+      name: "144p",
+      value: "144p",
+    },
+    {
+      name: "240p",
+      value: "240p",
+    },
+    {
+      name: "360p",
+      value: "360p",
+    },
+    {
+      name: "480p",
+      value: "480p",
+    },
+    {
+      name: "720p",
+      value: "720p",
+    },
+    {
+      name: "1080p",
+      value: "1080p",
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-10 p-4">
@@ -17,21 +42,6 @@ const page = () => {
           itemId="searchSuggestions"
           defaultVal={true}
         />
-        <TextSetting
-          title="Current invidious instance"
-          itemId="instance"
-          help="The server that BehtarTube connect to get data"
-          helper="View all invidious instances list here"
-          helperLink="https://api.invidious.io/"
-          defaultVal="https://yt.artemislena.eu/"
-        />
-        <SelectSetting
-          title="Trending region"
-          itemId="region"
-          list={YTMonitizedCountries}
-          help="You can pick which country's trending videos you want to have displayed"
-          defaultVal="US"
-        />
       </section>
       <section className={sectionClassName}>
         <h1 className={sectionTitleClassName}>Player</h1>
@@ -41,19 +51,24 @@ const page = () => {
           help="Will connect to Invidious to serve videos instead of making a direct connection to Youtube"
           defaultVal={true}
         />
+        <TextSetting
+          title="invidious instance to Proxy videos(if active)"
+          itemId="proxyInstance"
+          help="The server that BehtarTube connect to get videos and subtitles"
+          helper="View all invidious instances list here"
+          helperLink="https://api.invidious.io/"
+          defaultVal="https://yt.artemislena.eu/"
+        />
         <CheckboxSetting
           title="Autoplay Videos"
           itemId="autoplayVideos"
           defaultVal={false}
         />
         <SelectSetting
-          title="Default quality"
-          itemId="defaultQuality"
-          list={[
-            { name: "360p", value: "360" },
-            { name: "720p", value: "720" },
-          ]}
-          defaultVal="360"
+          title="Default video resolution"
+          itemId="defaultVideoResolution"
+          list={videoResolutionsList}
+          defaultVal="240p"
         />
       </section>
     </div>

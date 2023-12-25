@@ -1,8 +1,8 @@
-import { getVideoData, instance } from "@/components/getData";
+import { getVideoData } from "@/components/getData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
 import React from "react";
-import Player from "./Player";
+import Player from "./player/Player";
 import Image from "next/image";
 import { VideoListItem } from "@/components/cards";
 import numberCounter from "@/calc/numberCounter";
@@ -14,8 +14,6 @@ import Link from "next/link";
 const page = async ({ params }: { params: { videoId: string } }) => {
   const videoId = params.videoId;
   const data: DetailedVideoType = await getVideoData(videoId);
-
-  
 
   return (
     <div className="flex flex-col justify-center w-full gap-5 xl:flex-row">
@@ -64,7 +62,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 xl:w-96 px-2">
+      <div className="flex flex-col gap-3 px-2 xl:w-96">
         <p className="text-xl font-bold text-gray-400">Recommended videos:</p>
         {data.recommendedVideos.map((video) => (
           <VideoListItem

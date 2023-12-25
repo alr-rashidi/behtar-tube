@@ -2,6 +2,7 @@
 const videoTimeFormater = (time: number) => {
   let newTime: string = "00:00"
 
+  time = Math.floor(time)
   if (time >= 60) {
     if (time < 60*60) {
       let min = Math.floor(time/60);
