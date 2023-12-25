@@ -16,9 +16,9 @@ const TimelineInput = ({ videoRef, audioRef, currentTime }: PropsType) => {
       const videoInternalPlayer: Record<string, any> =
         videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> =
-        videoRef.current.getInternalPlayer();
-        videoInternalPlayer.currentTime = videoRef.current.getDuration();
-        audioInternalPlayer.currentTime = audioRef.current.getDuration();
+        audioRef.current.getInternalPlayer();
+        videoInternalPlayer.currentTime = value;
+        audioInternalPlayer.currentTime = value;
     }
     ChangeTimelineThumbPosition();
   };
