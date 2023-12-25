@@ -4,7 +4,7 @@ import Loading from "@/app/Loading";
 import { getLocalStorageSetting } from "@/calc/localStorageSettings";
 import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import TimelineInput from "./components/TimelineInput";
 import VolumeInput from "./components/VolumeInput";
@@ -38,8 +38,10 @@ export type VideoSelectedSettingsType = {
 const Player = ({ data }: { data: DetailedVideoType }) => {
   const videoDivRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<ReactPlayer>(null);
+  const audioRef = useRef<ReactPlayer>(null);
   const videoUnderLayerRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [videoLoading, setVideoLoading] = useState<boolean>(true);
+  const [audioLoading, setAudioLoading] = useState<boolean>(true);
   const [showControls, setShowControls] = useState<boolean>();
   const [playing, setPlaying] = useState<boolean>(false);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
@@ -52,6 +54,14 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       audioQuality: "AUDIO_QUALITY_LOW",
       caption: "",
     });
+
+  useEffect(() => {
+    if (videoRef.current?.getInternalPlayer() && audioRef.current?.getInternalPlayer()) {
+      videoRef.current.getInternalPlayer().pause();
+      audioRef.current.getInternalPlayer().pause();
+      setPlaying(false);
+    }
+  }, [videoSelectedSettings]);
 
   const proxyInstance = getLocalStorageSetting("proxyInstance") || instance;
 
@@ -124,14 +134,18 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   }, []);
 
   const handlePlayBtn = () => {
-    if (videoRef.current) {
-      const internalPlayer: Record<string, any> =
+    if (videoRef.current && audioRef.current && !isLoading) {
+      const videoInternalPlayer: Record<string, any> =
         videoRef.current.getInternalPlayer();
-      if (internalPlayer.paused) {
-        internalPlayer.play();
+      const audioInternalPlayer: Record<string, any> =
+        audioRef.current.getInternalPlayer();
+      if (videoInternalPlayer.paused) {
+        videoInternalPlayer.play();
+        audioInternalPlayer.play();
         setPlaying(true);
       } else {
-        internalPlayer.pause();
+        videoInternalPlayer.pause();
+        audioInternalPlayer.pause();
         setPlaying(false);
       }
     }
@@ -176,21 +190,28 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   useEffect(() => {
     const keyPressFunction = (e: any) => {
       const key = e.key;
-      if (videoRef.current) {
-        const internalPlayer: Record<string, any> =
+      if (videoRef.current && audioRef.current) {
+        const videoInternalPlayer: Record<string, any> =
           videoRef.current.getInternalPlayer();
+        const audioInternalPlayer: Record<string, any> =
+          audioRef.current.getInternalPlayer();
+        let localCurrentTime = videoRef.current.getCurrentTime();
         if (key == "k") {
           handlePlayBtn();
         } else if (key == "j") {
-          internalPlayer.currentTime = videoRef.current.getCurrentTime() - 5;
+          videoInternalPlayer.currentTime = localCurrentTime - 5;
+          audioInternalPlayer.currentTime = localCurrentTime - 5;
         } else if (key == "l") {
-          internalPlayer.currentTime = videoRef.current.getCurrentTime() + 5;
+          videoInternalPlayer.currentTime = localCurrentTime + 5;
+          audioInternalPlayer.currentTime = localCurrentTime + 5;
         } else if (key == "f") {
           handleFullscreenBtn();
         } else if (key == "ArrowLeft") {
-          internalPlayer.currentTime = videoRef.current.getCurrentTime() - 10;
+          videoInternalPlayer.currentTime = localCurrentTime - 10;
+          audioInternalPlayer.currentTime = localCurrentTime - 10;
         } else if (key == "ArrowRight") {
-          internalPlayer.currentTime = videoRef.current.getCurrentTime() + 10;
+          videoInternalPlayer.currentTime = localCurrentTime + 10;
+          audioInternalPlayer.currentTime = localCurrentTime + 10;
         }
       }
     };
@@ -214,7 +235,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
                     srcLang: "en",
                     label: caption.label,
                     default: true,
-                    mode: "showing",
                   },
                 ],
               },
@@ -225,16 +245,21 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         }, {})
       : {};
 
+  const isLoading = videoLoading || audioLoading;
+
+  useEffect(() => {
+    console.log(`Audio: ${audioLoading} - Video: ${videoLoading}`);
+  }, [audioLoading, videoLoading]);
+
   return (
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
       <ReactPlayer
         ref={videoRef}
-        key={JSON.stringify(videoSelectedSettings)}
+        key={JSON.stringify(videoSelectedSettings.videoResolution) + "-video"}
         width="100%"
         height="100%"
         config={videoConfig}
         style={{ aspectRatio: "16/9" }}
-        progressInterval={7}
         pip={false}
         url={data.adaptiveFormats
           .filter((item) => {
@@ -245,22 +270,53 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           .map((item) =>
             item.url.replace(/https:\/\/.+\//i, proxyInstance + "/")
           )}
-        onReady={() => console.log(videoConfig)}
         onEnded={() => setPlaying(false)}
-        onError={() => setLoading(false)}
-        onProgress={(progress) => handleVideoProgress(progress)}
-        onBuffer={() => setLoading(true)}
-        onBufferEnd={() => setLoading(false)}
+        onPlay={() =>
+          isLoading ? videoRef.current?.getInternalPlayer().pause() : null
+        }
+        onProgress={(progress) =>
+          isLoading
+            ? videoRef.current?.getInternalPlayer().pause()
+            : handleVideoProgress(progress)
+        }
+        onBuffer={() => setVideoLoading(true)}
+        onBufferEnd={() => setVideoLoading(false)}
+        onReady={() => setVideoLoading(false)}
+      />
+      <ReactPlayer
+        ref={audioRef}
+        key={JSON.stringify(videoSelectedSettings.audioQuality) + "-audio"}
+        width="0"
+        height="0"
+        url={data.adaptiveFormats
+          .filter((item) => {
+            if ("audioQuality" in item) {
+              return item.audioQuality == videoSelectedSettings.audioQuality;
+            }
+          })
+          .map((item) =>
+            item.url.replace(/https:\/\/.+\//i, proxyInstance + "/")
+          )}
+        onEnded={() => setPlaying(false)}
+        onplay={() =>
+          isLoading ? audioRef.current?.getInternalPlayer().pause() : null
+        }
+        onProgress={() =>
+          isLoading ? audioRef.current?.getInternalPlayer().pause() : null
+        }
+        onBuffer={() => setAudioLoading(true)}
+        onBufferEnd={() => setAudioLoading(false)}
+        onReady={() => setAudioLoading(false)}
       />
       <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col gap-1">
         <div
           className={`absolute w-full h-full bg-opacity-60 flex items-center justify-center transition ${
-            !playing || loading ? "bg-[#00000090]" : null
+            !playing || isLoading ? "bg-[#00000090]" : null
           }`}
           ref={videoUnderLayerRef}
           onClick={handlePlayBtn}
         >
-          {playing && loading ? (
+          {playing && isLoading ? (
             <div className={videoUnderLayerClassName}>
               <Loading />
             </div>
@@ -280,7 +336,11 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           } hover:opacity-100 transition bg-black bg-opacity-80`}
         >
           <PlayBtn handlePlayBtn={handlePlayBtn} playing={playing} />
-          <TimelineInput videoRef={videoRef} currentTime={currentTime} />
+          <TimelineInput
+            videoRef={videoRef}
+            audioRef={audioRef}
+            currentTime={currentTime}
+          />
           <div className="my-auto">{videoTimeFormater(currentTime)}</div>
           <VolumeInput videoRef={videoRef} />
           {videoSettings ? (
