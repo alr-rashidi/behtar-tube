@@ -3,24 +3,22 @@ import ReactPlayer from "react-player";
 
 type PropsType = {
   videoRef: RefObject<ReactPlayer>;
+  audioRef: RefObject<ReactPlayer>;
   currentTime: number;
 };
-const TimelineInput = ({ videoRef, currentTime }: PropsType) => {
+const TimelineInput = ({ videoRef, audioRef, currentTime }: PropsType) => {
   const timelineInputRef = useRef<HTMLInputElement>(null);
   const timelineBGRef = useRef<HTMLDivElement>(null);
   const timelineThumbRef = useRef<HTMLDivElement>(null);
 
   const handleTimeline = (value: number) => {
-    if (videoRef.current) {
-      const internalPlayer: Record<string, any> =
+    if (videoRef.current && audioRef.current) {
+      const videoInternalPlayer: Record<string, any> =
         videoRef.current.getInternalPlayer();
-      if (value >= 0 && value <= videoRef.current.getDuration()) {
-        internalPlayer.currentTime = value;
-      } else if (value < 0) {
-        internalPlayer.currentTime = 0;
-      } else {
-        internalPlayer.currentTime = videoRef.current.getDuration();
-      }
+      const audioInternalPlayer: Record<string, any> =
+        videoRef.current.getInternalPlayer();
+        videoInternalPlayer.currentTime = videoRef.current.getDuration();
+        audioInternalPlayer.currentTime = audioRef.current.getDuration();
     }
     ChangeTimelineThumbPosition();
   };
