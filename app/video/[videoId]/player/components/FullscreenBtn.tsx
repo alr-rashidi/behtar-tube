@@ -19,7 +19,7 @@ const FullscreenBtn = ({fullscreen, handleFullscreenBtn}: PropsType) => {
         <MdFullscreen className="w-8 h-8" />
       )}
     </button>
-    <div className={`${helpBubbleClassName} bottom-10 -left-3/4`}>
+    <div className={`${helpBubbleClassName} bottom-10 -left-[75%]`}>
       {fullscreen ? "Exit Fullscreen" : "Fullscreen"}
     </div>
   </div>
