@@ -10,11 +10,11 @@ const Description = ({ description }: { description: string }) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <div className={`${!showFullText && "text-trim text-lines-3"}`}>
         <div className="default-links" dangerouslySetInnerHTML={{__html: description}}></div>
       </div>
-      <button onClick={handleClick}>{!showFullText ? 'More...' : 'Less...'}</button>
+      <button onClick={handleClick} className="customButton">{!showFullText ? 'More...' : 'Less...'}</button>
     </div>
   );
 };
