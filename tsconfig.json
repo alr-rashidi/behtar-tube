@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.tsx", ".next/types/**/*.ts", "calc/dateCounter.tsx", "calc/numberCounter.tsx", "calc/textDecoder.ts", "calc/videoTimeFormater.ts"],
+  "include": ["next-env.d.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

@@ -11,7 +11,7 @@ import {
   Tabs,
   Videos,
 } from "./components/";
-import numberCounter from "@/calc/numberCounter";
+import numberCounter from "@/utils/numberCounter";
 
 const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   const channelId = params.slug;

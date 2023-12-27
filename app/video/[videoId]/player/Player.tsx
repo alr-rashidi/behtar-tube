@@ -1,8 +1,8 @@
 "use client";
 
 import Loading from "@/app/Loading";
-import { getLocalStorageSetting } from "@/calc/localStorageSettings";
-import videoTimeFormater from "@/calc/videoTimeFormater";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
+import videoTimeFormater from "@/utils/videoTimeFormater";
 import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
 import { useEffect, useRef, useState } from "react";

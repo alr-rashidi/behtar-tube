@@ -3,9 +3,9 @@
 import { searchSuggestionsType } from "@/types";
 import React, { useEffect, useRef, useState } from "react";
 import { getSearchSuggestionsData } from "@/components/getData";
-import localTextDecoder from "@/calc/textDecoder";
+import localTextDecoder from "@/utils/textDecoder";
 import { useRouter } from "next/navigation";
-import { getLocalStorageSetting } from "@/calc/localStorageSettings";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 
 type PropsType = {
   inputText: string;
@@ -50,7 +50,7 @@ const SearchSuggestions = ({ inputText }: PropsType) => {
   };
 
   return (
-    <ul className='absolute peer-focus:flex active:flex flex-col hidden text-right transition left-0 gap-2 bg-white dark:bg-black shadow backdrop-blur bg-opacity-60 dark:bg-opacity-60 w-full rounded-lg p-2'>
+    <ul className='absolute left-0 flex-col hidden w-full gap-2 p-2 text-right transition bg-white rounded-lg shadow peer-focus:flex active:flex dark:bg-black backdrop-blur bg-opacity-60 dark:bg-opacity-60'>
       {!loading ? (
         data &&
         data.suggestions.map((item) => (

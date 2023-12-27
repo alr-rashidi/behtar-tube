@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchSuggestions from "./SearchSuggestions";
-import { getLocalStorageSetting } from "@/calc/localStorageSettings";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 
 const SearchBar = () => {
   const router = useRouter();

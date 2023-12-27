@@ -1,7 +1,7 @@
 import { CommunityPostAttachmentType, ImageObjectType } from "@/types";
 import { PlaylistListItem, VideoListItem } from "..";
 import Image from "next/image";
-import numberCounter from "../../../calc/numberCounter";
+import numberCounter from "../../../utils/numberCounter";
 
 const Attachment = ({
   attachment,

@@ -7,9 +7,9 @@ import {
   MdOutlinePushPin,
   MdOutlineThumbUp,
 } from "react-icons/md";
-import dateCounter from "../../calc/dateCounter";
+import dateCounter from "../../utils/dateCounter";
 import Link from "next/link";
-import numberCounter from "../../calc/numberCounter";
+import numberCounter from "../../utils/numberCounter";
 
 const CommentCard = ({ comment }: { comment: CommentType }) => {
   return (

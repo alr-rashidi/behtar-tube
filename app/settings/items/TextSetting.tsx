@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   getLocalStorageSetting,
   setLocalStorageSetting,
-} from "@/calc/localStorageSettings";
+} from "@/utils/localStorageSettings";
 
 type PropsType = {
   title: string;
