@@ -4,12 +4,12 @@ import { MdPause, MdPlayArrow } from "react-icons/md";
 
 type PropsType = {
   playing: boolean;
-  handlePlayBtn: MouseEventHandler<HTMLButtonElement>;
+  handlePlay: MouseEventHandler<HTMLButtonElement>;
 };
-const PlayBtn = ({ handlePlayBtn, playing }: PropsType) => {
+const PlayBtn = ({ handlePlay, playing }: PropsType) => {
   return (
     <div className="relative">
-      <button onClick={handlePlayBtn} className="h-full peer">
+      <button onClick={handlePlay} className="h-full peer">
         {playing ? (
           <MdPause className="w-8 h-8" />
         ) : (

@@ -135,7 +135,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     ]);
   }, [listOfQualities, listOfAudios, listOfCaptions]);
 
-  const handlePlayBtn = () => {
+  const handlePlay = () => {
     if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
@@ -195,7 +195,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
         let localCurrentTime = videoRef.current.getCurrentTime();
         if (key == "k") {
-          handlePlayBtn();
+          handlePlay();
         } else if (key == "j") {
           videoInternalPlayer.currentTime = localCurrentTime - 5;
           audioInternalPlayer.currentTime = localCurrentTime - 5;
@@ -298,7 +298,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             !playing || isLoading ? "bg-[#00000090]" : null
           }`}
           ref={videoUnderLayerRef}
-          onClick={handlePlayBtn}
+          onClick={handlePlay}
         >
           {playing && isLoading
             ? (
@@ -321,7 +321,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             showControls && playing ? "opacity-100" : "opacity-0"
           } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-black bg-opacity-80`}
         >
-          <PlayBtn handlePlayBtn={handlePlayBtn} playing={playing} />
+          <PlayBtn handlePlay={handlePlay} playing={playing} />
           <TimelineInput
             videoRef={videoRef}
             audioRef={audioRef}
