@@ -1,10 +1,10 @@
 "use client";
 
 import Loading from "@/app/Loading";
-import { getLocalStorageSetting } from "@/utils/localStorageSettings";
-import videoTimeFormater from "@/utils/videoTimeFormater";
 import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
+import videoTimeFormater from "@/utils/videoTimeFormater";
 import { useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import ReactPlayer, { Config } from "react-player";
@@ -56,13 +56,16 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const isLoading = videoLoading || audioLoading;
 
   useEffect(() => {
-    if (
-      videoRef.current?.getInternalPlayer()
-      && audioRef.current?.getInternalPlayer()
-    ) {
-      videoRef.current.getInternalPlayer().pause();
-      audioRef.current.getInternalPlayer().pause();
-      setPlaying(false);
+    if (videoRef.current && audioRef.current) {
+      const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+      const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
+      if (videoInternalPlayer?.paused) {
+        videoInternalPlayer.pause();
+        audioInternalPlayer.pause();
+        setPlaying(false);
+        videoInternalPlayer.currentTime = 0;
+        audioInternalPlayer.currentTime = 0;
+      }
     }
   }, [videoSelectedSettings]);
 
@@ -139,7 +142,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
-      if (videoInternalPlayer.paused) {
+      if (videoInternalPlayer.paused && !isLoading) {
         videoInternalPlayer.play();
         audioInternalPlayer.play();
         setPlaying(true);
@@ -250,7 +253,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
       <ReactPlayer
         ref={videoRef}
-        key={JSON.stringify(videoSelectedSettings.videoResolution) + "-video"}
+        key={JSON.stringify(videoSelectedSettings) + "-video"}
         width="100%"
         height="100%"
         config={videoConfig}
@@ -275,7 +278,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       />
       <ReactPlayer
         ref={audioRef}
-        key={JSON.stringify(videoSelectedSettings.audioQuality) + "-audio"}
+        key={JSON.stringify(videoSelectedSettings) + "-audio"}
         width="0"
         height="0"
         url={data.adaptiveFormats
