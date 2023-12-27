@@ -4,16 +4,16 @@ import { MdVolumeMute, MdVolumeUp } from "react-icons/md";
 import ReactPlayer from "react-player";
 
 type PropsType = {
-  videoRef: RefObject<ReactPlayer>;
+  audioRef: RefObject<ReactPlayer>;
 };
-const VolumeInput = ({ videoRef }: PropsType) => {
+const VolumeInput = ({ audioRef }: PropsType) => {
   const [muted, setMuted] = useState<boolean>(false);
   const volumeInputRef = useRef<HTMLInputElement>(null);
 
   const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    if (videoRef.current) {
-      const internalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+    if (audioRef.current) {
+      const internalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
       if (value == 0) {
         setMuted(true);
       } else {
@@ -24,8 +24,8 @@ const VolumeInput = ({ videoRef }: PropsType) => {
   };
 
   const handleMute = () => {
-    if (videoRef.current && volumeInputRef.current) {
-      const internalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+    if (audioRef.current && volumeInputRef.current) {
+      const internalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
       if (muted) {
         internalPlayer.volume = parseInt(volumeInputRef.current.value) / 100;
         setMuted(false);

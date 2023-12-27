@@ -331,7 +331,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             currentTime={currentTime}
           />
           <div className="my-auto">{videoTimeFormater(currentTime)}</div>
-          <VolumeInput videoRef={videoRef} />
+          <VolumeInput audioRef={audioRef} />
           {videoSettings
             ? (
               <SettingsBtn
