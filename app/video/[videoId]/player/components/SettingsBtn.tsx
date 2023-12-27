@@ -29,14 +29,14 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
         Settings
       </div>
       <div
-        className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 max-h-96 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded-t-xl ${
+        className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 overflow-y-scroll max-h-60 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded-t-xl ${
           showSettings
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className={` ${selectedList == "" ? "block" : "hidden"} flex flex-col flex-shrink-0 w-40 px-2`}
+          className={` ${selectedList == "" ? "block" : "hidden"} flex flex-col gap-1 flex-shrink-0 w-40 px-2`}
         >
           {settings.map((setting) => (
             <button
@@ -47,7 +47,6 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
             </button>
           ))}
         </div>
-
         {settings.map((setting) => (
           <div
             key={setting.id}
@@ -67,7 +66,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
                   return (
                     <button
                       key={item.value}
-                      className="w-full py-1 text-sm cursor-pointer"
+                      className="w-full py-2 text-sm cursor-pointer"
                       onClick={() => handleItemClick(setting.id, item.value)}
                     >
                       {item.label}
