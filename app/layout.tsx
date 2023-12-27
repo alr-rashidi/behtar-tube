@@ -33,7 +33,7 @@ export default function RootLayout({
           <SidebarToggleProvider>
             <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">
               <Header />
-              <div className="flex flex-col min-h-screen pt-10 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
+              <div className="flex flex-col min-h-screen pt-8 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
                 <Sidebar />
                 <div className="container pt-4 mx-auto cursor-default lg:px-6">
                   {children}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   getLocalStorageSetting,
   setLocalStorageSetting,
-} from "@/calc/localStorageSettings";
+} from "@/utils/localStorageSettings";
 import HelpBubble from "@/components/HelpBubble";
 
 type PropsType = {

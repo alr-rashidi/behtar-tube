@@ -1,25 +1,25 @@
 "use client";
 
 import Loading from "@/app/Loading";
-import { getLocalStorageSetting } from "@/calc/localStorageSettings";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
+import videoTimeFormater from "@/utils/videoTimeFormater";
 import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
-import TimelineInput from "./components/TimelineInput";
-import VolumeInput from "./components/VolumeInput";
+import ReactPlayer, { Config } from "react-player";
+import { OnProgressProps } from "react-player/base";
 import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
-import videoTimeFormater from "@/calc/videoTimeFormater";
 import SettingsBtn from "./components/SettingsBtn";
-import ReactPlayer, { Config, ReactPlayerProps } from "react-player";
-import { OnProgressProps } from "react-player/base";
+import TimelineInput from "./components/TimelineInput";
+import VolumeInput from "./components/VolumeInput";
 
 type settingItemType =
   | {
-      label: string;
-      value: string;
-    }
+    label: string;
+    value: string;
+  }
   | null
   | undefined;
 
@@ -47,16 +47,19 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [videoSettings, setVideoSettings] = useState<settingType[]>();
-  const [videoSelectedSettings, setVideoSelectedSettings] =
-    useState<VideoSelectedSettingsType>({
-      videoResolution:
-        getLocalStorageSetting("defaultVideoResolution") || "240p",
-      audioQuality: "AUDIO_QUALITY_LOW",
-      caption: "",
-    });
+  const [videoSelectedSettings, setVideoSelectedSettings] = useState<VideoSelectedSettingsType>({
+    videoResolution: getLocalStorageSetting("defaultVideoResolution") || "240p",
+    audioQuality: "AUDIO_QUALITY_LOW",
+    caption: "",
+  });
+
+  const isLoading = videoLoading || audioLoading;
 
   useEffect(() => {
-    if (videoRef.current?.getInternalPlayer() && audioRef.current?.getInternalPlayer()) {
+    if (
+      videoRef.current?.getInternalPlayer()
+      && audioRef.current?.getInternalPlayer()
+    ) {
       videoRef.current.getInternalPlayer().pause();
       audioRef.current.getInternalPlayer().pause();
       setPlaying(false);
@@ -65,8 +68,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   const proxyInstance = getLocalStorageSetting("proxyInstance") || instance;
 
-  const videoUnderLayerClassName =
-    "w-full h-full flex items-center justify-center";
+  const videoUnderLayerClassName = "w-full h-full flex items-center justify-center";
 
   var filterSettingItems = (obj: settingItemType[]) => {
     const uniqueItems = Array.from(new Set(obj.map((item) => item?.value)));
@@ -92,7 +94,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       } else {
         return null;
       }
-    }
+    },
   );
 
   const listOfAudios: settingItemType[] = data.adaptiveFormats.map((item) => {
@@ -131,14 +133,12 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       },
       { name: "Caption", id: "caption", items: listOfCaptions },
     ]);
-  }, []);
+  }, [listOfQualities, listOfAudios, listOfCaptions]);
 
   const handlePlayBtn = () => {
-    if (videoRef.current && audioRef.current && !isLoading) {
-      const videoInternalPlayer: Record<string, any> =
-        videoRef.current.getInternalPlayer();
-      const audioInternalPlayer: Record<string, any> =
-        audioRef.current.getInternalPlayer();
+    if (videoRef.current && audioRef.current) {
+      const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+      const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
       if (videoInternalPlayer.paused) {
         videoInternalPlayer.play();
         audioInternalPlayer.play();
@@ -178,12 +178,12 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     const videoUnderLayerRefCurrent = videoUnderLayerRef.current;
     videoUnderLayerRefCurrent?.addEventListener(
       "pointermove",
-      handlePointerOverVideo
+      handlePointerOverVideo,
     );
     return () =>
       videoUnderLayerRefCurrent?.removeEventListener(
         "pointermove",
-        handlePointerOverVideo
+        handlePointerOverVideo,
       );
   }, []);
   // Handle keyboard shortcuts
@@ -191,10 +191,8 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     const keyPressFunction = (e: any) => {
       const key = e.key;
       if (videoRef.current && audioRef.current) {
-        const videoInternalPlayer: Record<string, any> =
-          videoRef.current.getInternalPlayer();
-        const audioInternalPlayer: Record<string, any> =
-          audioRef.current.getInternalPlayer();
+        const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+        const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
         let localCurrentTime = videoRef.current.getCurrentTime();
         if (key == "k") {
           handlePlayBtn();
@@ -219,33 +217,30 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     return () => window.removeEventListener("keydown", keyPressFunction);
   }, []);
 
-  const videoConfig: Config =
-    videoSelectedSettings.caption !== ""
-      ? data.captions.reduce((config, caption) => {
-          if (caption.label === videoSelectedSettings.caption) {
-            return {
-              file: {
-                attributes: {
-                  crossOrigin: "anonymous",
-                },
-                tracks: [
-                  {
-                    kind: "subtitles",
-                    src: proxyInstance + caption.url,
-                    srcLang: "en",
-                    label: caption.label,
-                    default: true,
-                  },
-                ],
+  const videoConfig: Config = videoSelectedSettings.caption !== ""
+    ? data.captions.reduce((config, caption) => {
+      if (caption.label === videoSelectedSettings.caption) {
+        return {
+          file: {
+            attributes: {
+              crossOrigin: "anonymous",
+            },
+            tracks: [
+              {
+                kind: "subtitles",
+                src: proxyInstance + caption.url,
+                srcLang: "en",
+                label: caption.label,
+                default: true,
               },
-            };
-          } else {
-            return config;
-          }
-        }, {})
-      : {};
-
-  const isLoading = videoLoading || audioLoading;
+            ],
+          },
+        };
+      } else {
+        return config;
+      }
+    }, {})
+    : {};
 
   useEffect(() => {
     console.log(`Audio: ${audioLoading} - Video: ${videoLoading}`);
@@ -267,18 +262,13 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
               return item.resolution == videoSelectedSettings.videoResolution;
             }
           })
-          .map((item) =>
-            item.url.replace(/https:\/\/.+\//i, proxyInstance + "/")
-          )}
+          .map((item) => item.url.replace(/https:\/\/.+\//i, proxyInstance + "/"))}
         onEnded={() => setPlaying(false)}
-        onPlay={() =>
-          isLoading ? videoRef.current?.getInternalPlayer().pause() : null
-        }
+        onPlay={() => isLoading ? videoRef.current?.getInternalPlayer().pause() : null}
         onProgress={(progress) =>
           isLoading
             ? videoRef.current?.getInternalPlayer().pause()
-            : handleVideoProgress(progress)
-        }
+            : handleVideoProgress(progress)}
         onBuffer={() => setVideoLoading(true)}
         onBufferEnd={() => setVideoLoading(false)}
         onReady={() => setVideoLoading(false)}
@@ -294,16 +284,10 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
               return item.audioQuality == videoSelectedSettings.audioQuality;
             }
           })
-          .map((item) =>
-            item.url.replace(/https:\/\/.+\//i, proxyInstance + "/")
-          )}
+          .map((item) => item.url.replace(/https:\/\/.+\//i, proxyInstance + "/"))}
         onEnded={() => setPlaying(false)}
-        onplay={() =>
-          isLoading ? audioRef.current?.getInternalPlayer().pause() : null
-        }
-        onProgress={() =>
-          isLoading ? audioRef.current?.getInternalPlayer().pause() : null
-        }
+        onplay={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
+        onProgress={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
         onBuffer={() => setAudioLoading(true)}
         onBufferEnd={() => setAudioLoading(false)}
         onReady={() => setAudioLoading(false)}
@@ -316,24 +300,26 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           ref={videoUnderLayerRef}
           onClick={handlePlayBtn}
         >
-          {playing && isLoading ? (
-            <div className={videoUnderLayerClassName}>
-              <Loading />
-            </div>
-          ) : null}
-          {!playing ? (
-            <div className={`${videoUnderLayerClassName} pointer-events-none`}>
-              <MdPlayArrow className="w-12 h-12 p-2 bg-black rounded-full bg-opacity-20" />
-            </div>
-          ) : null}
+          {playing && isLoading
+            ? (
+              <div className={videoUnderLayerClassName}>
+                <Loading />
+              </div>
+            )
+            : null}
+          {!playing
+            ? (
+              <div className={`${videoUnderLayerClassName} pointer-events-none`}>
+                <MdPlayArrow className="w-12 h-12 p-2 bg-black rounded-full bg-opacity-20" />
+              </div>
+            )
+            : null}
         </div>
         <div
           aria-label="BottomPanel"
           className={`absolute bottom-0 left-0 right-0 flex flex-row h-10 gap-3 px-2 ${
             showControls && playing ? "opacity-100" : "opacity-0"
-          } ${
-            !playing ? "opacity-100" : null
-          } hover:opacity-100 transition bg-black bg-opacity-80`}
+          } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-black bg-opacity-80`}
         >
           <PlayBtn handlePlayBtn={handlePlayBtn} playing={playing} />
           <TimelineInput
@@ -343,12 +329,14 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           />
           <div className="my-auto">{videoTimeFormater(currentTime)}</div>
           <VolumeInput videoRef={videoRef} />
-          {videoSettings ? (
-            <SettingsBtn
-              settings={videoSettings}
-              setVideoSelectedSettings={setVideoSelectedSettings}
-            />
-          ) : null}
+          {videoSettings
+            ? (
+              <SettingsBtn
+                settings={videoSettings}
+                setVideoSelectedSettings={setVideoSelectedSettings}
+              />
+            )
+            : null}
           <FullscreenBtn
             fullscreen={fullscreen}
             handleFullscreenBtn={handleFullscreenBtn}

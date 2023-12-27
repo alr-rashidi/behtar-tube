@@ -1,9 +1,9 @@
 import React from 'react'
 import { SearchedChannelType } from '@/types'
 import Image from 'next/image'
-import numberCounter from '../../calc/numberCounter'
+import numberCounter from '../../utils/numberCounter'
 import Link from 'next/link'
-import ProfilePictureHttpsSolver from '@/calc/ProfilePictureHttpsSolver'
+import ProfilePictureHttpsSolver from '@/utils/ProfilePictureHttpsSolver'
 
 const ChannelListItem = ({channel}: {channel: SearchedChannelType}) => {
 

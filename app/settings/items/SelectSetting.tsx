@@ -5,7 +5,7 @@ import HelpBubble from "@/components/HelpBubble";
 import {
   getLocalStorageSetting,
   setLocalStorageSetting,
-} from "@/calc/localStorageSettings";
+} from "@/utils/localStorageSettings";
 
 export type SelectSettingListType = { name: string; value: string };
 

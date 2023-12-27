@@ -1,11 +1,11 @@
-import numberCounter from "@/calc/numberCounter";
+import numberCounter from "@/utils/numberCounter";
 import { VideoListItem } from "@/components/cards";
 import { getPlaylistData } from "@/components/getData";
 import { PlaylistType, VideoType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import playlistValidVideos from "../../../calc/playlistValidVideos";
+import playlistValidVideos from "@/utils/playlistValidVideos";
 import ErrorCard from "@/components/cards/ErrorCard";
 
 const page = async ({ params }: any) => {
