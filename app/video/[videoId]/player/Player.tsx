@@ -4,7 +4,7 @@ import Loading from "@/app/Loading";
 import { getLocalStorageSetting } from "@/calc/localStorageSettings";
 import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import TimelineInput from "./components/TimelineInput";
 import VolumeInput from "./components/VolumeInput";
@@ -55,8 +55,13 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       caption: "",
     });
 
+  const isLoading = videoLoading || audioLoading;
+
   useEffect(() => {
-    if (videoRef.current?.getInternalPlayer() && audioRef.current?.getInternalPlayer()) {
+    if (
+      videoRef.current?.getInternalPlayer() &&
+      audioRef.current?.getInternalPlayer()
+    ) {
       videoRef.current.getInternalPlayer().pause();
       audioRef.current.getInternalPlayer().pause();
       setPlaying(false);
@@ -131,10 +136,10 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       },
       { name: "Caption", id: "caption", items: listOfCaptions },
     ]);
-  }, []);
+  }, [listOfQualities, listOfAudios, listOfCaptions]);
 
   const handlePlayBtn = () => {
-    if (videoRef.current && audioRef.current && !isLoading) {
+    if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> =
         videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> =
@@ -149,7 +154,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         setPlaying(false);
       }
     }
-  };
+  }
 
   const handleFullscreenBtn = () => {
     if (document.fullscreenElement == videoDivRef.current) {
@@ -244,8 +249,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           }
         }, {})
       : {};
-
-  const isLoading = videoLoading || audioLoading;
 
   useEffect(() => {
     console.log(`Audio: ${audioLoading} - Video: ${videoLoading}`);
