@@ -9,7 +9,7 @@ import {
   MdOutlineLightMode,
   MdSearch,
 } from "react-icons/md";
-import { themeContext } from "../../contexts/themeContext";
+import { themeContext } from "@/contexts/themeContext";
 import Logo from "./Logo";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 
