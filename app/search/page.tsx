@@ -4,7 +4,7 @@ import { searchDataType } from "@/types";
 import { getSearchData } from "@/api/getData";
 import InfiniteScroll from "./InfiniteScroll";
 import MapSearchData from "./MapSearchData";
-import ErrorCard from "@/components/cards/ErrorCard";
+import { ErrorCard } from "@/components/cards/";
 
 export function generateMetadata({
   searchParams,

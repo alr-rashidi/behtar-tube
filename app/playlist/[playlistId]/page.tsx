@@ -1,12 +1,12 @@
 import numberCounter from "@/utils/numberCounter";
 import { VideoListItem } from "@/components/listItems";
+import { ErrorCard } from "@/components/cards/";
 import { getPlaylistData } from "@/api/getData";
 import { PlaylistType, VideoType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import playlistValidVideos from "@/utils/playlistValidVideos";
-import ErrorCard from "@/components/cards/ErrorCard";
 
 const page = async ({ params }: any) => {
   const playlistId = params.playlistId;
