@@ -1,5 +1,3 @@
-import { VideoType } from "../types/index";
-
 type PropsType = {
   title: string;
   [key: string]: any
