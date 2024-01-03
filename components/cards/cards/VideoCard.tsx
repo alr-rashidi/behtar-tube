@@ -1,10 +1,10 @@
 import { VideoType } from "@/types";
 import Image from "next/image";
 import React from "react";
-import videoTimeFormater from "../../utils/videoTimeFormater";
-import numberCounter from "../../utils/numberCounter";
+import videoTimeFormater from "@/utils/videoTimeFormater";
+import numberCounter from "@/utils/numberCounter";
 import Link from "next/link";
-import dateCounter from "../../utils/dateCounter";
+import dateCounter from "@/utils/dateCounter";
 
 type ParamsType = { video: VideoType; type?: "short" };
 
