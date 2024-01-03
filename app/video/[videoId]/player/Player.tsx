@@ -1,7 +1,7 @@
 "use client";
 
 import Loading from "@/app/Loading";
-import { instance } from "@/components/getData";
+import { instance } from "@/api/getData";
 import { DetailedVideoType } from "@/types";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 import videoTimeFormater from "@/utils/videoTimeFormater";

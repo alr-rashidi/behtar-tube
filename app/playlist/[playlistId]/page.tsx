@@ -1,6 +1,6 @@
 import numberCounter from "@/utils/numberCounter";
-import { VideoListItem } from "@/components/cards";
-import { getPlaylistData } from "@/components/getData";
+import { VideoListItem } from "@/components/listItems";
+import { getPlaylistData } from "@/api/getData";
 import { PlaylistType, VideoType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";

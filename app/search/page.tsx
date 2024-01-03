@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { searchDataType } from "@/types";
-import { getSearchData } from "@/components/getData";
+import { getSearchData } from "@/api/getData";
 import InfiniteScroll from "./InfiniteScroll";
 import MapSearchData from "./MapSearchData";
 import ErrorCard from "@/components/cards/ErrorCard";

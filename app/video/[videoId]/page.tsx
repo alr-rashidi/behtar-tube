@@ -1,10 +1,10 @@
-import { getVideoData } from "@/components/getData";
+import { getVideoData } from "@/api/getData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
 import React from "react";
 import Player from "./player/Player";
 import Image from "next/image";
-import { VideoListItem } from "@/components/cards";
+import { VideoListItem } from "@/components/listItems";
 import numberCounter from "@/utils/numberCounter";
 import dateCounter from "@/utils/dateCounter";
 import Description from "./components/Description";
