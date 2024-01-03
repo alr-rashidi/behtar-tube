@@ -6,13 +6,10 @@ import {
   MdVideogameAsset,
   MdMusicNote,
   MdMovie,
-  MdClose,
   MdSettings,
 } from "react-icons/md";
-import { FaYoutube } from "react-icons/fa";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IconType } from "react-icons";
-import Link from "next/link";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import Logo from "./header/Logo";
 

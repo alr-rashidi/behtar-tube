@@ -10,7 +10,6 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { themeContext } from "../../contexts/themeContext";
-import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 

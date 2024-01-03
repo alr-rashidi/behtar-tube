@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { getSearchSuggestionsData } from "@/components/getData";
 import localTextDecoder from "@/utils/textDecoder";
 import { useRouter } from "next/navigation";
-import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 
 type PropsType = {
   inputText: string;
