@@ -1,4 +1,4 @@
-import { CommunityPostCard } from "@/components/cards";
+import { CommunityPostCard } from "@/components/cards/";
 import { getChannelCommunity } from "@/api/getData";
 import { CommunityPostType } from "@/types";
 import React from "react";

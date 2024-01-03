@@ -1,4 +1,4 @@
-import PlaylistCard from "@/components/cards/PlaylistCard";
+import { PlaylistCard } from "@/components/cards/";
 import { getChannelPlaylists } from "@/api/getData";
 import { ChannelPlaylistsType } from "@/types";
 import React from "react";

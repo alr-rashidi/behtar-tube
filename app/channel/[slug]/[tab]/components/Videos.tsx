@@ -1,4 +1,4 @@
-import VideoCard from "@/components/cards/VideoCard";
+import { VideoCard } from "@/components/cards/";
 import { getChannelVideos } from "@/api/getData";
 import { ChannelVideosType } from "@/types";
 import React from "react";
