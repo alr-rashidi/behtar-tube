@@ -1,4 +1,4 @@
-import { getChannelInfo } from "@/api/getData";
+import { getChannelInfo } from "@/api/getYTData";
 import { ChannelType } from "@/types";
 import numberCounter from "@/utils/numberCounter";
 import Image from "next/image";

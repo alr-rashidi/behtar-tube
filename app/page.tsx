@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Loading from "./Loading";
 import { TrendVideoCategories, VideoType } from "@/types";
-import { getTrendVideos } from "@/api/getData";
+import { getTrendVideos } from "@/api/getYTData";
 import { VideoCard } from "@/components/cards/";
 
 type PropsType = {

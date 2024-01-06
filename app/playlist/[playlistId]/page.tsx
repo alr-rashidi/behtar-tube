@@ -1,7 +1,7 @@
 import numberCounter from "@/utils/numberCounter";
 import { VideoListItem } from "@/components/listItems";
 import { ErrorCard } from "@/components/cards/";
-import { getPlaylistData } from "@/api/getData";
+import { getPlaylistData } from "@/api/getYTData";
 import { PlaylistType, VideoType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";

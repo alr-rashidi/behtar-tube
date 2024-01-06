@@ -1,4 +1,4 @@
-import { getVideoData } from "@/api/getData";
+import { getVideoData } from "@/api/getYTData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
 import React from "react";

@@ -2,7 +2,7 @@
 
 import { searchSuggestionsType } from "@/types";
 import React, { useEffect, useRef, useState } from "react";
-import { getSearchSuggestionsData } from "@/api/getData";
+import { getSearchSuggestionsData } from "@/api/getYTData";
 import localTextDecoder from "@/utils/textDecoder";
 import { useRouter } from "next/navigation";
 

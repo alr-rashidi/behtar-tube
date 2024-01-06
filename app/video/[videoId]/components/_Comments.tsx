@@ -1,7 +1,7 @@
 "use client";
 
 import CommentCard from "@/components/cards/CommentCard";
-import { getCommentsData } from "@/api/getData";
+import { getCommentsData } from "@/api/getYTData";
 import numberCounter from "@/utils/numberCounter";
 import { CommentsType, DetailedVideoType } from "@/types";
 import React, { useEffect, useState } from "react";
