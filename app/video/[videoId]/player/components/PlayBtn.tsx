@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from "@/components/HelpBubble";
+import { helpBubbleClassName } from "@/components/ui/HelpBubble";
 import React, { MouseEventHandler } from "react";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 

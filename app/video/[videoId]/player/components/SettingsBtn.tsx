@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from "@/components/HelpBubble";
+import { helpBubbleClassName } from "@/components/ui/HelpBubble";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { MdArrowBack, MdSettings } from "react-icons/md";
 import { settingType, VideoSelectedSettingsType } from "../Player";

@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from "@/components/HelpBubble";
+import { helpBubbleClassName } from "@/components/ui/HelpBubble";
 import React, { ChangeEvent, RefObject, useRef, useState } from "react";
 import { MdVolumeMute, MdVolumeUp } from "react-icons/md";
 import ReactPlayer from "react-player";

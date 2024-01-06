@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from '@/components/HelpBubble';
+import { helpBubbleClassName } from '@/components/ui/HelpBubble';
 import React from 'react'
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
 
