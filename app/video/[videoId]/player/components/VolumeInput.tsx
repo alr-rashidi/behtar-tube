@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from "@/components/ui/HelpBubble";
+import DivWithHelpBubble, { helpBubbleClassName } from "@/components/ui/HelpBubble";
 import React, { ChangeEvent, RefObject, useRef, useState } from "react";
 import { MdVolumeMute, MdVolumeUp } from "react-icons/md";
 import ReactPlayer from "react-player";
@@ -38,14 +38,11 @@ const VolumeInput = ({ audioRef }: PropsType) => {
 
   return (
     <div className="flex items-center group">
-      <div className="relative">
-        <button onClick={handleMute} className="flex items-center">
+      <DivWithHelpBubble text={muted ? "Unmute" : "Mute"} bubbleClassName="bottom-10">
+        <button onClick={handleMute} className="flex items-center peer">
           {muted ? <MdVolumeMute className="w-6 h-6" /> : <MdVolumeUp className="w-6 h-6" />}
         </button>
-        <div className={`${helpBubbleClassName} bottom-10`}>
-          {muted ? "Unmute" : "Mute"}
-        </div>
-      </div>
+      </DivWithHelpBubble>
       <input
         type="range"
         step={5}

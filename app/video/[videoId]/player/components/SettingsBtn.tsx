@@ -1,4 +1,4 @@
-import { helpBubbleClassName } from "@/components/ui/HelpBubble";
+import DivWithHelpBubble from "@/components/ui/HelpBubble";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { MdArrowBack, MdSettings } from "react-icons/md";
 import { settingType, VideoSelectedSettingsType } from "../Player";
@@ -21,13 +21,8 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
   };
 
   return (
-    <div className="relative">
-      <MdSettings className="w-8 h-full px-1 cursor-pointer" onClick={handleSettingsClick} />
-      <div
-        className={`${!showSettings ? helpBubbleClassName : "hidden"} bottom-10`}
-      >
-        Settings
-      </div>
+    <DivWithHelpBubble text="settings" bubbleClassName="bottom-10">
+      <MdSettings className="w-8 h-full px-1 cursor-pointer peer" onClick={handleSettingsClick} />
       <div
         className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 overflow-y-scroll max-h-60 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded-t-xl ${
           showSettings
@@ -78,7 +73,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
           </div>
         ))}
       </div>
-    </div>
+    </DivWithHelpBubble>
   );
 };
 
