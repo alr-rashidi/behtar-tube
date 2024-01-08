@@ -47,7 +47,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
                 {/* <button className="subButton">Subscribe</button> */}
               </div>
             </div>
-            <div>{/* <button className="customButton"></button> */}</div>
+            <div>{/* <Button>Text</Button> */}</div>
           </div>
           <div className="flex flex-col gap-2 dark:bg-[#ffffff20] bg-[#00000020] rounded-xl p-3">
             <div className="flex flex-row">

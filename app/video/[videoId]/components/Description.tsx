@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/ui/Button";
 import React, { useState } from "react";
 
 const Description = ({ description }: { description: string }) => {
@@ -15,7 +16,7 @@ const Description = ({ description }: { description: string }) => {
         <div className="default-links" dangerouslySetInnerHTML={{ __html: description }}></div>
       </div>
       {description.length <= 300
-        ? <button onClick={handleClick} className="customButton">{!showFullText ? "More..." : "Less..."}</button>
+        ? <Button onClick={handleClick}>{!showFullText ? "More..." : "Less..."}</Button>
         : null}
     </div>
   );

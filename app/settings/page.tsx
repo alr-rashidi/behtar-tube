@@ -45,7 +45,7 @@ const page = () => {
         />
       </section>
       <section className={sectionClassName}>
-        <h1 className={sectionTitleClassName}>Player<Button className="mx-2">Text</Button></h1>
+        <h1 className={sectionTitleClassName}>Player</h1>
         <CheckboxSetting
           title="Proxy Videos Through Invidious"
           itemId="proxyVideos"

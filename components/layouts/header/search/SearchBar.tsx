@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchSuggestions from "./SearchSuggestions";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
+import Button from "@/components/ui/Button";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -48,12 +49,12 @@ const SearchBar = () => {
 
   return (
     <div className="flex flex-row h-full lg:ltr:ml-20 lg:rtl:mr-20" dir="ltr">
-      <button
+      <Button
         className="flex items-center justify-center w-16 transition bg-gray-300 border border-gray-400 rounded-l-full dark:bg-gray-700 dark:border-gray-600"
         onClick={handleSearch}
       >
         <MdSearch className="w-5 h-5" />
-      </button>
+      </Button>
       <div className="relative">
         <input
           className={`h-full pl-10 pr-4 ${showSuggestion ? 'peer' : null} text-right transition bg-gray-100 border border-gray-300 rounded-r-full dark:border-gray-600 focus:border-gray-400 dark:bg-stone-900 w-60 lg:w-96`}
@@ -66,12 +67,12 @@ const SearchBar = () => {
         {inputText != "" && (
           <>
             <SearchSuggestions inputText={inputText} />
-            <button
+            <Button
               className="absolute top-0 left-0 w-10 h-10 p-2 opacity-80 hover:opacity-100"
               onClick={handleReset}
             >
               <MdClose className="w-full h-full" />
-            </button>
+            </Button>
           </>
         )}
       </div>
