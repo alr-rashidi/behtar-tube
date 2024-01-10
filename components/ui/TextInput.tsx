@@ -4,7 +4,7 @@ type PropsType = {
   className?: string;
   [key: string]: any;
 };
-const TextInput = ({ type, className: classNameProp, children, ...attributes }: PropsType) => {
+const TextInput = ({ className: classNameProp, children, ...attributes }: PropsType) => {
   return (
     <input
       type="text"
