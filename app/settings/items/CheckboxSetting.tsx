@@ -49,7 +49,7 @@ const CheckboxSetting = ({ title, itemId, help, defaultVal }: PropsType) => {
           </svg>
         </span>
       </div>
-      <label className="flex flex-row items-center gap-2" htmlFor={`checkbox-${itemId}`}>
+      <label className="flex flex-row items-center gap-2">
         {title}
         {help ? <HelpBubble text={help} /> : null}
       </label>
