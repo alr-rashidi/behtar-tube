@@ -7,6 +7,7 @@ import {
   getLocalStorageSetting,
   setLocalStorageSetting,
 } from "@/utils/localStorageSettings";
+import TextInput from "@/components/ui/TextInput";
 
 type PropsType = {
   title: string;
@@ -41,12 +42,12 @@ const TextSetting = ({
         {title}
         {help ? <HelpBubble text={help} /> : null}
       </label>
-      <input
+      <TextInput
         id="input"
-        className="block w-full px-4 py-3 bg-gray-100 border-gray-200 rounded-lg focus:border-blue-500 dark:bg-gray-900"
+        className="block w-full"
         placeholder={title}
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e: any) => setInputValue(e.target.value)}
       />
       {helper && helperLink ? (
         <Link
