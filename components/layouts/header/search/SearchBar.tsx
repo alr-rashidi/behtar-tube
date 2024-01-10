@@ -60,7 +60,7 @@ const SearchBar = () => {
         <TextInput
           className={`h-full pl-10 pr-4 ${
             showSuggestion ? "peer" : null
-          } text-right transition active:scale-100 bg-[#eee] border border-gray-300 dark:border-gray-700 rounded-l-none w-60 lg:w-96`}
+          } text-right transition active:scale-100 bg-[#eee] dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-l-none w-60 lg:w-96`}
           placeholder="جستجو"
           value={inputText}
           onChange={(e: any) => handleChange(e)}
