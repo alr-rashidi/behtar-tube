@@ -8,7 +8,7 @@ const TextInput = ({ type, className: classNameProp, children, ...attributes }: 
   return (
     <input
       type="text"
-      className={`${classNameProp} bg-slate-200 dark:bg-slate-800 text-sm h-full rounded-lg hover:brightness-95 active:brightness-90 delay-75 active:scale-95 px-2`}
+      className={`${classNameProp} bg-slate-200 p-3 dark:bg-slate-800 text-sm h-full rounded-lg hover:brightness-95 focus:brightness-90 border border-transparent focus:border-gray-500 delay-75`}
       {...attributes}
     />
   );
