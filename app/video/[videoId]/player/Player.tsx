@@ -5,7 +5,7 @@ import Loading from "@/app/Loading";
 import { DetailedVideoType } from "@/types";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 import videoTimeFormater from "@/utils/videoTimeFormater";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import ReactPlayer, { Config } from "react-player";
 import { OnProgressProps } from "react-player/base";
@@ -138,7 +138,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     ]);
   }, [listOfQualities, listOfAudios, listOfCaptions]);
 
-  const handlePlay = () => {
+  const handlePlay = useCallback(() => {
     if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
@@ -152,7 +152,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         setPlaying(false);
       }
     }
-  };
+  }, [isLoading]);
 
   const handleFullscreenBtn = () => {
     if (document.fullscreenElement == videoDivRef.current) {
@@ -218,7 +218,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     };
     window.addEventListener("keydown", keyPressFunction);
     return () => window.removeEventListener("keydown", keyPressFunction);
-  }, []);
+  }, [handlePlay]);
 
   const videoConfig: Config = videoSelectedSettings.caption !== ""
     ? data.captions.reduce((config, caption) => {
