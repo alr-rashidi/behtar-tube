@@ -1,7 +1,7 @@
 "use client";
 
-import Loading from "@/app/Loading";
 import { instance } from "@/api/getYTData";
+import Loading from "@/app/Loading";
 import { DetailedVideoType } from "@/types";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 import videoTimeFormater from "@/utils/videoTimeFormater";
@@ -289,7 +289,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           })
           .map((item) => item.url.replace(/https:\/\/.+\//i, proxyInstance + "/"))}
         onEnded={() => setPlaying(false)}
-        onplay={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
+        onPlay={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
         onProgress={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
         onBuffer={() => setAudioLoading(true)}
         onBufferEnd={() => setAudioLoading(false)}
