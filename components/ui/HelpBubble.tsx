@@ -4,7 +4,7 @@ import { MdHelp } from "react-icons/md";
 type PropsType = {
   divClassName?: string;
   bubbleClassName?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   text: string;
 };
 
