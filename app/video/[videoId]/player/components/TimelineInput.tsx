@@ -1,4 +1,4 @@
-import React, { FC, RefObject, useEffect, useRef } from "react";
+import React, { FC, RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import ReactPlayer from "react-player";
 
 type PropsType = {
@@ -13,6 +13,33 @@ const TimelineInput = ({ videoRef, audioRef, currentTime }: PropsType) => {
   const timelineBGRef = useRef<HTMLDivElement>(null);
   const timelineThumbRef = useRef<HTMLDivElement>(null);
 
+  const ChangeTimelineThumbPosition = useCallback(() => {
+    (() => {
+      if (
+        timelineThumbRef.current
+        && timelineInputRef.current
+        && timelineWatchedRef.current
+        && timelineBufferedRef.current
+        && videoRef.current?.getInternalPlayer()
+      ) {
+        let playedPosition = `${
+          // Timeline width - Thumb width / Video time(max value of input) = One percent of the width of input
+          ((timelineInputRef.current.clientWidth - 16)
+            / videoRef.current.getDuration())
+          // ... * Timeline value (parseInt for TS intellisense)
+          * videoRef.current.getCurrentTime()}px`;
+        let BufferedPosition = `${
+          //  Similar to top code
+          ((timelineInputRef.current.clientWidth - 16)
+            / videoRef.current.getDuration())
+          * videoRef.current.getInternalPlayer().buffered.end(0)}px`;
+        timelineThumbRef.current.style.left = playedPosition;
+        timelineWatchedRef.current.style.width = playedPosition;
+        timelineBufferedRef.current.style.width = BufferedPosition;
+      }
+    });
+  }, [videoRef]);
+
   const handleTimeline = (value: number) => {
     if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
@@ -25,33 +52,7 @@ const TimelineInput = ({ videoRef, audioRef, currentTime }: PropsType) => {
 
   useEffect(() => {
     ChangeTimelineThumbPosition();
-  }, [currentTime]);
-
-  const ChangeTimelineThumbPosition = () => {
-    if (
-      timelineThumbRef.current
-      && timelineInputRef.current
-      && timelineWatchedRef.current
-      && timelineBufferedRef.current
-      && videoRef.current?.getInternalPlayer()
-    ) {
-      let playedPosition = `${
-        // Timeline width - Thumb width / Video time(max value of input) = One percent of the width of input
-        ((timelineInputRef.current.clientWidth - 16)
-          / videoRef.current.getDuration())
-        // ... * Timeline value (parseInt for TS intellisense)
-        * videoRef.current.getCurrentTime()}px`;
-      let BufferedPosition = `${
-        //  Similar to top code
-        ((timelineInputRef.current.clientWidth - 16)
-          / videoRef.current.getDuration())
-        * videoRef.current.getInternalPlayer().buffered.end(0)}px`;
-      timelineThumbRef.current.style.left = playedPosition;
-      timelineWatchedRef.current.style.width = playedPosition;
-      timelineBufferedRef.current.style.width = BufferedPosition;
-      console.log(BufferedPosition);
-    }
-  };
+  }, [currentTime, ChangeTimelineThumbPosition]);
 
   return (
     <div aria-label="Timeline" className="relative w-full flex items-center">
