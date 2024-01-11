@@ -1,11 +1,9 @@
 "use client";
 
+import HelpBubble from "@/components/ui/HelpBubble";
+import SelectInput from "@/components/ui/Select";
+import { getLocalStorageSetting, setLocalStorageSetting } from "@/utils/localStorageSettings";
 import React, { useEffect, useState } from "react";
-import HelpBubble from "@/components/HelpBubble";
-import {
-  getLocalStorageSetting,
-  setLocalStorageSetting,
-} from "@/utils/localStorageSettings";
 
 export type SelectSettingListType = { name: string; value: string };
 
@@ -40,10 +38,9 @@ const SelectSetting = ({
         {title}
         {help ? <HelpBubble text={help} /> : null}
       </label>
-      <select
-        id="hs-select-label"
-        className="block w-full px-4 py-3 bg-gray-100 border-gray-200 rounded-lg cursor-pointer pe-9 dark:bg-gray-900"
-        onChange={(e) => setSelectedItem(e.target.value)}
+      <SelectInput
+        className="block w-full"
+        onChange={(e: any) => setSelectedItem(e.target.value)}
         value={selectedItem}
       >
         {list.map((item) => (
@@ -51,7 +48,7 @@ const SelectSetting = ({
             {item.name}
           </option>
         ))}
-      </select>
+      </SelectInput>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/components/ui/Button";
 import { useState } from "react";
 
 const CommunityPostTextContent = ({ content }: { content: string }) => {
@@ -11,12 +12,12 @@ const CommunityPostTextContent = ({ content }: { content: string }) => {
         {content}
       </div>
       {content.length >= 200 ? (
-        <button
+        <Button
           className="text-subtitle-color"
           onClick={() => setShowFullTextContent((v) => !v)}
         >
           {!showFullTextContent ? "More..." : "Less..."}
-        </button>
+        </Button>
       ) : (
         ""
       )}

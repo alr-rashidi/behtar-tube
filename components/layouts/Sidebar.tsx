@@ -1,19 +1,10 @@
 "use client";
 
-import React, { useContext } from "react";
-import {
-  MdStar,
-  MdVideogameAsset,
-  MdMusicNote,
-  MdMovie,
-  MdClose,
-  MdSettings,
-} from "react-icons/md";
-import { FaYoutube } from "react-icons/fa";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IconType } from "react-icons";
-import Link from "next/link";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useContext } from "react";
+import { IconType } from "react-icons";
+import { MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
 import Logo from "./header/Logo";
 
 type itemType = {
@@ -48,7 +39,7 @@ const Sidebar = () => {
     if (items.find((item) => item.id == itemId)) {
       router.push(itemId != "trending" ? "/?category=" + itemId : "/");
     } else {
-      router.push('/' + itemId);
+      router.push("/" + itemId);
     }
     toggleSidebar(false);
   };
@@ -81,7 +72,7 @@ const Sidebar = () => {
               onClick={handleClickItem}
             />
           ))}
-          <hr className="border-gray-500 my-2" />
+          <Divider />
           <SidebarItem
             itemId={"settings"}
             Icon={MdSettings}
@@ -119,5 +110,7 @@ const SidebarItem = ({
     </span>
   </button>
 );
+
+const Divider = () => <hr className="border-gray-200 dark:border-gray-800 my-2 border" />;
 
 export default Sidebar;

@@ -1,17 +1,10 @@
+import { getChannelInfo } from "@/api/getYTData";
 import { ChannelType } from "@/types";
+import numberCounter from "@/utils/numberCounter";
 import Image from "next/image";
 import React from "react";
-import { getChannelInfo } from "@/components/getData";
 import { MdArrowBackIosNew } from "react-icons/md";
-import {
-  Community,
-  Playlists,
-  Shorts,
-  Streams,
-  Tabs,
-  Videos,
-} from "./components/";
-import numberCounter from "@/utils/numberCounter";
+import { Community, Playlists, Shorts, Streams, Tabs, Videos } from "./components/";
 
 const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   const channelId = params.slug;

@@ -1,19 +1,19 @@
-import { helpBubbleClassName } from "@/components/HelpBubble";
+import DivWithHelpBubble, { helpBubbleClassName } from "@/components/ui/HelpBubble";
 import React, { ChangeEvent, RefObject, useRef, useState } from "react";
 import { MdVolumeMute, MdVolumeUp } from "react-icons/md";
 import ReactPlayer from "react-player";
 
 type PropsType = {
-  videoRef: RefObject<ReactPlayer>;
+  audioRef: RefObject<ReactPlayer>;
 };
-const VolumeInput = ({ videoRef }: PropsType) => {
+const VolumeInput = ({ audioRef }: PropsType) => {
   const [muted, setMuted] = useState<boolean>(false);
   const volumeInputRef = useRef<HTMLInputElement>(null);
 
   const handleVolume = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    if (videoRef.current) {
-      const internalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+    if (audioRef.current) {
+      const internalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
       if (value == 0) {
         setMuted(true);
       } else {
@@ -24,8 +24,8 @@ const VolumeInput = ({ videoRef }: PropsType) => {
   };
 
   const handleMute = () => {
-    if (videoRef.current && volumeInputRef.current) {
-      const internalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+    if (audioRef.current && volumeInputRef.current) {
+      const internalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
       if (muted) {
         internalPlayer.volume = parseInt(volumeInputRef.current.value) / 100;
         setMuted(false);
@@ -38,14 +38,11 @@ const VolumeInput = ({ videoRef }: PropsType) => {
 
   return (
     <div className="flex items-center group">
-      <div className="relative">
-        <button onClick={handleMute} className="flex items-center">
+      <DivWithHelpBubble text={muted ? "Unmute" : "Mute"} bubbleClassName="bottom-10">
+        <button onClick={handleMute} className="flex items-center peer">
           {muted ? <MdVolumeMute className="w-6 h-6" /> : <MdVolumeUp className="w-6 h-6" />}
         </button>
-        <div className={`${helpBubbleClassName} bottom-10`}>
-          {muted ? "Unmute" : "Mute"}
-        </div>
-      </div>
+      </DivWithHelpBubble>
       <input
         type="range"
         step={5}

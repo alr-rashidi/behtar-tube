@@ -1,7 +1,7 @@
 import { CommunityPostCommentsType } from "@/types";
 import Image from "next/image";
 import React from "react";
-import ProfilePictureHttpsSolver from "../../../utils/ProfilePictureHttpsSolver";
+import ProfilePictureHttpsSolver from "@/utils/ProfilePictureHttpsSolver";
 import Attachment from "./CommunityPostAttachment";
 import CommunityPostTextContent from './CommunityPostTextContent'
 import dateCounter from "@/utils/dateCounter";

@@ -1,11 +1,10 @@
 "use client";
 
+import { instance } from "@/api/getYTData";
 import Loading from "@/app/Loading";
-import { getLocalStorageSetting } from "@/utils/localStorageSettings";
-import videoTimeFormater from "@/utils/videoTimeFormater";
-import { instance } from "@/components/getData";
 import { DetailedVideoType } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import { getLocalStorageSetting } from "@/utils/localStorageSettings";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import ReactPlayer, { Config } from "react-player";
 import { OnProgressProps } from "react-player/base";
@@ -13,6 +12,7 @@ import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
 import SettingsBtn from "./components/SettingsBtn";
 import TimelineInput from "./components/TimelineInput";
+import VideoTime from "./components/VideoTime";
 import VolumeInput from "./components/VolumeInput";
 
 type settingItemType =
@@ -48,7 +48,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [videoSettings, setVideoSettings] = useState<settingType[]>();
   const [videoSelectedSettings, setVideoSelectedSettings] = useState<VideoSelectedSettingsType>({
-    videoResolution: getLocalStorageSetting("defaultVideoResolution") || "240p",
+    videoResolution: "144p",
     audioQuality: "AUDIO_QUALITY_LOW",
     caption: "",
   });
@@ -56,13 +56,16 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const isLoading = videoLoading || audioLoading;
 
   useEffect(() => {
-    if (
-      videoRef.current?.getInternalPlayer()
-      && audioRef.current?.getInternalPlayer()
-    ) {
-      videoRef.current.getInternalPlayer().pause();
-      audioRef.current.getInternalPlayer().pause();
-      setPlaying(false);
+    if (videoRef.current && audioRef.current) {
+      const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+      const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
+      if (videoInternalPlayer?.paused) {
+        videoInternalPlayer.pause();
+        audioInternalPlayer.pause();
+        setPlaying(false);
+        videoInternalPlayer.currentTime = 0;
+        audioInternalPlayer.currentTime = 0;
+      }
     }
   }, [videoSelectedSettings]);
 
@@ -84,39 +87,55 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     });
   };
 
-  const listOfQualities: settingItemType[] = data.adaptiveFormats.map(
-    (item) => {
-      if ("resolution" in item) {
+  const listOfQualities: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map(
+      (item) => {
+        if ("resolution" in item) {
+          return {
+            label: item.qualityLabel,
+            value: item.resolution,
+          };
+        } else {
+          return null;
+        }
+      },
+    ), [data.adaptiveFormats]);
+
+  const listOfAudios: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map((item) => {
+      if ("audioQuality" in item) {
         return {
-          label: item.qualityLabel,
-          value: item.resolution,
+          label: item.audioQuality,
+          value: item.audioQuality,
         };
       } else {
         return null;
       }
-    },
-  );
+    }), [data.adaptiveFormats]);
 
-  const listOfAudios: settingItemType[] = data.adaptiveFormats.map((item) => {
-    if ("audioQuality" in item) {
-      return {
-        label: item.audioQuality,
-        value: item.audioQuality,
-      };
-    } else {
-      return null;
-    }
-  });
-
-  const mappedCaptions = data.captions.map((caption) => ({
-    label: caption.label,
-    value: caption.label,
-  }));
-  mappedCaptions.unshift({
-    label: "",
-    value: "None",
-  });
+  const mappedCaptions = useMemo(() =>
+    data.captions.map((caption) => ({
+      label: caption.label,
+      value: caption.label,
+    })).concat({
+      label: "",
+      value: "None",
+    }), [data.captions]);
   const listOfCaptions: settingItemType[] = mappedCaptions;
+
+  // set default video resolution if available
+  useEffect(() => {
+    if (
+      listOfQualities.find((item) => {
+        item?.value == getLocalStorageSetting("defaultVideoResolution");
+      })
+    ) {
+      setVideoSelectedSettings(prev => ({
+        ...prev,
+        videoResolution: getLocalStorageSetting("defaultVideoResolution"),
+      }));
+    }
+  }, [listOfQualities]);
 
   // set videoSettings to state
   useEffect(() => {
@@ -135,11 +154,11 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     ]);
   }, [listOfQualities, listOfAudios, listOfCaptions]);
 
-  const handlePlayBtn = () => {
+  const handlePlay = useCallback(() => {
     if (videoRef.current && audioRef.current) {
       const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
       const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
-      if (videoInternalPlayer.paused) {
+      if (videoInternalPlayer.paused && !isLoading) {
         videoInternalPlayer.play();
         audioInternalPlayer.play();
         setPlaying(true);
@@ -149,7 +168,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         setPlaying(false);
       }
     }
-  };
+  }, [isLoading]);
 
   const handleFullscreenBtn = () => {
     if (document.fullscreenElement == videoDivRef.current) {
@@ -195,7 +214,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
         const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
         let localCurrentTime = videoRef.current.getCurrentTime();
         if (key == "k") {
-          handlePlayBtn();
+          handlePlay();
         } else if (key == "j") {
           videoInternalPlayer.currentTime = localCurrentTime - 5;
           audioInternalPlayer.currentTime = localCurrentTime - 5;
@@ -215,7 +234,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     };
     window.addEventListener("keydown", keyPressFunction);
     return () => window.removeEventListener("keydown", keyPressFunction);
-  }, []);
+  }, [handlePlay]);
 
   const videoConfig: Config = videoSelectedSettings.caption !== ""
     ? data.captions.reduce((config, caption) => {
@@ -242,15 +261,14 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     }, {})
     : {};
 
-  useEffect(() => {
-    console.log(`Audio: ${audioLoading} - Video: ${videoLoading}`);
-  }, [audioLoading, videoLoading]);
-
   return (
-    <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
+    <div
+      className={`relative overflow-hidden rounded-xl bg-gray-500 ${!showControls ? "cursor-none" : "cursor-auto"}`}
+      ref={videoDivRef}
+    >
       <ReactPlayer
         ref={videoRef}
-        key={JSON.stringify(videoSelectedSettings.videoResolution) + "-video"}
+        key={JSON.stringify(videoSelectedSettings) + "-video"}
         width="100%"
         height="100%"
         config={videoConfig}
@@ -275,7 +293,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       />
       <ReactPlayer
         ref={audioRef}
-        key={JSON.stringify(videoSelectedSettings.audioQuality) + "-audio"}
+        key={JSON.stringify(videoSelectedSettings) + "-audio"}
         width="0"
         height="0"
         url={data.adaptiveFormats
@@ -286,7 +304,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           })
           .map((item) => item.url.replace(/https:\/\/.+\//i, proxyInstance + "/"))}
         onEnded={() => setPlaying(false)}
-        onplay={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
+        onPlay={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
         onProgress={() => isLoading ? audioRef.current?.getInternalPlayer().pause() : null}
         onBuffer={() => setAudioLoading(true)}
         onBufferEnd={() => setAudioLoading(false)}
@@ -298,7 +316,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             !playing || isLoading ? "bg-[#00000090]" : null
           }`}
           ref={videoUnderLayerRef}
-          onClick={handlePlayBtn}
+          onClick={handlePlay}
         >
           {playing && isLoading
             ? (
@@ -310,7 +328,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           {!playing
             ? (
               <div className={`${videoUnderLayerClassName} pointer-events-none`}>
-                <MdPlayArrow className="w-12 h-12 p-2 bg-black rounded-full bg-opacity-20" />
+                <MdPlayArrow className="w-12 h-12 p-2 bg-white dark:bg-black rounded-full bg-opacity-20" />
               </div>
             )
             : null}
@@ -319,16 +337,16 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           aria-label="BottomPanel"
           className={`absolute bottom-0 left-0 right-0 flex flex-row h-10 gap-3 px-2 ${
             showControls && playing ? "opacity-100" : "opacity-0"
-          } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-black bg-opacity-80`}
+          } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-white dark:bg-black bg-opacity-80`}
         >
-          <PlayBtn handlePlayBtn={handlePlayBtn} playing={playing} />
+          <PlayBtn handlePlay={handlePlay} playing={playing} />
           <TimelineInput
             videoRef={videoRef}
             audioRef={audioRef}
             currentTime={currentTime}
           />
-          <div className="my-auto">{videoTimeFormater(currentTime)}</div>
-          <VolumeInput videoRef={videoRef} />
+          <VideoTime currentTime={currentTime} />
+          <VolumeInput audioRef={audioRef} />
           {videoSettings
             ? (
               <SettingsBtn

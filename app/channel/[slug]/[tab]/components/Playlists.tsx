@@ -1,5 +1,5 @@
-import PlaylistCard from "@/components/cards/PlaylistCard";
-import { getChannelPlaylists } from "@/components/getData";
+import { PlaylistCard } from "@/components/cards/";
+import { getChannelPlaylists } from "@/api/getYTData";
 import { ChannelPlaylistsType } from "@/types";
 import React from "react";
 

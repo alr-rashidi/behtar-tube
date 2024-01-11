@@ -1,5 +1,5 @@
-import VideoCard from "@/components/cards/VideoCard";
-import { getChannelShorts } from "@/components/getData";
+import { VideoCard } from "@/components/cards/";
+import { getChannelShorts } from "@/api/getYTData";
 import { ChannelVideosType } from "@/types";
 import React from "react";
 

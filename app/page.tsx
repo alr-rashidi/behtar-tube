@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
 import Loading from "./Loading";
 import { TrendVideoCategories, VideoType } from "@/types";
-import { getTrendVideos } from "@/components/getData";
-import { VideoCard } from "@/components/cards";
+import { getTrendVideos } from "@/api/getYTData";
+import { VideoCard } from "@/components/cards/";
 
 type PropsType = {
   params: any;

@@ -1,10 +1,10 @@
-import { getVideoData } from "@/components/getData";
+import { getVideoData } from "@/api/getYTData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
 import React from "react";
 import Player from "./player/Player";
 import Image from "next/image";
-import { VideoListItem } from "@/components/cards";
+import { VideoListItem } from "@/components/listItems";
 import numberCounter from "@/utils/numberCounter";
 import dateCounter from "@/utils/dateCounter";
 import Description from "./components/Description";
@@ -47,7 +47,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
                 {/* <button className="subButton">Subscribe</button> */}
               </div>
             </div>
-            <div>{/* <button className="customButton"></button> */}</div>
+            <div>{/* <Button>Text</Button> */}</div>
           </div>
           <div className="flex flex-col gap-2 dark:bg-[#ffffff20] bg-[#00000020] rounded-xl p-3">
             <div className="flex flex-row">

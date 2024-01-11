@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import Loading from "../Loading";
 import { useInView } from "react-intersection-observer";
 import { searchDataType } from "@/types";
-import { getSearchData } from "@/components/getData";
+import { getSearchData } from "@/api/getYTData";
 import MapSearchData from "./MapSearchData";
-import ErrorCard from "@/components/cards/ErrorCard";
+import { ErrorCard } from "@/components/cards/";
 
 type PropsType = {
   query: string;

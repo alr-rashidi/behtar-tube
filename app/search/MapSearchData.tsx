@@ -2,7 +2,7 @@ import {
   ChannelListItem,
   PlaylistListItem,
   VideoListItem,
-} from "@/components/cards";
+} from "@/components/listItems";
 import { searchDataType } from "@/types";
 import React from "react";
 

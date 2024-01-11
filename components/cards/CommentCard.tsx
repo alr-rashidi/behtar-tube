@@ -7,9 +7,10 @@ import {
   MdOutlinePushPin,
   MdOutlineThumbUp,
 } from "react-icons/md";
-import dateCounter from "../../utils/dateCounter";
+import dateCounter from "@/utils/dateCounter";
 import Link from "next/link";
-import numberCounter from "../../utils/numberCounter";
+import numberCounter from "@/utils/numberCounter";
+import Button from "../ui/Button";
 
 const CommentCard = ({ comment }: { comment: CommentType }) => {
   return (
@@ -55,10 +56,10 @@ const CommentCard = ({ comment }: { comment: CommentType }) => {
         </div>
         <div>
           {comment.replies && (
-            <button className="text-blue-500">
+            <Button className="text-blue-500">
               <MdArrowDropDown className="inline-block w-6 h-6" />
               {comment.replies?.replyCount} Replies
-            </button>
+            </Button>
           )}
         </div>
       </div>

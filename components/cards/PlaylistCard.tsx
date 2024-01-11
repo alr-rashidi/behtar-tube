@@ -1,11 +1,10 @@
-import { ChannelPlaylistsType, PlaylistType, SearchedPlayListType } from "@/types";
+import { SearchedPlayListType } from "@/types";
 import Image from "next/image";
 import React from "react";
-import numberCounter from "../../utils/numberCounter";
+import numberCounter from "@/utils/numberCounter";
 import { MdVideoLibrary } from "react-icons/md";
-import videoTimeFormater from "../../utils/videoTimeFormater";
+import videoTimeFormater from "@/utils/videoTimeFormater";
 import Link from "next/link";
-import playlistValidVideos from "@/utils/playlistValidVideos";
 
 const PlaylistCard = ({ playlist }: { playlist: SearchedPlayListType }) => {
   return (
