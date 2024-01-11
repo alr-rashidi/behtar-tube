@@ -15,8 +15,8 @@ const Description = ({ description }: { description: string }) => {
       <div className={`${!showFullText && "text-trim text-lines-3"}`}>
         <div className="default-links" dangerouslySetInnerHTML={{ __html: description }}></div>
       </div>
-      {description.length <= 300
-        ? <Button onClick={handleClick}>{!showFullText ? "More..." : "Less..."}</Button>
+      {description.length >= 300
+        ? <Button className="p-2" onClick={handleClick}>Show {!showFullText ? "More..." : "Less..."}</Button>
         : null}
     </div>
   );
