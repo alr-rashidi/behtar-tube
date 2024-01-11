@@ -88,40 +88,37 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     });
   };
 
-  const listOfQualities: settingItemType[] = useMemo(() =>
-    data.adaptiveFormats.map(
-      (item) => {
-        if ("resolution" in item) {
-          return {
-            label: item.qualityLabel,
-            value: item.resolution,
-          };
-        } else {
-          return null;
-        }
-      },
-    ), [data.adaptiveFormats]);
-
-  const listOfAudios: settingItemType[] = useMemo(() =>
-    data.adaptiveFormats.map((item) => {
-      if ("audioQuality" in item) {
+  const listOfQualities: settingItemType[] = useMemo(() => data.adaptiveFormats.map(
+    (item) => {
+      if ("resolution" in item) {
         return {
-          label: item.audioQuality,
-          value: item.audioQuality,
+          label: item.qualityLabel,
+          value: item.resolution,
         };
       } else {
         return null;
       }
-    }), [data.adaptiveFormats]);
+    },
+  ), [data.adaptiveFormats]);
 
-  const mappedCaptions = useMemo(() =>
-    data.captions.map((caption) => ({
-      label: caption.label,
-      value: caption.label,
-    })).concat({
-      label: "",
-      value: "None",
-    }), [data.captions]);
+  const listOfAudios: settingItemType[] = useMemo(() => data.adaptiveFormats.map((item) => {
+    if ("audioQuality" in item) {
+      return {
+        label: item.audioQuality,
+        value: item.audioQuality,
+      };
+    } else {
+      return null;
+    }
+  }), [data.adaptiveFormats]);
+
+  const mappedCaptions = useMemo(() => data.captions.map((caption) => ({
+    label: caption.label,
+    value: caption.label,
+  })).concat({
+    label: "",
+    value: "None",
+  }),[data.captions])
   const listOfCaptions: settingItemType[] = mappedCaptions;
 
   // set videoSettings to state
@@ -333,7 +330,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
             audioRef={audioRef}
             currentTime={currentTime}
           />
-          <div className="my-auto">{videoTimeFormater(currentTime)}</div>
+          <VideoTime currentTime={currentTime} />
           <VolumeInput audioRef={audioRef} />
           {videoSettings
             ? (
