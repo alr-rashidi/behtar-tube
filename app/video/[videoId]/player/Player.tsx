@@ -262,7 +262,10 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     : {};
 
   return (
-    <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
+    <div
+      className={`relative overflow-hidden rounded-xl ${!showControls ? "cursor-none" : "cursor-auto"}`}
+      ref={videoDivRef}
+    >
       <ReactPlayer
         ref={videoRef}
         key={JSON.stringify(videoSelectedSettings) + "-video"}
