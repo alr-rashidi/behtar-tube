@@ -11,7 +11,6 @@ type PropsType = {
 };
 const SearchSuggestions = ({ inputText }: PropsType) => {
   const getSuggestionsTimeout = useRef<NodeJS.Timeout | null>(null);
-
   const [data, setData] = useState<searchSuggestionsType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,8 +18,8 @@ const SearchSuggestions = ({ inputText }: PropsType) => {
     if (getSuggestionsTimeout.current) {
       clearTimeout(getSuggestionsTimeout.current);
     }
-    setLoading(true);
     getSuggestionsTimeout.current = setTimeout(() => {
+      setLoading(true);
       const controller = new AbortController();
       const getData = async () => {
         try {
@@ -49,7 +48,9 @@ const SearchSuggestions = ({ inputText }: PropsType) => {
           data?.suggestions
           && data.suggestions.map((item, index) => (
             <li
-              className={`text-trim text-lines-1 border-gray-300 dark:border-gray-700 ${index+1 != data.suggestions.length ? "border-b" : ""} py-0.5`}
+              className={`text-trim text-lines-1 border-gray-300 dark:border-gray-700 ${
+                index + 1 != data.suggestions.length ? "border-b" : ""
+              } py-0.5`}
               key={item}
             >
               <Link href={"/search?q=" + localTextDecoder(item)}>
