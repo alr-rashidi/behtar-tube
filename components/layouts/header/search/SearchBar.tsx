@@ -70,12 +70,12 @@ const SearchBar = () => {
         {inputText != "" && (
           <>
             <SearchSuggestions inputText={inputText} />
-            <Button
-              className="absolute top-0 left-0 w-10 h-10"
+            <button
+              className="absolute top-0 left-0 w-10 h-10 p-2"
               onClick={handleReset}
             >
               <MdClose className="w-full h-full" />
-            </Button>
+            </button>
           </>
         )}
       </div>
