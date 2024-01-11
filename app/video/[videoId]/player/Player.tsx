@@ -4,7 +4,6 @@ import { instance } from "@/api/getYTData";
 import Loading from "@/app/Loading";
 import { DetailedVideoType } from "@/types";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
-import videoTimeFormater from "@/utils/videoTimeFormater";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import ReactPlayer, { Config } from "react-player";
