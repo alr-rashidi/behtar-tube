@@ -263,7 +263,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-xl ${!showControls ? "cursor-none" : "cursor-auto"}`}
+      className={`relative overflow-hidden rounded-xl bg-gray-500 ${!showControls ? "cursor-none" : "cursor-auto"}`}
       ref={videoDivRef}
     >
       <ReactPlayer
@@ -328,7 +328,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           {!playing
             ? (
               <div className={`${videoUnderLayerClassName} pointer-events-none`}>
-                <MdPlayArrow className="w-12 h-12 p-2 bg-black rounded-full bg-opacity-20" />
+                <MdPlayArrow className="w-12 h-12 p-2 bg-white dark:bg-black rounded-full bg-opacity-20" />
               </div>
             )
             : null}
@@ -337,7 +337,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
           aria-label="BottomPanel"
           className={`absolute bottom-0 left-0 right-0 flex flex-row h-10 gap-3 px-2 ${
             showControls && playing ? "opacity-100" : "opacity-0"
-          } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-black bg-opacity-80`}
+          } ${!playing ? "opacity-100" : null} hover:opacity-100 transition bg-white dark:bg-black bg-opacity-80`}
         >
           <PlayBtn handlePlay={handlePlay} playing={playing} />
           <TimelineInput
