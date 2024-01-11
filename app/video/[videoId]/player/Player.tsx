@@ -49,26 +49,26 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [videoSettings, setVideoSettings] = useState<settingType[]>();
   const [videoSelectedSettings, setVideoSelectedSettings] = useState<VideoSelectedSettingsType>({
-    videoResolution: getLocalStorageSetting("defaultVideoResolution") || "240p",
+    videoResolution: "144p",
     audioQuality: "AUDIO_QUALITY_LOW",
     caption: "",
   });
 
   const isLoading = videoLoading || audioLoading;
 
-  // useEffect(() => {
-  //   if (videoRef.current && audioRef.current) {
-  //     const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
-  //     const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
-  //     if (videoInternalPlayer?.paused) {
-  //       videoInternalPlayer.pause();
-  //       audioInternalPlayer.pause();
-  //       setPlaying(false);
-  //       videoInternalPlayer.currentTime = 0;
-  //       audioInternalPlayer.currentTime = 0;
-  //     }
-  //   }
-  // }, [videoSelectedSettings]);
+  useEffect(() => {
+    if (videoRef.current && audioRef.current) {
+      const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+      const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
+      if (videoInternalPlayer?.paused) {
+        videoInternalPlayer.pause();
+        audioInternalPlayer.pause();
+        setPlaying(false);
+        videoInternalPlayer.currentTime = 0;
+        audioInternalPlayer.currentTime = 0;
+      }
+    }
+  }, [videoSelectedSettings]);
 
   const proxyInstance = getLocalStorageSetting("proxyInstance") || instance;
 
@@ -88,38 +88,55 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     });
   };
 
-  const listOfQualities: settingItemType[] = useMemo(() => data.adaptiveFormats.map(
-    (item) => {
-      if ("resolution" in item) {
+  const listOfQualities: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map(
+      (item) => {
+        if ("resolution" in item) {
+          return {
+            label: item.qualityLabel,
+            value: item.resolution,
+          };
+        } else {
+          return null;
+        }
+      },
+    ), [data.adaptiveFormats]);
+
+  const listOfAudios: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map((item) => {
+      if ("audioQuality" in item) {
         return {
-          label: item.qualityLabel,
-          value: item.resolution,
+          label: item.audioQuality,
+          value: item.audioQuality,
         };
       } else {
         return null;
       }
-    },
-  ), [data.adaptiveFormats]);
+    }), [data.adaptiveFormats]);
 
-  const listOfAudios: settingItemType[] = useMemo(() => data.adaptiveFormats.map((item) => {
-    if ("audioQuality" in item) {
-      return {
-        label: item.audioQuality,
-        value: item.audioQuality,
-      };
-    } else {
-      return null;
-    }
-  }), [data.adaptiveFormats]);
-
-  const mappedCaptions = useMemo(() => data.captions.map((caption) => ({
-    label: caption.label,
-    value: caption.label,
-  })).concat({
-    label: "",
-    value: "None",
-  }),[data.captions])
+  const mappedCaptions = useMemo(() =>
+    data.captions.map((caption) => ({
+      label: caption.label,
+      value: caption.label,
+    })).concat({
+      label: "",
+      value: "None",
+    }), [data.captions]);
   const listOfCaptions: settingItemType[] = mappedCaptions;
+
+  // set default video resolution if available
+  useEffect(() => {
+    if (
+      listOfQualities.find((item) => {
+        item?.value == getLocalStorageSetting("defaultVideoResolution");
+      })
+    ) {
+      setVideoSelectedSettings(prev => ({
+        ...prev,
+        videoResolution: getLocalStorageSetting("defaultVideoResolution"),
+      }));
+    }
+  }, [listOfQualities]);
 
   // set videoSettings to state
   useEffect(() => {
@@ -244,10 +261,6 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
       }
     }, {})
     : {};
-
-  useEffect(() => {
-    console.log(`Audio: ${audioLoading} - Video: ${videoLoading}`);
-  }, [audioLoading, videoLoading]);
 
   return (
     <div className="relative overflow-hidden rounded-xl" ref={videoDivRef}>
