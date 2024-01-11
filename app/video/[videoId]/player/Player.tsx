@@ -5,7 +5,7 @@ import Loading from "@/app/Loading";
 import { DetailedVideoType } from "@/types";
 import { getLocalStorageSetting } from "@/utils/localStorageSettings";
 import videoTimeFormater from "@/utils/videoTimeFormater";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";
 import ReactPlayer, { Config } from "react-player";
 import { OnProgressProps } from "react-player/base";
@@ -13,6 +13,7 @@ import FullscreenBtn from "./components/FullscreenBtn";
 import PlayBtn from "./components/PlayBtn";
 import SettingsBtn from "./components/SettingsBtn";
 import TimelineInput from "./components/TimelineInput";
+import VideoTime from "./components/VideoTime";
 import VolumeInput from "./components/VolumeInput";
 
 type settingItemType =
@@ -55,19 +56,19 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   const isLoading = videoLoading || audioLoading;
 
-  useEffect(() => {
-    if (videoRef.current && audioRef.current) {
-      const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
-      const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
-      if (videoInternalPlayer?.paused) {
-        videoInternalPlayer.pause();
-        audioInternalPlayer.pause();
-        setPlaying(false);
-        videoInternalPlayer.currentTime = 0;
-        audioInternalPlayer.currentTime = 0;
-      }
-    }
-  }, [videoSelectedSettings]);
+  // useEffect(() => {
+  //   if (videoRef.current && audioRef.current) {
+  //     const videoInternalPlayer: Record<string, any> = videoRef.current.getInternalPlayer();
+  //     const audioInternalPlayer: Record<string, any> = audioRef.current.getInternalPlayer();
+  //     if (videoInternalPlayer?.paused) {
+  //       videoInternalPlayer.pause();
+  //       audioInternalPlayer.pause();
+  //       setPlaying(false);
+  //       videoInternalPlayer.currentTime = 0;
+  //       audioInternalPlayer.currentTime = 0;
+  //     }
+  //   }
+  // }, [videoSelectedSettings]);
 
   const proxyInstance = getLocalStorageSetting("proxyInstance") || instance;
 
@@ -87,38 +88,40 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
     });
   };
 
-  const listOfQualities: settingItemType[] = data.adaptiveFormats.map(
-    (item) => {
-      if ("resolution" in item) {
+  const listOfQualities: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map(
+      (item) => {
+        if ("resolution" in item) {
+          return {
+            label: item.qualityLabel,
+            value: item.resolution,
+          };
+        } else {
+          return null;
+        }
+      },
+    ), [data.adaptiveFormats]);
+
+  const listOfAudios: settingItemType[] = useMemo(() =>
+    data.adaptiveFormats.map((item) => {
+      if ("audioQuality" in item) {
         return {
-          label: item.qualityLabel,
-          value: item.resolution,
+          label: item.audioQuality,
+          value: item.audioQuality,
         };
       } else {
         return null;
       }
-    },
-  );
+    }), [data.adaptiveFormats]);
 
-  const listOfAudios: settingItemType[] = data.adaptiveFormats.map((item) => {
-    if ("audioQuality" in item) {
-      return {
-        label: item.audioQuality,
-        value: item.audioQuality,
-      };
-    } else {
-      return null;
-    }
-  });
-
-  const mappedCaptions = data.captions.map((caption) => ({
-    label: caption.label,
-    value: caption.label,
-  }));
-  mappedCaptions.unshift({
-    label: "",
-    value: "None",
-  });
+  const mappedCaptions = useMemo(() =>
+    data.captions.map((caption) => ({
+      label: caption.label,
+      value: caption.label,
+    })).concat({
+      label: "",
+      value: "None",
+    }), [data.captions]);
   const listOfCaptions: settingItemType[] = mappedCaptions;
 
   // set videoSettings to state
