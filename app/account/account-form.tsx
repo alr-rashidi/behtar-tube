@@ -2,13 +2,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Database } from '@/types/supabase'
 import { User, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import TextInput from '@/components/ui/TextInput'
+import Button from '@/components/ui/Button'
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClientComponentClient<Database>()
   const [loading, setLoading] = useState(true)
   const [fullname, setFullname] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
-  const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
 
   const getProfile = useCallback(async () => {
@@ -17,8 +18,8 @@ export default function AccountForm({ user }: { user: User | null }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
-        .eq('id', user?.id)
+        .select(`full_name, username, avatar_url`)
+        .eq('id', user!.id)
         .single()
 
       if (error && status !== 406) {
@@ -43,12 +44,10 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   async function updateProfile({
     username,
-    website,
     avatar_url,
   }: {
     username: string | null
     fullname: string | null
-    website: string | null
     avatar_url: string | null
   }) {
     try {
@@ -58,7 +57,6 @@ export default function AccountForm({ user }: { user: User | null }) {
         id: user?.id as string,
         full_name: fullname,
         username,
-        website,
         avatar_url,
         updated_at: new Date().toISOString(),
       })
@@ -75,51 +73,41 @@ export default function AccountForm({ user }: { user: User | null }) {
     <div className="form-widget">
       <div>
         <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={user?.email} disabled />
+        <TextInput id="email" type="text" value={user?.email} disabled />
       </div>
       <div>
         <label htmlFor="fullName">Full Name</label>
-        <input
+        <TextInput
           id="fullName"
           type="text"
           value={fullname || ''}
-          onChange={(e) => setFullname(e.target.value)}
+          onChange={(e: any) => setFullname(e.target.value)}
         />
       </div>
       <div>
         <label htmlFor="username">Username</label>
-        <input
+        <TextInput
           id="username"
           type="text"
           value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e: any) => setUsername(e.target.value)}
         />
       </div>
       <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="url"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <button
+        <Button
           className="button primary block"
-          onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+          onClick={() => updateProfile({ fullname, username, avatar_url })}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
-        </button>
+        </Button>
       </div>
 
       <div>
         <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
+          <Button className="button block" type="submit">
             Sign out
-          </button>
+          </Button>
         </form>
       </div>
     </div>
