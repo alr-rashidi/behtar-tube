@@ -13,6 +13,7 @@ import {
 } from "react-icons/md";
 import Logo from "./Logo";
 import SearchBar from "./search/SearchBar";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { theme, switchTheme } = useContext(themeContext);
@@ -20,6 +21,7 @@ const Header = () => {
   const [smallScreenSearching, setSmallScreenSearching] = useState<boolean>(false);
   const { sidebarState, toggleSidebar } = useContext(SidebarToggleContext);
   const smallScreenSearchWidth = 850;
+  const router = useRouter();
 
   useEffect(() => {
     const windowWidthHandler = () => {
@@ -63,8 +65,7 @@ const Header = () => {
               </Button>
               <Button
                 className="flex flex-row items-center gap-1"
-                onClick={() =>
-                  alert("Coming soon...")}
+                onClick={() => router.push("/login")}
               >
                 <MdOutlineAccountCircle className="w-6 h-6" />
                 <span className="text-sm md:text-base">Login</span>
