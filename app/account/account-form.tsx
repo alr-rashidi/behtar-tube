@@ -85,7 +85,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 p-4">
       <Avatar
         uid={user.id}
         url={avatar_url}
