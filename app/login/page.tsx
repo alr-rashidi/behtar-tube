@@ -26,7 +26,7 @@ export default function AuthForm() {
           },
         }}
         theme={theme}
-        providers={["github", "google"]}
+        providers={["github"]}
         redirectTo="http://localhost:3000/auth/callback"
       />
     </div>
