@@ -1,8 +1,10 @@
 "use client";
+import Button from "@/components/ui/Button";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { MdUpload } from "react-icons/md";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({
@@ -65,28 +67,29 @@ export default function Avatar({
   };
 
   return (
-    <div>
-      {avatarUrl
-        ? (
-          <Image
-            width={size}
-            height={size}
-            src={avatarUrl}
-            alt="Avatar"
-            className="avatar image"
-            style={{ height: size, width: size }}
-          />
-        )
-        : <div className="avatar no-image" style={{ height: size, width: size }} />}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
+    <div className="flex flex-col gap-1">
+      <div>Profile Image:</div>
+      <div className="flex flex-row items-center gap-5 ">
+        {avatarUrl
+          ? (
+            <Image
+              width={80}
+              height={80}
+              src={avatarUrl}
+              alt="Avatar"
+              className="rounded-full"
+            />
+          )
+          : <div className={`bg-blue-900 rounded-full w-20 h-20`} />}
+        <label className="cursor-pointer border border-gray-500 rounded p-1" htmlFor="single">
+          {uploading ? "Uploading ..." : (
+            <div className="flex flex-row gap-0.5 items-center">
+              <MdUpload className="w-4 h-4" /> Upload
+            </div>
+          )}
         </label>
         <input
-          style={{
-            visibility: "hidden",
-            position: "absolute",
-          }}
+          className="hidden absolute"
           type="file"
           id="single"
           accept="image/*"
