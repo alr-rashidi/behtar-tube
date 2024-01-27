@@ -80,7 +80,7 @@ export default function Avatar({
               className="rounded-full"
             />
           )
-          : <div className={`bg-blue-900 rounded-full w-20 h-20`} />}
+          : <div className={`bg-slate-200 dark:bg-slate-800 rounded-full w-20 h-20`} />}
         <label className="cursor-pointer hover:underline rounded p-1" htmlFor="single">
           {uploading ? "Uploading ..." : (
             <div className="flex flex-row gap-0.5 items-center">
