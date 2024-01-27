@@ -3,17 +3,11 @@
 import Button from "@/components/ui/Button";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { themeContext } from "@/contexts/themeContext";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  MdArrowBack,
-  MdOutlineAccountCircle,
-  MdOutlineDarkMode,
-  MdOutlineLightMode,
-  MdSearch,
-} from "react-icons/md";
+import { MdArrowBack, MdOutlineAccountCircle, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from "react-icons/md";
 import Logo from "./Logo";
 import SearchBar from "./search/SearchBar";
-import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { theme, switchTheme } = useContext(themeContext);
@@ -65,7 +59,8 @@ const Header = () => {
               </Button>
               <Button
                 className="flex flex-row items-center gap-1"
-                onClick={() => router.push("/login")}
+                onClick={() =>
+                  router.push("/login")}
               >
                 <MdOutlineAccountCircle className="w-6 h-6" />
                 <span className="text-sm md:text-base">Login</span>

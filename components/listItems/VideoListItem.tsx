@@ -1,13 +1,13 @@
-import Image from "next/image";
-import React from "react";
 import { VideoType } from "@/types";
-import videoTimeFormater from "@/utils/videoTimeFormater";
-import numberCounter from "@/utils/numberCounter";
-import Link from "next/link";
 import dateCounter from "@/utils/dateCounter";
+import numberCounter from "@/utils/numberCounter";
+import videoTimeFormater from "@/utils/videoTimeFormater";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 type PropsType = {
-  video: VideoType
+  video: VideoType;
   size?: "small";
 };
 const VideoListItem = ({ video, size }: PropsType) => {
@@ -38,30 +38,22 @@ const VideoListItem = ({ video, size }: PropsType) => {
       </Link>
       <div
         aria-label="info"
-        className={`flex flex-col gap-2 ${
-          size != "small" && "pt-2"
-        } text-start`}
+        className={`flex flex-col gap-2 ${size != "small" && "pt-2"} text-start`}
       >
         <Link
           href={`/video/${video.videoId}`}
-          className={`text-trim text-lines-1 max-h-12  ${
-            size == "small" ? "text-sm" : "text-base"
-          }`}
+          className={`text-trim text-lines-1 max-h-12  ${size == "small" ? "text-sm" : "text-base"}`}
         >
           {video.title}
         </Link>
         <Link
           href={`/channel/${video.authorId}/videos`}
-          className={`hover:underline text-subtitle-color  ${
-            size == "small" ? "text-xs" : "text-sm"
-          } w-max`}
+          className={`hover:underline text-subtitle-color  ${size == "small" ? "text-xs" : "text-sm"} w-max`}
         >
           {video.author}
         </Link>
         <div
-          className={`text-subtitle-color ${
-            size == "small" ? "text-xs" : "text-sm"
-          }`}
+          className={`text-subtitle-color ${size == "small" ? "text-xs" : "text-sm"}`}
         >
           {video.viewCount ? numberCounter(video.viewCount) + " views" : null}
           {video.published ? ` - ${dateCounter(video.published)}` : null}

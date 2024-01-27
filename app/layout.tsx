@@ -1,11 +1,11 @@
 import React from "react";
 import "./global.css";
-import { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
-import { ThemeProvider } from "@/contexts/themeContext";
 import Header from "@/components/layouts/header/Header";
 import Sidebar from "@/components/layouts/Sidebar";
 import { SidebarToggleProvider } from "@/contexts/sidebarToggleContext";
+import { ThemeProvider } from "@/contexts/themeContext";
+import { Metadata } from "next";
+import { Vazirmatn } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Behtar Tube",

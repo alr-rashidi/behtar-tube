@@ -28,8 +28,8 @@ const Tabs = ({
           key={tab}
           href={`/channel/${channelId}/${tab}`}
           className={`px-4 py-2 transition border-gray-500 hover:border-b ${
-            tab == activeTab &&
-            "dark:text-white text-black border-b dark:border-white border-black"
+            tab == activeTab
+            && "dark:text-white text-black border-b dark:border-white border-black"
           }`}
           onClick={() => setActiveTab(tab)}
         >

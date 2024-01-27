@@ -1,15 +1,18 @@
-import React from 'react'
-import { SearchedChannelType } from '@/types'
-import Image from 'next/image'
-import numberCounter from '@/utils/numberCounter'
-import Link from 'next/link'
-import ProfilePictureHttpsSolver from '@/utils/ProfilePictureHttpsSolver'
+import { SearchedChannelType } from "@/types";
+import numberCounter from "@/utils/numberCounter";
+import ProfilePictureHttpsSolver from "@/utils/ProfilePictureHttpsSolver";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-const ChannelListItem = ({channel}: {channel: SearchedChannelType}) => {
-
+const ChannelListItem = ({ channel }: { channel: SearchedChannelType }) => {
   return (
     <>
-      <Link href={`/channel/${channel.authorId}/videos`} key={channel.authorId} className="flex flex-row pt-2 cursor-pointer">
+      <Link
+        href={`/channel/${channel.authorId}/videos`}
+        key={channel.authorId}
+        className="flex flex-row pt-2 cursor-pointer"
+      >
         <div
           aria-label="ImageBox"
           className="flex channels-center justify-center flex-shrink-0 flex-grow-0 w-1/3 max-w-xs md:w-72 h-20 md:h-[140px]"
@@ -37,7 +40,7 @@ const ChannelListItem = ({channel}: {channel: SearchedChannelType}) => {
       </Link>
       <hr className="w-full mb-2 border-t border-gray-300 dark:border-gray-600" />
     </>
-  )
-}
+  );
+};
 
 export default ChannelListItem;

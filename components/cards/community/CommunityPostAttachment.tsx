@@ -1,7 +1,7 @@
-import { CommunityPostAttachmentType, ImageObjectType } from "@/types";
 import { PlaylistListItem, VideoListItem } from "@/components/listItems";
-import Image from "next/image";
+import { CommunityPostAttachmentType, ImageObjectType } from "@/types";
 import numberCounter from "@/utils/numberCounter";
+import Image from "next/image";
 
 const Attachment = ({
   attachment,
@@ -43,9 +43,7 @@ const Attachment = ({
     } else if (attachment.type == "multiImage") {
       return (
         <div className="relative">
-          {attachment.images.map((image) => (
-            <ImageAttachmentElement key={image[0].url} image={image} />
-          ))}
+          {attachment.images.map((image) => <ImageAttachmentElement key={image[0].url} image={image} />)}
         </div>
       );
     } else if (attachment.type == "poll") {

@@ -1,5 +1,5 @@
-import { VideoCard } from "@/components/cards/";
 import { getChannelVideos } from "@/api/getYTData";
+import { VideoCard } from "@/components/cards/";
 import { ChannelVideosType } from "@/types";
 import React from "react";
 
@@ -8,9 +8,7 @@ const Videos = async ({ channelId }: { channelId: string }) => {
 
   return (
     <section className="mx-auto grid-items">
-      {data.videos.map((video) => (
-        <VideoCard key={video.videoId} video={video} />
-      ))}
+      {data.videos.map((video) => <VideoCard key={video.videoId} video={video} />)}
     </section>
   );
 };

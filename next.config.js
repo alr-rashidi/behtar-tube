@@ -6,7 +6,7 @@ const nextConfig = {
         source: "/channel/:slug",
         destination: "/channel/:slug/videos",
         permanent: true,
-      }
+      },
     ];
   },
   images: {

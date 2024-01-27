@@ -1,5 +1,5 @@
-import { PlaylistCard } from "@/components/cards/";
 import { getChannelPlaylists } from "@/api/getYTData";
+import { PlaylistCard } from "@/components/cards/";
 import { ChannelPlaylistsType } from "@/types";
 import React from "react";
 
@@ -8,9 +8,7 @@ const Playlists = async ({ channelId }: { channelId: string }) => {
 
   return (
     <section className="mx-auto grid-items">
-      {data.playlists.map((playlist) => (
-        <PlaylistCard key={playlist.playlistId} playlist={playlist} />
-      ))}
+      {data.playlists.map((playlist) => <PlaylistCard key={playlist.playlistId} playlist={playlist} />)}
     </section>
   );
 };

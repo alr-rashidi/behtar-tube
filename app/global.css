@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-input, select {
+input,
+select {
   outline: none !important;
 }
 
@@ -23,7 +24,7 @@ input, select {
 }
 
 .loadingBg {
-  @apply bg-gray-300 dark:bg-gray-700
+  @apply bg-gray-300 dark:bg-gray-700;
 }
 
 .text-trim {

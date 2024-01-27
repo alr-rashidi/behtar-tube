@@ -178,32 +178,35 @@ export type DetailedVideoType = {
   premiereTimestamp?: number;
 
   hlsUrl?: string;
-  adaptiveFormats: ({
-    init: string;
-    index: string;
-    bitrate: string;
-    url: string;
-    itag: string;
-    type: string;
-    clen: string;
-    lmt: string;
-    projectionType: number;
-  } & (
-    // audio
-    | {
+  adaptiveFormats: (
+    & {
+      init: string;
+      index: string;
+      bitrate: string;
+      url: string;
+      itag: string;
+      type: string;
+      clen: string;
+      lmt: string;
+      projectionType: number;
+    }
+    & (
+      // audio
+      | {
         audioQuality: string;
         audioSampleRate: number;
         audioChannels: number;
       }
       // video
-    | {
+      | {
         container: string;
         encoding: string;
         fps: number;
         qualityLabel: string;
         resolution: string;
       }
-  ))[];
+    )
+  )[];
   formatStreams: {
     url: string;
     itag: string;
@@ -270,7 +273,7 @@ export type SearchedPlayListType = {
 };
 
 export type searchDataType = [
-  VideoType | SearchedChannelType | SearchedPlayListType
+  VideoType | SearchedChannelType | SearchedPlayListType,
 ];
 
 export type searchSuggestionsType = {

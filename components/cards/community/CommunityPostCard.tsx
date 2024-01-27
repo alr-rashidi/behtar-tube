@@ -1,13 +1,12 @@
 import { CommunityPostCommentsType } from "@/types";
+import dateCounter from "@/utils/dateCounter";
+import ProfilePictureHttpsSolver from "@/utils/ProfilePictureHttpsSolver";
 import Image from "next/image";
 import React from "react";
-import ProfilePictureHttpsSolver from "@/utils/ProfilePictureHttpsSolver";
 import Attachment from "./CommunityPostAttachment";
-import CommunityPostTextContent from './CommunityPostTextContent'
-import dateCounter from "@/utils/dateCounter";
+import CommunityPostTextContent from "./CommunityPostTextContent";
 
 const CommunityPostCard = ({ item }: { item: CommunityPostCommentsType }) => {
-
   return (
     <div className="flex flex-row w-full max-w-4xl gap-4 p-4 overflow-scroll border border-gray-300 dark:border-gray-700 rounded-xl">
       <div aria-label="ImageBox" className="flex-shrink-0">

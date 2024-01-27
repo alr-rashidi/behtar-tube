@@ -1,14 +1,14 @@
 import { getVideoData } from "@/api/getYTData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
-import React from "react";
-import Player from "./player/Player";
-import Image from "next/image";
 import { VideoListItem } from "@/components/listItems";
-import numberCounter from "@/utils/numberCounter";
 import dateCounter from "@/utils/dateCounter";
-import Description from "./components/Description";
+import numberCounter from "@/utils/numberCounter";
+import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import Description from "./components/Description";
+import Player from "./player/Player";
 // import Comments from "./components/Comments";
 
 const page = async ({ params }: { params: { videoId: string } }) => {
@@ -54,9 +54,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
               {numberCounter(data.viewCount)} views -&nbsp;
               {dateCounter(data.published)}
             </div>
-            {data.description && (
-              <Description description={data.descriptionHtml} />
-            )}
+            {data.description && <Description description={data.descriptionHtml} />}
           </div>
           {/* <Comments data={data} /> */}
         </div>

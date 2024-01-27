@@ -34,6 +34,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       }
     } catch (error) {
       alert("Error loading user data!");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +72,13 @@ export default function AccountForm({ user }: { user: User | null }) {
   }
 
   if (user == null) {
-    return <ErrorCard title="User doesn't exist!" body="Sign in if you are not logged in, if not you can try again" tryBtn={false} />
+    return (
+      <ErrorCard
+        title="User doesn't exist!"
+        body="Sign in if you are not logged in, if not you can try again"
+        tryBtn={false}
+      />
+    );
   } else {
     console.log(user);
   }

@@ -1,15 +1,10 @@
 import { CommentType } from "@/types";
-import Image from "next/image";
-import React from "react";
-import {
-  MdArrowDropDown,
-  MdCheckCircleOutline,
-  MdOutlinePushPin,
-  MdOutlineThumbUp,
-} from "react-icons/md";
 import dateCounter from "@/utils/dateCounter";
-import Link from "next/link";
 import numberCounter from "@/utils/numberCounter";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { MdArrowDropDown, MdCheckCircleOutline, MdOutlinePushPin, MdOutlineThumbUp } from "react-icons/md";
 import Button from "../ui/Button";
 
 const CommentCard = ({ comment }: { comment: CommentType }) => {
@@ -35,14 +30,12 @@ const CommentCard = ({ comment }: { comment: CommentType }) => {
             <Link
               href={`/channel/${comment.authorId}/videos`}
               className={`flex flex-row gap-1 ${
-                comment.authorIsChannelOwner &&
-                "bg-gray-200 dark:bg-gray-800 rounded-full px-1 pt-1"
+                comment.authorIsChannelOwner
+                && "bg-gray-200 dark:bg-gray-800 rounded-full px-1 pt-1"
               } text-sm`}
             >
               {comment.author}
-              {comment.authorIsChannelOwner && (
-                <MdCheckCircleOutline className="inline-block" />
-              )}
+              {comment.authorIsChannelOwner && <MdCheckCircleOutline className="inline-block" />}
             </Link>
             <div className="text-subtitle-color text-sm">
               {dateCounter(comment.published)}

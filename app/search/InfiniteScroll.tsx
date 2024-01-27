@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Loading from "../Loading";
-import { useInView } from "react-intersection-observer";
-import { searchDataType } from "@/types";
 import { getSearchData } from "@/api/getYTData";
-import MapSearchData from "./MapSearchData";
 import { ErrorCard } from "@/components/cards/";
+import { searchDataType } from "@/types";
+import React, { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import Loading from "../Loading";
+import MapSearchData from "./MapSearchData";
 
 type PropsType = {
   query: string;
@@ -35,17 +35,18 @@ const InfiniteScroll = ({ query }: PropsType) => {
         controller.abort();
       };
     }
-  }),
-    [inView];
+  }), [inView];
 
   return (
     <>
-      {data?.[0] ? (
-        <MapSearchData data={data} />
-        // Not showing ErrorCard in first load that data is null
-      ) : page == 3 ? (
-        <ErrorCard />
-      ) : null}
+      {data?.[0]
+        ? (
+          <MapSearchData data={data} />
+          // Not showing ErrorCard in first load that data is null
+        )
+        : page == 3
+        ? <ErrorCard />
+        : null}
       <div ref={ref} className="p-10">
         <Loading />
       </div>
