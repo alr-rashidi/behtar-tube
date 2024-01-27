@@ -7,9 +7,6 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
 
-  console.log(`=====
-  ${req.nextUrl.pathname}
-  =====`);
   const {
     data: { user },
   } = await supabase.auth.getUser();
