@@ -5,6 +5,7 @@ import TextInput from "@/components/ui/TextInput";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
 import { useCallback, useEffect, useState } from "react";
+import Avatar from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClientComponentClient<Database>();
@@ -85,6 +86,15 @@ export default function AccountForm({ user }: { user: User | null }) {
 
   return (
     <div className="flex flex-col gap-2">
+      <Avatar
+        uid={user.id}
+        url={avatar_url}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url);
+          updateProfile({ fullName, username, avatar_url: url });
+        }}
+      />
       <div className="flex flex-col">
         <label htmlFor="email">Email</label>
         <TextInput id="email" type="text" value={user?.email} disabled />
