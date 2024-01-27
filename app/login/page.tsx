@@ -10,11 +10,19 @@ export default function AuthForm() {
   return (
     <Auth
       supabaseClient={supabase}
-      view="magic_link"
-      appearance={{ theme: ThemeSupa }}
+      appearance={{
+        theme: ThemeSupa,
+        variables: {
+          default: {
+            colors: {
+              brand: "#aa0000",
+              brandAccent: "darkred",
+            },
+          },
+        },
+      }}
       theme="dark"
-      showLinks={false}
-      providers={[]}
+      providers={["github", "google"]}
       redirectTo="http://localhost:3000/auth/callback"
     />
   );
