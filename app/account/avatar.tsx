@@ -81,7 +81,7 @@ export default function Avatar({
             />
           )
           : <div className={`bg-blue-900 rounded-full w-20 h-20`} />}
-        <label className="cursor-pointer border border-gray-500 rounded p-1" htmlFor="single">
+        <label className="cursor-pointer hover:underline rounded p-1" htmlFor="single">
           {uploading ? "Uploading ..." : (
             <div className="flex flex-row gap-0.5 items-center">
               <MdUpload className="w-4 h-4" /> Upload
