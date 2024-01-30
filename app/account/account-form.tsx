@@ -2,13 +2,12 @@
 import { ErrorCard } from "@/components/cards";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
-import { Database } from "@/types/supabase";
-import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs";
+import { User } from "@supabase/auth-helpers-nextjs";
 import { useCallback, useEffect, useState } from "react";
+import { getUserData, updateUserData } from "../../api/supabase";
 import Avatar from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
-  const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
@@ -18,15 +17,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     try {
       setLoading(true);
 
-      const { data, error, status } = await supabase
-        .from("profiles")
-        .select(`full_name, username, avatar_url`)
-        .eq("id", user!.id)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
+      const data = await getUserData(user);
 
       if (data) {
         setFullName(data.full_name);
@@ -39,7 +30,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     } finally {
       setLoading(false);
     }
-  }, [user, supabase]);
+  }, [user]);
 
   useEffect(() => {
     getProfile();
@@ -53,23 +44,16 @@ export default function AccountForm({ user }: { user: User | null }) {
     fullName: string | null;
     avatar_url: string | null;
   }) {
-    try {
-      setLoading(true);
-
-      const { error } = await supabase.from("profiles").upsert({
-        id: user?.id as string,
-        full_name: fullName,
-        username,
-        avatar_url,
-        updated_at: new Date().toISOString(),
-      });
-      if (error) throw error;
-      alert("Profile updated!");
-    } catch (error) {
-      alert("Error updating the data!");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    updateUserData({
+      id: user?.id as string,
+      full_name: fullName,
+      username,
+      avatar_url,
+      updated_at: new Date().toISOString(),
+    }).then(() => alert("Profile updated!"))
+      .catch((data) => alert("Error updating the data!"+ JSON.stringify(data)));
+    setLoading(false);
   }
 
   if (user == null) {
@@ -126,7 +110,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           {loading ? "Loading ..." : "Update"}
         </Button>
         <form action="/auth/signout" className="w-full" method="post">
-          <Button className="w-full bg-transparent dark:bg-red-900" type="submit">
+          <Button className="w-full bg-red-200 dark:bg-red-800" type="submit">
             Sign out
           </Button>
         </form>
