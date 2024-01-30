@@ -39,6 +39,7 @@ export const updateUserData = async (newUser: UpdateUserType) => {
   const { error } = await supabase
     .from("profiles")
     .upsert(newUser)
+    .select();
     if (error) throw error;
     return  "Successfully Updated!";
 };
