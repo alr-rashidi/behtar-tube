@@ -24,13 +24,7 @@ export default function Avatar({
   useEffect(() => {
     async function downloadImage(path: string) {
       try {
-        const { data, error } = await supabase.storage.from("avatars").download(path, {
-          transform: {
-            width: 512,
-            height: 512,
-            resize: "contain", // 'contain' | 'cover' | 'fill'
-          },
-        });
+        const { data, error } = await supabase.storage.from("avatars").download(path);
         if (error) {
           throw error;
         }
