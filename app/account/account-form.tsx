@@ -89,7 +89,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       <Avatar
         uid={user.id}
         url={avatar_url}
-        size={150}
+        size={80}
         onUpload={(url) => {
           setAvatarUrl(url);
           updateProfile({ fullName, username, avatar_url: url });

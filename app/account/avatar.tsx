@@ -1,5 +1,4 @@
 "use client";
-import Button from "@/components/ui/Button";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
@@ -25,7 +24,13 @@ export default function Avatar({
   useEffect(() => {
     async function downloadImage(path: string) {
       try {
-        const { data, error } = await supabase.storage.from("avatars").download(path);
+        const { data, error } = await supabase.storage.from("avatars").download(path, {
+          transform: {
+            width: 512,
+            height: 512,
+            resize: "contain", // 'contain' | 'cover' | 'fill'
+          },
+        });
         if (error) {
           throw error;
         }
@@ -73,8 +78,8 @@ export default function Avatar({
         {avatarUrl
           ? (
             <Image
-              width={80}
-              height={80}
+              width={size}
+              height={size}
               src={avatarUrl}
               alt="Avatar"
               className="rounded-full"
