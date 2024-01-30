@@ -7,7 +7,7 @@ export const getUserData = async (user: User | null) => {
   try {
     const { data, error, status } = await supabase
       .from("profiles")
-      .select(`full_name, username, avatar_url`)
+      .select()
       .eq("id", user!.id)
       .single();
 
@@ -29,17 +29,18 @@ type UpdateUserType = {
   username: string | null;
   avatar_url: string | null;
   updated_at: string;
-}
+};
 export const updateUserData = async (newUser: UpdateUserType) => {
-  newUser.updated_at = new Date().toISOString();
+  try {
+    newUser.updated_at = new Date().toISOString();
 
-  console.log(newUser);
-  
-
-  const { error } = await supabase
-    .from("profiles")
-    .upsert(newUser)
-    .select();
+    const { error } = await supabase
+      .from("profiles")
+      .upsert(newUser)
+      .select();
     if (error) throw error;
-    return  "Successfully Updated!";
+    return "Successfully Updated!";
+  } catch (error) {
+    throw error;
+  }
 };
