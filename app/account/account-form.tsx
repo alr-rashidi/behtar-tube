@@ -17,7 +17,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     try {
       setLoading(true);
 
-      const data = await getUserData(user);
+      const data = await getUserData(user!.id);
 
       if (data) {
         setFullName(data.full_name);
@@ -56,22 +56,10 @@ export default function AccountForm({ user }: { user: User | null }) {
     setLoading(false);
   }
 
-  if (user == null) {
-    return (
-      <ErrorCard
-        title="User doesn't exist!"
-        body="Sign in if you are not logged in, if not you can try again"
-        tryBtn={false}
-      />
-    );
-  } else {
-    console.log(user);
-  }
-
   return (
     <div className="flex flex-col gap-2 p-4">
       <Avatar
-        uid={user.id}
+        uid={user!.id}
         url={avatar_url}
         size={80}
         onUpload={(url) => {

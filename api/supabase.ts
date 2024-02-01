@@ -3,12 +3,12 @@ import { createClientComponentClient, User } from "@supabase/auth-helpers-nextjs
 
 const supabase = createClientComponentClient<Database>();
 
-export const getUserData = async (user: User | null) => {
+export const getUserData = async (userId: string) => {
   try {
     const { data, error, status } = await supabase
       .from("profiles")
       .select()
-      .eq("id", user!.id)
+      .eq("id", userId)
       .single();
 
     if (error && status !== 406) {
