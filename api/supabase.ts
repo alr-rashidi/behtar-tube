@@ -44,3 +44,12 @@ export const updateUserData = async (newUser: UpdateUserType) => {
     throw error;
   }
 };
+
+export const RetrieveUser = async () => {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};

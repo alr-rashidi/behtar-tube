@@ -42,6 +42,11 @@ const nextConfig = {
         hostname: "vid.puffyan.us",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
+      },
     ],
   },
 };

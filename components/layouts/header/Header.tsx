@@ -3,13 +3,18 @@
 import Button from "@/components/ui/Button";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { themeContext } from "@/contexts/themeContext";
+import { User } from "@supabase/supabase-js";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { MdArrowBack, MdOutlineAccountCircle, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from "react-icons/md";
 import Logo from "./Logo";
 import SearchBar from "./search/SearchBar";
 
-const Header = () => {
+type PropsType = {
+  user: User | null;
+};
+const Header = ({ user }: PropsType) => {
   const { theme, switchTheme } = useContext(themeContext);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [smallScreenSearching, setSmallScreenSearching] = useState<boolean>(false);
@@ -29,6 +34,7 @@ const Header = () => {
     }
 
     windowWidthHandler();
+    console.log(user);
     return () => {
       window.removeEventListener("resize", windowWidthHandler);
     };
@@ -57,14 +63,31 @@ const Header = () => {
                   ? <MdOutlineLightMode className="w-5 h-5" />
                   : <MdOutlineDarkMode className="w-5 h-5" />}
               </Button>
-              <Button
-                className="flex flex-row items-center gap-1"
-                onClick={() =>
-                  router.push("/login")}
-              >
-                <MdOutlineAccountCircle className="w-6 h-6" />
-                <span className="text-sm md:text-base">Login</span>
-              </Button>
+              {user
+                ? (
+                  <Button
+                    className="flex flex-row items-center gap-1"
+                    onClick={() => router.push("/account")}
+                  >
+                    <Image
+                      width={30}
+                      height={30}
+                      className="rounded-full"
+                      src={user.user_metadata.avatar_url}
+                      alt="ProfilePic"
+                    />
+                    <span className="text-sm md:text-base text-trim text-lines-1">{user.user_metadata.name}</span>
+                  </Button>
+                )
+                : (
+                  <Button
+                    className="flex flex-row items-center gap-1"
+                    onClick={() => router.push("/login")}
+                  >
+                    <MdOutlineAccountCircle className="w-6 h-6" />
+                    <span className="text-sm md:text-base">Login</span>
+                  </Button>
+                )}
             </div>
           </>
         )
