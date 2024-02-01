@@ -15,12 +15,14 @@ const LoginBtn = ({ user }: PropsType) => {
   const [ProfilePicURL, setProfilePicURL] = useState<string>();
 
   useEffect(() => {
-    const changeProfilePic = async () => {
-      let url = await getProfilePictureURL(user.avatar_url!);
-      setProfilePicURL(url);
-    };
-    changeProfilePic();
-  }, [user.avatar_url]);
+    if (user) {
+      const changeProfilePic = async () => {
+        let url = await getProfilePictureURL(user.avatar_url!);
+        setProfilePicURL(url);
+      };
+      changeProfilePic();
+    }
+  }, [user]);
 
   return (
     <>
