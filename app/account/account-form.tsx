@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { User } from "@supabase/auth-helpers-nextjs";
 import { useCallback, useEffect, useState } from "react";
-import { getUserData, updateUserData } from "../../api/supabase";
+import { getUserData, updateUserData } from "@/api/supabase";
 import Avatar from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
