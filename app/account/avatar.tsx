@@ -3,8 +3,9 @@ import { deleteProfilePic } from "@/api/supabase";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { MdDelete, MdUpload } from "react-icons/md";
+import { MdDelete, MdEdit, MdOpenInBrowser, MdOpenInNew, MdOutlineAccountCircle, MdUpload } from "react-icons/md";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({
@@ -68,8 +69,8 @@ export default function Avatar({
 
   const deleteProfilePicFunction = async () => {
     await deleteProfilePic(url!);
-    alert("Profile Picture Deleted!")
-  }
+    alert("Profile Picture Deleted!");
+  };
 
   return (
     <div className="flex flex-col gap-1">
@@ -77,13 +78,18 @@ export default function Avatar({
       <div className="flex flex-row items-center gap-5 ">
         {avatarUrl
           ? (
-            <Image
-              width={size}
-              height={size}
-              src={avatarUrl}
-              alt="Avatar"
-              className="rounded-full"
-            />
+            <Link href={avatarUrl} className="relative" target="_blank">
+              <Image
+                width={size}
+                height={size}
+                src={avatarUrl}
+                alt="Avatar"
+                className="rounded-full peer"
+              />
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center rounded-full bg-white dark:bg-black transition-all peer-hover:opacity-80 opacity-0">
+                <MdOpenInNew className="w-8 h-8" />
+              </div>
+            </Link>
           )
           : <div className={`bg-slate-200 dark:bg-slate-800 rounded-full w-20 h-20`} />}
         <label className="cursor-pointer hover:underline rounded p-1" htmlFor="single">
@@ -101,7 +107,10 @@ export default function Avatar({
           onChange={uploadAvatar}
           disabled={uploading}
         />
-        <button onClick={deleteProfilePicFunction} className="flex flex-row gap-0.5 items-center cursor-pointer hover:underline">
+        <button
+          onClick={deleteProfilePicFunction}
+          className="flex flex-row gap-0.5 items-center cursor-pointer hover:underline"
+        >
           <MdDelete className="w-4 h-4" /> Delete
         </button>
       </div>
