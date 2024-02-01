@@ -1,8 +1,10 @@
 "use client";
 
+import { getProfilePictureURL } from "@/api/supabase";
 import Button from "@/components/ui/Button";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { themeContext } from "@/contexts/themeContext";
+import { Database } from "@/types/supabase";
 import { User } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,13 +14,14 @@ import Logo from "./Logo";
 import SearchBar from "./search/SearchBar";
 
 type PropsType = {
-  user: User | null;
+  user: Database["public"]["Tables"]["profiles"]["Row"];
 };
 const Header = ({ user }: PropsType) => {
   const { theme, switchTheme } = useContext(themeContext);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [smallScreenSearching, setSmallScreenSearching] = useState<boolean>(false);
   const { sidebarState, toggleSidebar } = useContext(SidebarToggleContext);
+  const [ProfilePicURL, setProfilePicURL] = useState<string>()
   const smallScreenSearchWidth = 850;
   const router = useRouter();
 
@@ -34,11 +37,18 @@ const Header = ({ user }: PropsType) => {
     }
 
     windowWidthHandler();
-    console.log(user);
     return () => {
       window.removeEventListener("resize", windowWidthHandler);
     };
   }, [windowWidth]);
+
+  useEffect(() => {
+    const changeProfilePic = async () => {
+      let url = await getProfilePictureURL(user.avatar_url!);
+      setProfilePicURL(url)
+    };
+    changeProfilePic()
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 flex flex-row items-center justify-between h-12 py-2 transition bg-white md:h-14 dark:bg-darkBG">
@@ -69,14 +79,18 @@ const Header = ({ user }: PropsType) => {
                     className="flex flex-row items-center gap-1"
                     onClick={() => router.push("/account")}
                   >
-                    <Image
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                      src={user.user_metadata.avatar_url}
-                      alt="ProfilePic"
-                    />
-                    <span className="text-sm md:text-base text-trim text-lines-1">{user.user_metadata.name}</span>
+                    {ProfilePicURL
+                      ? (
+                        <Image
+                          width={30}
+                          height={30}
+                          className="rounded-full"
+                          src={ProfilePicURL}
+                          alt="ProfilePic"
+                        />
+                      )
+                      : <MdOutlineAccountCircle className="w-6 h-6" />}
+                    <span className="text-sm md:text-base text-trim text-lines-1">{user.full_name}</span>
                   </Button>
                 )
                 : (

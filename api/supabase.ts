@@ -53,3 +53,16 @@ export const RetrieveUser = async () => {
     throw error;
   }
 };
+
+export const getProfilePictureURL = async (path: string) => {
+  try {
+    const { data, error } = await supabase.storage.from("avatars").download(path);
+    if (error) {
+      throw error;
+    }
+    const url = URL.createObjectURL(data);
+    return url;
+  } catch (error) {
+    console.log("Error downloading image: ", error);
+  }
+};
