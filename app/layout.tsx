@@ -9,6 +9,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
 import { cookies } from "next/headers";
+import { getUserData } from "@/api/supabaseServer";
 
 const supabase = createServerComponentClient<Database>({ cookies });
 export const metadata: Metadata = {
@@ -27,7 +28,13 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const userInfo = (await supabase.auth.getUser()).data.user;
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+
+  const userInfo = await getUserData(user!.id);
   return (
     <html dir="ltr">
       <head>
@@ -37,7 +44,7 @@ export default async function RootLayout({
         <ThemeProvider>
           <SidebarToggleProvider>
             <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">
-              <Header user={userInfo} />
+              <Header user={userInfo!} />
               <div className="flex flex-col min-h-screen pt-8 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
                 <Sidebar />
                 <div className="container pt-4 mx-auto cursor-default lg:px-6">
