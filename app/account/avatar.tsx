@@ -1,9 +1,10 @@
 "use client";
+import { deleteProfilePic } from "@/api/supabase";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { MdUpload } from "react-icons/md";
+import { MdDelete, MdUpload } from "react-icons/md";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({
@@ -65,6 +66,11 @@ export default function Avatar({
     }
   };
 
+  const deleteProfilePicFunction = async () => {
+    await deleteProfilePic(url!);
+    alert("Profile Picture Deleted!")
+  }
+
   return (
     <div className="flex flex-col gap-1">
       <div>Profile Image:</div>
@@ -95,6 +101,9 @@ export default function Avatar({
           onChange={uploadAvatar}
           disabled={uploading}
         />
+        <button onClick={deleteProfilePicFunction} className="flex flex-row gap-0.5 items-center cursor-pointer hover:underline">
+          <MdDelete className="w-4 h-4" /> Delete
+        </button>
       </div>
     </div>
   );

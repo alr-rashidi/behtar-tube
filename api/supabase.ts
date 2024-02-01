@@ -30,6 +30,7 @@ type UpdateUserType = {
   avatar_url: string | null;
   updated_at: string;
 };
+
 export const updateUserData = async (newUser: UpdateUserType) => {
   try {
     newUser.updated_at = new Date().toISOString();
@@ -64,5 +65,20 @@ export const getProfilePictureURL = async (path: string) => {
     return url;
   } catch (error) {
     console.log("Error downloading image: ", error);
+  }
+};
+
+export const deleteProfilePic = async (path: string) => {
+  try {
+    const { error } = await supabase
+      .storage
+      .from('avatars')
+      .remove([path])
+    
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.log("Error Deleting image: ", error);
   }
 };
