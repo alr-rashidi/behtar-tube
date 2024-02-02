@@ -98,7 +98,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           {loading ? "Loading ..." : "Update"}
         </Button>
         <form action="/auth/signout" className="w-full" method="post">
-          <Button className="w-full bg-red-200 dark:bg-red-800" type="submit">
+          <Button className="w-full !bg-red-200 dark:!bg-red-800" type="submit">
             Sign out
           </Button>
         </form>
