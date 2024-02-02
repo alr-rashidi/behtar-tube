@@ -1,10 +1,9 @@
 import React from "react";
 
 type PropsType = {
-  className?: string;
   [key: string]: any;
 };
-const Checkbox = ({ className: classNameProp, ...attributes }: PropsType) => {
+const Checkbox = ({ ...attributes }: PropsType) => {
   return (
     <div className="relative flex items-center p-3 rounded-full cursor-pointer">
       <input
