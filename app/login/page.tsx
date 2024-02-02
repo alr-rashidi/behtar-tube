@@ -32,45 +32,54 @@ export default function AuthForm() {
           ))}
         </nav>
       </div>
-      <Auth
-        view="sign_in"
-        supabaseClient={supabase}
-        appearance={{
-          theme: ThemeSupa,
-          style: { container: { display: selectedTab == 1 ? "flex" : "none" } },
-          variables: {
-            default: {
-              colors: {
-                brand: "#aa0000",
-                brandAccent: "darkred",
+      {selectedTab == 1
+        ? (
+          <Auth
+            view="sign_in"
+            supabaseClient={supabase}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: "#aa0000",
+                    brandAccent: "darkred",
+                  },
+                },
               },
-            },
-          },
-        }}
-        theme={theme}
-        providers={["github", "google"]}
-        redirectTo="http://localhost:3000/auth/callback"
-      />
-      <Auth
-        view="magic_link"
-        supabaseClient={supabase}
-        appearance={{
-          theme: ThemeSupa,
-          style: { container: { display: selectedTab == 2 ? "flex" : "none" }},
-          variables: {
-            default: {
-              colors: {
-                brand: "#aa0000",
-                brandAccent: "darkred",
-              },
-            },
-          },
-        }}
-        theme={theme}
-        providers={[]}
-        showLinks={false}
-        redirectTo="http://localhost:3000/auth/callback"
-      />
+            }}
+            theme={theme}
+            providers={["github", "google"]}
+            redirectTo="http://localhost:3000/auth/callback"
+          />
+        )
+        : null}
+      {selectedTab == 2
+        ? (
+          <div className="flex-col gap-2">
+            <div>Magic links are a form of passwordless logins where users click on a link sent to their email address to log in to their accounts. Magic links only work with email addresses and are one-time use only</div>
+            <Auth
+              view="magic_link"
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: "#aa0000",
+                      brandAccent: "darkred",
+                    },
+                  },
+                },
+              }}
+              theme={theme}
+              providers={[]}
+              showLinks={false}
+              redirectTo="http://localhost:3000/auth/callback"
+            />
+          </div>
+        )
+        : null}
     </div>
   );
 }
