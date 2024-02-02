@@ -1,4 +1,5 @@
 "use client";
+
 import { ErrorCard } from "@/components/cards";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
@@ -26,7 +27,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       }
     } catch (error) {
       alert("Error loading user data!");
-      console.log(error);
+      console.log("Error loading user data:", error);
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     <div className="flex flex-col gap-2 p-4">
       <Avatar
         uid={user!.id}
-        url={avatar_url}
+        path={avatar_url}
         size={80}
         onUpload={(url) => {
           setAvatarUrl(url);
@@ -98,7 +99,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           {loading ? "Loading ..." : "Update"}
         </Button>
         <form action="/auth/signout" className="w-full" method="post">
-          <Button className="w-full !bg-red-200 dark:!bg-red-800" type="submit">
+          <Button className="w-full" Theme="red" type="submit">
             Sign out
           </Button>
         </form>

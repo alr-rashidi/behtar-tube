@@ -1,5 +1,6 @@
 "use client";
-import { deleteProfilePic } from "@/api/supabase";
+import { deleteProfilePic, getProfilePictureURL } from "@/api/supabase";
+import Button from "@/components/ui/Button";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
@@ -10,36 +11,31 @@ type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({
   uid,
-  url,
+  path,
   size,
   onUpload,
 }: {
   uid: string;
-  url: Profiles["avatar_url"];
+  path: Profiles["avatar_url"];
   size: number;
   onUpload: (url: string) => void;
 }) {
   const supabase = createClientComponentClient<Database>();
-  const [avatarUrl, setAvatarUrl] = useState<Profiles["avatar_url"]>(url);
+  const [avatarUrl, setAvatarUrl] = useState<Profiles["avatar_url"]>();
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     async function downloadImage(path: string) {
       try {
-        const { data, error } = await supabase.storage.from("avatars").download(path);
-        if (error) {
-          throw error;
-        }
-
-        const url = URL.createObjectURL(data);
-        setAvatarUrl(url);
+        const url = await getProfilePictureURL(path);
+        setAvatarUrl(url!);
       } catch (error) {
         console.log("Error downloading image: ", error);
       }
     }
 
-    if (url) downloadImage(url);
-  }, [url, supabase]);
+    if (path) downloadImage(path);
+  }, [path, supabase]);
 
   const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
     try {
@@ -68,14 +64,14 @@ export default function Avatar({
   };
 
   const deleteProfilePicFunction = async () => {
-    await deleteProfilePic(url!);
+    await deleteProfilePic(path!);
     alert("Profile Picture Deleted!");
   };
 
   return (
     <div className="flex flex-col gap-1">
       <div>Profile Image:</div>
-      <div className="flex flex-row items-center gap-5 ">
+      <div className="flex flex-row items-center gap-3 ">
         {avatarUrl
           ? (
             <Link href={avatarUrl} className="relative" target="_blank">
@@ -92,11 +88,11 @@ export default function Avatar({
             </Link>
           )
           : <div className={`bg-slate-200 dark:bg-slate-800 rounded-full w-20 h-20`} />}
-        <label className="cursor-pointer hover:underline rounded p-1" htmlFor="single">
+        <label className="cursor-pointer rounded-lg" htmlFor="single">
           {uploading ? "Uploading ..." : (
-            <div className="flex flex-row gap-0.5 items-center">
+            <Button className="flex flex-row gap-0.5 items-center p-1">
               <MdUpload className="w-4 h-4" /> Upload
-            </div>
+            </Button>
           )}
         </label>
         <input
@@ -107,12 +103,13 @@ export default function Avatar({
           onChange={uploadAvatar}
           disabled={uploading}
         />
-        <button
+        <Button
           onClick={deleteProfilePicFunction}
-          className="flex flex-row gap-0.5 items-center cursor-pointer hover:underline"
+          Theme="red"
+          className="flex flex-row p-1 gap-0.5 items-center cursor-pointer"
         >
           <MdDelete className="w-4 h-4" /> Delete
-        </button>
+        </Button>
       </div>
     </div>
   );
