@@ -19,7 +19,7 @@ export const getUserData = async (userId: string) => {
       return data;
     }
   } catch (error) {
-    throw error;
+    console.log("Get user data failed: ", error);
   }
 };
 
@@ -42,7 +42,7 @@ export const updateUserData = async (newUser: UpdateUserType) => {
     if (error) throw error;
     return "Successfully Updated!";
   } catch (error) {
-    throw error;
+    console.log("Update user data failed: ", error);
   }
 };
 
@@ -51,7 +51,7 @@ export const RetrieveUser = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     return user;
   } catch (error) {
-    throw error;
+    console.log("Retrieve user failed: ", error);
   }
 };
 
@@ -64,7 +64,7 @@ export const getProfilePictureURL = async (path: string) => {
     const url = URL.createObjectURL(data);
     return url;
   } catch (error) {
-    console.log("Error downloading image: ", error);
+    console.log("downloading image failed: ", error);
   }
 };
 
@@ -72,13 +72,13 @@ export const deleteProfilePic = async (path: string) => {
   try {
     const { error } = await supabase
       .storage
-      .from('avatars')
-      .remove([path])
-    
+      .from("avatars")
+      .remove([path]);
+
     if (error) {
       throw error;
     }
   } catch (error) {
-    console.log("Error Deleting image: ", error);
+    console.log("Deleting image failed: ", error);
   }
 };

@@ -20,6 +20,6 @@ export const getUserData = async (userId: string) => {
       return data;
     }
   } catch (error) {
-    throw error;
+    console.log("Get user data failed: ", error);
   }
 };
