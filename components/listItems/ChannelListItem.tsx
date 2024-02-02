@@ -33,12 +33,12 @@ const ChannelListItem = ({ channel }: { channel: SearchedChannelType }) => {
           <div className="text-sm cursor-pointer text-subtitle-color">
             {numberCounter(channel.subCount) + " Subscribers"} - {channel.channelHandle}
           </div>
-          <div className="mt-2 text-sm text-gray-400 text-trim text-lines-2">
+          <div className="mt-2 text-sm text-neutral-400 text-trim text-lines-2">
             {channel.description}
           </div>
         </div>
       </Link>
-      <hr className="w-full mb-2 border-t border-gray-300 dark:border-gray-600" />
+      <hr className="w-full mb-2 border-t border-neutral-300 dark:border-neutral-600" />
     </>
   );
 };

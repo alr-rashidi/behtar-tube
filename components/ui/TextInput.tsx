@@ -10,7 +10,7 @@ const TextInput = forwardRef<HTMLInputElement, PropsType>(
       <input
         type="text"
         ref={ref}
-        className={`${classNameProp} bg-slate-200 p-3 dark:bg-slate-800 text-sm h-full rounded-lg hover:brightness-95 focus:brightness-90 border border-transparent focus:border-gray-500 delay-75 disabled:text-gray-400 disabled:cursor-not-allowed`}
+        className={`${classNameProp} bg-neutral-200 p-3 dark:bg-neutral-800 text-sm h-full rounded-lg hover:brightness-95 focus:brightness-90 border border-transparent focus:border-neutral-500 delay-75 disabled:text-neutral-400 disabled:cursor-not-allowed`}
         {...attributes}
       />
     );

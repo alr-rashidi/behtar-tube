@@ -87,7 +87,7 @@ export default function Avatar({
               </div>
             </Link>
           )
-          : <div className={`bg-slate-200 dark:bg-slate-800 rounded-full w-20 h-20`} />}
+          : <div className={`bg-neutral-200 dark:bg-neutral-800 rounded-full w-20 h-20`} />}
         <label className="cursor-pointer rounded-lg" htmlFor="single">
           {uploading ? "Uploading ..." : (
             <Button className="flex flex-row gap-0.5 items-center p-1">

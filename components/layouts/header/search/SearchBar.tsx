@@ -51,7 +51,7 @@ const SearchBar = () => {
   return (
     <div className="flex flex-row h-full lg:ltr:ml-20 lg:rtl:mr-20" dir="ltr">
       <Button
-        className="flex items-center justify-center w-16 rounded-r-none border border-gray-300 dark:border-gray-700"
+        className="flex items-center justify-center w-16 rounded-r-none border border-neutral-300 dark:border-neutral-700"
         onClick={handleSearch}
       >
         <MdSearch className="w-5 h-5" />
@@ -60,7 +60,7 @@ const SearchBar = () => {
         <TextInput
           className={`h-full pl-10 pr-4 ${
             showSuggestion ? "peer" : null
-          } text-right transition active:scale-100 bg-[#eee] dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-l-none w-60 lg:w-96`}
+          } text-right transition active:scale-100 bg-[#eee] dark:bg-[#222] border border-neutral-300 dark:border-neutral-700 rounded-l-none w-60 lg:w-96`}
           placeholder="جستجو"
           value={inputText}
           onChange={(e: any) => handleChange(e)}

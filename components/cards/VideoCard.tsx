@@ -17,7 +17,7 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
       <Link
         href={`/video/${video.videoId}`}
         aria-label="imageBox"
-        className={`relative w-full cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl overflow-hidden`}
+        className={`relative w-full cursor-pointer bg-neutral-300 dark:bg-neutral-600 rounded-xl overflow-hidden`}
       >
         <Image
           src={video.videoThumbnails[3].url}
@@ -46,11 +46,11 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
         </Link>
         <Link
           href={`/channel/${video.videoId}/videos`}
-          className="text-sm text-gray-500 cursor-pointer hover:underline dark:text-gray-400"
+          className="text-sm text-neutral-500 cursor-pointer hover:underline dark:text-neutral-400"
         >
           {video.author}
         </Link>
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-sm text-neutral-500 dark:text-neutral-400">
           {numberCounter(video.viewCount)} views -&nbsp;
           {dateCounter(video.published)}
         </div>

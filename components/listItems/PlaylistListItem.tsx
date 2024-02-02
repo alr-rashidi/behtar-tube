@@ -13,7 +13,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
       <Link
         href={`/playlist/${playlist.playlistId}`}
         aria-label="imageBox"
-        className={`relative w-2/6 max-w-xs h-max flex-shrink-0 cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl`}
+        className={`relative w-2/6 max-w-xs h-max flex-shrink-0 cursor-pointer bg-neutral-300 dark:bg-neutral-600 rounded-xl`}
       >
         <Image
           src={playlist.playlistThumbnail}
@@ -21,7 +21,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`bg- absolute -top-1.5 left-1/2 w-11/12 h-[4px] -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-700 opacity-70 rounded-t-xl`}
+          className={`bg- absolute -top-1.5 left-1/2 w-11/12 h-[4px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-70 rounded-t-xl`}
         />
         <Image
           src={playlist.playlistThumbnail}
@@ -29,7 +29,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`absolute -top-2 left-1/2 w-5/6 h-[3px] -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-700 opacity-50 rounded-t-xl`}
+          className={`absolute -top-2 left-1/2 w-5/6 h-[3px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-50 rounded-t-xl`}
         />
         <Image
           src={playlist.playlistThumbnail}
@@ -37,7 +37,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`absolute -top-2.5 left-1/2 w-2/3 h-[2px] -translate-x-1/2 z-10 bg-gray-300 dark:bg-gray-700 opacity-30 rounded-t-xl`}
+          className={`absolute -top-2.5 left-1/2 w-2/3 h-[2px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-30 rounded-t-xl`}
         />
         <Image
           src={playlistValidVideos(playlist.videos)[0].videoThumbnails[0].url}
@@ -70,7 +70,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
             {playlist.author}
           </Link>
         </div>
-        <div className="text-sm text-gray-700 dark:text-gray-200">
+        <div className="text-sm text-neutral-700 dark:text-neutral-200">
           {playlist.videos.map((video) => (
             <div key={video.videoId}>
               {video.title} - {videoTimeFormater(video.lengthSeconds)}

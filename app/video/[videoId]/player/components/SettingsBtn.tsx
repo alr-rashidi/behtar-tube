@@ -55,7 +55,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
             </button>
             <div className="my-1">{setting.name}:</div>
             <div className="flex flex-col gap-1">
-              <hr className="my-1 border-gray-600" />
+              <hr className="my-1 border-neutral-600" />
               {setting.items.map((item) => {
                 if (item) {
                   return (

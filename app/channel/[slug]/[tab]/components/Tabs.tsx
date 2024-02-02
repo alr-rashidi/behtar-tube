@@ -22,12 +22,12 @@ const Tabs = ({
   };
 
   return (
-    <div className="flex flex-row overflow-x-scroll border-b border-gray-600 text-subtitle-color">
+    <div className="flex flex-row overflow-x-scroll border-b border-neutral-600 text-subtitle-color">
       {removeInvalidTabs(tabs).map((tab) => (
         <Link
           key={tab}
           href={`/channel/${channelId}/${tab}`}
-          className={`px-4 py-2 transition border-gray-500 hover:border-b ${
+          className={`px-4 py-2 transition border-neutral-500 hover:border-b ${
             tab == activeTab
             && "dark:text-white text-black border-b dark:border-white border-black"
           }`}

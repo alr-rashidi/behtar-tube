@@ -61,7 +61,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
       </div>
 
       <div className="flex flex-col gap-3 px-2 xl:w-96">
-        <p className="text-xl font-bold text-gray-400">Recommended videos:</p>
+        <p className="text-xl font-bold text-neutral-400">Recommended videos:</p>
         {data.recommendedVideos.map((video) => (
           <VideoListItem
             key={video.videoId}

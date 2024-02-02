@@ -18,7 +18,7 @@ const VideoListItem = ({ video, size }: PropsType) => {
         aria-label="imageBox"
         className={`relative ${
           size == "small" ? "w-32" : "w-2/6 max-w-xs"
-        } h-max flex-shrink-0 cursor-pointer bg-gray-300 dark:bg-gray-600 ${
+        } h-max flex-shrink-0 cursor-pointer bg-neutral-300 dark:bg-neutral-600 ${
           size == "small" ? "rounded-lg" : "rounded-xl"
         } overflow-hidden`}
       >

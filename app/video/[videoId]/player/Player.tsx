@@ -263,7 +263,7 @@ const Player = ({ data }: { data: DetailedVideoType }) => {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-xl bg-gray-500 ${!showControls ? "cursor-none" : "cursor-auto"}`}
+      className={`relative overflow-hidden rounded-xl bg-neutral-500 ${!showControls ? "cursor-none" : "cursor-auto"}`}
       ref={videoDivRef}
     >
       <ReactPlayer

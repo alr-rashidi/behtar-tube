@@ -31,7 +31,7 @@ const Button = ({ children, Theme, className: classNameProp, ...attributes }: Pr
       className={`${classNameProp} ${
         Theme
           ? `${Themes[Theme].light} ${Themes[Theme].dark} ${Themes[Theme].textLight} ${Themes[Theme].textDark}`
-          : "bg-slate-200 dark:bg-slate-800"
+          : "bg-neutral-200 dark:bg-neutral-800"
       } text-sm h-full rounded-lg hover:brightness-95 active:brightness-90 delay-75 active:scale-95 px-2`}
       {...attributes}
     >
