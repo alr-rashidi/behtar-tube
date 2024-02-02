@@ -5,6 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useContext, useState } from "react";
+import { MdInfo } from "react-icons/md";
 
 export default function AuthForm() {
   const supabase = createClientComponentClient<Database>();
@@ -56,8 +57,12 @@ export default function AuthForm() {
         : null}
       {selectedTab == 2
         ? (
-          <div className="flex-col gap-2">
-            <div>Magic links are a form of passwordless logins where users click on a link sent to their email address to log in to their accounts. Magic links only work with email addresses and are one-time use only</div>
+          <div className="flex flex-col gap-4 pt-2">
+            <div className="flex flex-row gap-2 p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+              <MdInfo className="w-14 h-10" />
+              Magic links are a form of passwordless logins where users click on a link sent to their email address to
+              log in to their accounts. Magic links only work with email addresses and are one-time use only
+            </div>
             <Auth
               view="magic_link"
               supabaseClient={supabase}
