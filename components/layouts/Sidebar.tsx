@@ -47,7 +47,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`absolute z-40 tranneutral-x-0 transition md:opacity-0 md:pointer-events-none left-0 right-0 top-0 bottom-0 opacity-0 pointer-events-none ${
+        className={`absolute z-40 translate-x-0 transition md:opacity-0 md:pointer-events-none left-0 right-0 top-0 bottom-0 opacity-0 pointer-events-none ${
           sidebarState && "pointer-events-auto opacity-60"
         } bg-black w-full`}
         onClick={() => toggleSidebar(false)}
@@ -55,10 +55,10 @@ const Sidebar = () => {
         &nbsp;
       </div>
       <div
-        className={`z-40 py-1 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:tranneutral-x-0 md:rtl:tranneutral-x-0 ${
+        className={`z-40 py-1 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:translate-0 md:rtl:trtranslate ${
           sidebarState
-            ? "tranneutral-x-0"
-            : "ltr:-tranneutral-x-full rtl:tranneutral-x-full"
+            ? "translate-0"
+            : "ltr:-translate-full rtl:trtranslateull"
         } md:rtl:right-0 md:ltr:left-0 top-0 h-full text-right`}
       >
         <Logo showMenuIcon />

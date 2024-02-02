@@ -21,7 +21,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`bg- absolute -top-1.5 left-1/2 w-11/12 h-[4px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-70 rounded-t-xl`}
+          className={`bg- absolute -top-1.5 left-1/2 w-11/12 h-[4px] -translate-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-70 rounded-t-xl`}
         />
         <Image
           src={playlist.playlistThumbnail}
@@ -29,7 +29,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`absolute -top-2 left-1/2 w-5/6 h-[3px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-50 rounded-t-xl`}
+          className={`absolute -top-2 left-1/2 w-5/6 h-[3px] -translate-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-50 rounded-t-xl`}
         />
         <Image
           src={playlist.playlistThumbnail}
@@ -37,7 +37,7 @@ const PlaylistListItem = ({ playlist }: { playlist: SearchedPlayListType }) => {
           height={1}
           aria-label="imageBox"
           alt=""
-          className={`absolute -top-2.5 left-1/2 w-2/3 h-[2px] -tranneutral-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-30 rounded-t-xl`}
+          className={`absolute -top-2.5 left-1/2 w-2/3 h-[2px] -translate-x-1/2 z-10 bg-neutral-300 dark:bg-neutral-700 opacity-30 rounded-t-xl`}
         />
         <Image
           src={playlistValidVideos(playlist.videos)[0].videoThumbnails[0].url}

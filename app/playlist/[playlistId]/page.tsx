@@ -24,7 +24,7 @@ const page = async ({ params }: any) => {
                 src={validVideos[0].videoThumbnails[0].url}
                 width={validVideos[0].videoThumbnails[0].width}
                 height={validVideos[0].videoThumbnails[0].height}
-                className="absolute left-1/2 -tranneutral-x-1/2 -top-20 w-5/6 mx-auto scale-[130%] loadingBg rounded-2xl blur-3xl"
+                className="absolute left-1/2 -translate-x-1/2 -top-20 w-5/6 mx-auto scale-[130%] loadingBg rounded-2xl blur-3xl"
                 alt="Playlist Thumbnail"
               />
               <Image

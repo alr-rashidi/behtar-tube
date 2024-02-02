@@ -66,24 +66,24 @@ const TimelineInput = ({ videoRef, audioRef, currentTime }: PropsType) => {
       <div
         aria-label="timeline background bar"
         ref={timelineBGRef}
-        className="absolute left-0 w-full my-auto h-1 bg-neutral-500 border-white pointer-events-none top-1/2 -tranneutral-y-1/2"
+        className="absolute left-0 w-full my-auto h-1 bg-neutral-500 border-white pointer-events-none top-1/2 -translate-y-1/2"
       >
       </div>
       <div
         aria-label="timeline buffered bar"
         ref={timelineBufferedRef}
-        className="absolute left-0 h-1 bg-neutral-300 border-white pointer-events-none top-1/2 -tranneutral-y-1/2"
+        className="absolute left-0 h-1 bg-neutral-300 border-white pointer-events-none top-1/2 -translate-y-1/2"
       >
       </div>
       <div
         aria-label="timeline watched bar"
         ref={timelineWatchedRef}
-        className="absolute left-0 h-1 bg-red-500 border-white pointer-events-none top-1/2 -tranneutral-y-1/2"
+        className="absolute left-0 h-1 bg-red-500 border-white pointer-events-none top-1/2 -translate-y-1/2"
       >
       </div>
       <div
         ref={timelineThumbRef}
-        className="absolute left-0 w-4 h-4 transition -tranneutral-y-1/2 bg-red-800 border border-red-400 border-opacity-0 rounded-full pointer-events-none peer-active:border-opacity-100 peer-active:scale-125 top-1/2"
+        className="absolute left-0 w-4 h-4 transition -translate-y-1/2 bg-red-800 border border-red-400 border-opacity-0 rounded-full pointer-events-none peer-active:border-opacity-100 peer-active:scale-125 top-1/2"
       />
     </div>
   );
