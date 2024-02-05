@@ -87,11 +87,29 @@ export const subscribeChannel = async (channelId: string) => {
   try {
     const { error } = await supabase
       .from("subscribes")
-      .insert({subscribed_id: channelId});
+      .insert({ subscribed_id: channelId });
 
     if (error) {
       throw error;
     }
+  } catch (error) {
+    console.log("Deleting image failed: ", error);
+  }
+};
+
+export const checkSubscribed = async (userId: string, channelId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("subscribes")
+      .select()
+      .eq("user_id", userId)
+      .eq("subscribed_id", channelId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+    return data ? true : false;
   } catch (error) {
     console.log("Deleting image failed: ", error);
   }
