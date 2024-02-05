@@ -93,7 +93,23 @@ export const subscribeChannel = async (channelId: string) => {
       throw error;
     }
   } catch (error) {
-    console.log("Deleting image failed: ", error);
+    console.log("Subscribe failed: ", error);
+  }
+};
+
+export const unsubscribeChannel = async (userId: string, channelId: string) => {
+  try {
+    const { error } = await supabase
+      .from("subscribes")
+      .delete()
+      .eq("user_id", userId)
+      .eq("subscribed_id", channelId);
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.log("Unsubscribe failed: ", error);
   }
 };
 
@@ -111,6 +127,6 @@ export const checkSubscribed = async (userId: string, channelId: string) => {
     }
     return data ? true : false;
   } catch (error) {
-    console.log("Deleting image failed: ", error);
+    console.log("Check subscribe failed: ", error);
   }
 };
