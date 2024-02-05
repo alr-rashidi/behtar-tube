@@ -1,6 +1,10 @@
 import { getChannelInfo } from "@/api/getYTData";
+import Button from "@/components/ui/Button";
 import { ChannelType } from "@/types";
+import { Database } from "@/types/supabase";
 import numberCounter from "@/utils/numberCounter";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import React from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -10,7 +14,12 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   const channelId = params.slug;
   const tab = params.tab;
 
+  const supabase = createServerComponentClient<Database>({ cookies });
+
   const data: ChannelType = await getChannelInfo(channelId);
+  const {
+    data: { user: userAuth },
+  } = await supabase.auth.getUser();
 
   // Switch/Case bad support in NextJS
   const SelectedTabPage = ({ channelId }: { channelId: string }) => {
@@ -59,7 +68,9 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
             </div>
           )}
           <div>
-            <SubscribeBtn channelId={data.authorId} />
+            {userAuth
+              ? <SubscribeBtn userId={userAuth!.id} channelId={data.authorId} />
+              : <Button className="!p-3" disabled>Need login your account to subscribe</Button>}
           </div>
         </div>
       </div>
