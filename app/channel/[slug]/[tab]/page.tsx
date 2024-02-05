@@ -4,7 +4,7 @@ import numberCounter from "@/utils/numberCounter";
 import Image from "next/image";
 import React from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { Community, Playlists, Shorts, Streams, Tabs, Videos } from "./components/";
+import { Community, Playlists, Shorts, Streams, SubscribeBtn, Tabs, Videos } from "./components/";
 
 const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   const channelId = params.slug;
@@ -59,7 +59,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
             </div>
           )}
           <div>
-            {/* <button className="subButton">Subscribe</button> */}
+            <SubscribeBtn channelId={data.authorId} />
           </div>
         </div>
       </div>

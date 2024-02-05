@@ -7,7 +7,7 @@ type PropsType = {
   [key: string]: any;
 };
 
-type ThemesNamesType = "red";
+type ThemesNamesType = "red" | "sharp";
 
 type ThemesType = {
   [key: string]: {
@@ -21,6 +21,12 @@ const Themes: ThemesType = {
   red: {
     light: "bg-red-200",
     dark: "dark:bg-red-800",
+  },
+  sharp: {
+    light: "bg-neutral-900",
+    dark: "dark:bg-neutral-200",
+    textLight: "text-white",
+    textDark: "dark:text-black"
   },
 };
 
