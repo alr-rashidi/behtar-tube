@@ -32,7 +32,7 @@ export default async function RootLayout({
     data: { user: userAuth },
   } = await supabase.auth.getUser();
 
-  let userInfo;
+  let userInfo: Database["public"]["Tables"]["profiles"]["Row"] | undefined;
   if (userAuth) {
     userInfo = await getUserData(userAuth!.id);
   }
