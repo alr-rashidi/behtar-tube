@@ -82,3 +82,17 @@ export const deleteProfilePic = async (path: string) => {
     console.log("Deleting image failed: ", error);
   }
 };
+
+export const subscribeChannel = async (channelId: string) => {
+  try {
+    const { error } = await supabase
+      .from("subscribes")
+      .insert({subscribed_id: channelId});
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.log("Deleting image failed: ", error);
+  }
+};
