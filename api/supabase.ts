@@ -130,3 +130,19 @@ export const checkSubscribed = async (userId: string, channelId: string) => {
     console.log("Check subscribe failed: ", error);
   }
 };
+
+export const getSubscribesList = async (userId: string, channelId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("subscribes")
+      .select()
+      .eq("user_id", userId);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    console.log("Check subscribe failed: ", error);
+  }
+};
