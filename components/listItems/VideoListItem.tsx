@@ -8,9 +8,10 @@ import React from "react";
 
 type PropsType = {
   video: VideoType;
+  showDescription?: boolean;
   size?: "small";
 };
-const VideoListItem = ({ video, size }: PropsType) => {
+const VideoListItem = ({ video, size, showDescription }: PropsType) => {
   return (
     <div className="flex flex-row gap-5">
       <Link
@@ -58,7 +59,9 @@ const VideoListItem = ({ video, size }: PropsType) => {
           {video.viewCount ? numberCounter(video.viewCount) + " views" : null}
           {video.published ? ` - ${dateCounter(video.published)}` : null}
         </div>
-        <div>{video.description}</div>
+        {showDescription
+          ? <div className="text-sm text-neutral-500">{video.description}</div>
+          : null}
       </div>
     </div>
   );
