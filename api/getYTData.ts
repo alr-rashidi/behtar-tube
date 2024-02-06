@@ -1,5 +1,5 @@
 import getYTData from "@/lib/fetchData";
-import { TrendVideoCategories } from "@/types";
+import { TrendVideoCategories, VideoType } from "@/types";
 
 // export const instance = "https://vid.puffyan.us";
 export const instance = "https://yt.artemislena.eu";
@@ -53,7 +53,10 @@ export const getPlaylistData = async (query: string, signal?: AbortSignal) => {
   return await getYTData(`${instance}/api/v1/playlists/${query}`, signal);
 };
 
-export const getChannelVideos = async (query: string, signal?: AbortSignal) => {
+export const getChannelVideos = async (
+  query: string,
+  signal?: AbortSignal,
+): Promise<{ continuation: string; videos: VideoType[] }> => {
   return await getYTData(`${instance}/api/v1/channels/${query}/videos/`, signal);
 };
 
