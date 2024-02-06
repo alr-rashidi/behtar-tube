@@ -4,7 +4,7 @@ import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useContext } from "react";
 import { IconType } from "react-icons";
-import { MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
+import { MdGroup, MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
 import Logo from "./header/Logo";
 
 type itemType = {
@@ -12,7 +12,10 @@ type itemType = {
   icon: IconType;
 };
 
-const Sidebar = () => {
+type PropsType = {
+  userAuth: any;
+};
+const Sidebar = ({ userAuth }: PropsType) => {
   const items: itemType[] = [
     { id: "trending", icon: MdStar },
     { id: "gaming", icon: MdVideogameAsset },
@@ -72,6 +75,19 @@ const Sidebar = () => {
               onClick={handleClickItem}
             />
           ))}
+          {userAuth
+            ? (
+              <>
+                <Divider />
+                <SidebarItem
+                  itemId={"subscribes"}
+                  Icon={MdGroup}
+                  selected={"/subscribes" == pathname}
+                  onClick={handleClickItem}
+                />
+              </>
+            )
+            : null}
           <Divider />
           <SidebarItem
             itemId={"settings"}
@@ -111,6 +127,6 @@ const SidebarItem = ({
   </button>
 );
 
-const Divider = () => <hr className="border-neutral-200 dark:border-neutral-800 my-2 border" />;
+const Divider = () => <hr className="my-2 border border-neutral-200 dark:border-neutral-800" />;
 
 export default Sidebar;
