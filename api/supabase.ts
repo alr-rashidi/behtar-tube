@@ -131,7 +131,7 @@ export const checkSubscribed = async (userId: string, channelId: string) => {
   }
 };
 
-export const getSubscribesList = async (userId: string, channelId: string) => {
+export const getSubscribesList = async (userId: string) => {
   try {
     const { data, error } = await supabase
       .from("subscribes")
