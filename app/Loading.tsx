@@ -1,6 +1,9 @@
 import React from "react";
 
-const Loading = () => {
+type PropsType = {
+  text?: string;
+};
+const Loading = ({ text }: PropsType) => {
   return (
     <div role="status" className="mx-auto my-auto flex flex-col gap-2 justify-center items-center">
       <svg
@@ -20,7 +23,7 @@ const Loading = () => {
         />
       </svg>
       <span className="sr-only">Loading</span>
-      <span className="dark:text-neutral-200 text-neutral-800">Loading...</span>
+      <span className="dark:text-neutral-200 text-neutral-800">{text ? text : "Loading..."}</span>
     </div>
   );
 };
