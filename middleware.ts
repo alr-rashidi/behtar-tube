@@ -12,6 +12,9 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getUser();
 
   // if user is not signed in and the current path is /account redirect the user to /login
+  if (!user && req.nextUrl.pathname === "/subscribes") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }// if user is not signed in and the current path is /account redirect the user to /login
   if (!user && req.nextUrl.pathname === "/account") {
     return NextResponse.redirect(new URL("/login", req.url));
   }
@@ -24,5 +27,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/account"],
+  matcher: ["/login", "/account", "/subscribes"],
 };
