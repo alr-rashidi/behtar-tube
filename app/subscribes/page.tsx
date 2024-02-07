@@ -55,7 +55,7 @@ const Page = () => {
 
   return (
     <div>
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 p-4">
         {videos.data?.map(item => (
           <li key={item.title}>
             <VideoListItem video={item} />
