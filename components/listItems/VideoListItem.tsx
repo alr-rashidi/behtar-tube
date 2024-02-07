@@ -43,7 +43,7 @@ const VideoListItem = ({ video, size, showDescription }: PropsType) => {
       >
         <Link
           href={`/video/${video.videoId}`}
-          className={`text-trim text-lines-1 max-h-12  ${size == "small" ? "text-sm" : "text-base"}`}
+          className={`text-trim text-lines-1 max-h-12 ${video.title.length < 50 ? 'text-sm' : 'text-xs'} ${size == "small" ? "sm:text-xs" : "sm:text-base"} `}
         >
           {video.title}
         </Link>
