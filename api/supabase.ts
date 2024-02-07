@@ -131,11 +131,12 @@ export const checkSubscribed = async (userId: string, channelId: string) => {
   }
 };
 
-export const getSubscribesList = async (userId: string) => {
+export const getSubscribesList = async (userId: string, signal: AbortSignal) => {
   try {
     const { data, error } = await supabase
       .from("subscribes")
       .select()
+      .abortSignal(signal)
       .eq("user_id", userId);
 
     if (error) {
