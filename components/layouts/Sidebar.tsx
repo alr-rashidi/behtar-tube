@@ -61,7 +61,7 @@ const Sidebar = ({ userAuth }: PropsType) => {
         className={`z-40 py-1 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:translate-0 md:rtl:trtranslate ${
           sidebarState
             ? "translate-0"
-            : "ltr:-translate-full rtl:trtranslateull"
+            : "ltr:-translate-x-full rtl:translate-x-full"
         } md:rtl:right-0 md:ltr:left-0 top-0 h-full text-right`}
       >
         <Logo showMenuIcon />
