@@ -43,7 +43,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
         width={data.authorBanners[1].width}
         height={data.authorBanners[1].height}
         alt="Channel thumbnail"
-        className="w-full bg-neutral-500 md:rounded-xl"
+        className="w-full bg-neutral-500 sm:rounded-xl"
       />
       <div className="flex flex-row gap-4 p-4">
         <Image
