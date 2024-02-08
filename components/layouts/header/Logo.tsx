@@ -14,14 +14,16 @@ const Logo = ({ showMenuIcon }: PropsType) => {
 
   return (
     <div className="flex flex-row items-center py-2 text-lg font-bold">
-      {showMenuIcon ? (
-        <button
-          className="block pl-2 md:hidden"
-          onClick={() => toggleSidebar()}
-        >
-          <MdMenu className="w-8 h-8" />
-        </button>
-      ) : null}
+      {showMenuIcon
+        ? (
+          <button
+            className="block pl-2 md:hidden"
+            onClick={() => toggleSidebar()}
+          >
+            <MdMenu className="w-8 h-8" />
+          </button>
+        )
+        : null}
       <Link href={"/"} className="flex flex-row items-center gap-1 pl-2 pr-1">
         <FaYoutube color="red" className="w-8 h-8" />
         <div className="max-h-fit">BehtarTube</div>

@@ -1,10 +1,10 @@
-import React from "react";
-import { Metadata } from "next";
-import { searchDataType } from "@/types";
 import { getSearchData } from "@/api/getYTData";
+import { ErrorCard } from "@/components/cards/";
+import { searchDataType } from "@/types";
+import { Metadata } from "next";
+import React from "react";
 import InfiniteScroll from "./InfiniteScroll";
 import MapSearchData from "./MapSearchData";
-import { ErrorCard } from "@/components/cards/";
 
 export function generateMetadata({
   searchParams,
@@ -23,13 +23,15 @@ const page = async ({ params, searchParams }: any) => {
   const data: searchDataType | null = await getSearchData(query);
 
   return (
-    <div className="container flex flex-col gap-6 p-4">
-      {data?.[0] ? (
-        <>
-          <MapSearchData data={data} />
-          <InfiniteScroll key={query} query={query} />
-        </>
-      ) : <ErrorCard />}
+    <div className="container flex flex-col gap-6 px-4">
+      {data?.[0]
+        ? (
+          <>
+            <MapSearchData data={data} />
+            <InfiniteScroll key={query} query={query} />
+          </>
+        )
+        : <ErrorCard />}
     </div>
   );
 };

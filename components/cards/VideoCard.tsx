@@ -1,10 +1,10 @@
 import { VideoType } from "@/types";
-import Image from "next/image";
-import React from "react";
-import videoTimeFormater from "@/utils/videoTimeFormater";
-import numberCounter from "@/utils/numberCounter";
-import Link from "next/link";
 import dateCounter from "@/utils/dateCounter";
+import numberCounter from "@/utils/numberCounter";
+import videoTimeFormater from "@/utils/videoTimeFormater";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 type ParamsType = { video: VideoType; type?: "short" };
 
@@ -17,24 +17,18 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
       <Link
         href={`/video/${video.videoId}`}
         aria-label="imageBox"
-        className={`relative w-full cursor-pointer bg-gray-300 dark:bg-gray-600 rounded-xl overflow-hidden`}
+        className={`relative w-full cursor-pointer bg-neutral-300 dark:bg-neutral-600 rounded-xl overflow-hidden`}
       >
         <Image
           src={video.videoThumbnails[3].url}
-          width={
-            videoType == "short"
-              ? video.videoThumbnails[2].width
-              : video.videoThumbnails[4].width
-          }
-          height={
-            videoType == "short"
-              ? video.videoThumbnails[2].height
-              : video.videoThumbnails[4].height
-          }
+          width={videoType == "short"
+            ? video.videoThumbnails[2].width
+            : video.videoThumbnails[4].width}
+          height={videoType == "short"
+            ? video.videoThumbnails[2].height
+            : video.videoThumbnails[4].height}
           alt="Video image"
-          className={`object-cover ${
-            videoType == "short" ? "aspect-[9/16]" : "aspect-[16/9]"
-          } w-full`}
+          className={`object-cover ${videoType == "short" ? "aspect-[9/16]" : "aspect-[16/9]"} w-full`}
         />
         <div
           aria-label="videoLengthSeconds"
@@ -52,11 +46,11 @@ const VideoCard = ({ video, type: videoType }: ParamsType) => {
         </Link>
         <Link
           href={`/channel/${video.videoId}/videos`}
-          className="text-sm text-gray-500 cursor-pointer hover:underline dark:text-gray-400"
+          className="text-sm text-neutral-500 cursor-pointer hover:underline dark:text-neutral-400"
         >
           {video.author}
         </Link>
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-sm text-neutral-500 dark:text-neutral-400">
           {numberCounter(video.viewCount)} views -&nbsp;
           {dateCounter(video.published)}
         </div>

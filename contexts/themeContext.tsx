@@ -9,8 +9,10 @@ type themeContextType = {
   switchTheme: Function;
 };
 
-export const themeContext: React.Context<themeContextType> =
-  createContext<themeContextType>({ theme: "dark", switchTheme: () => {} });
+export const themeContext: React.Context<themeContextType> = createContext<themeContextType>({
+  theme: "dark",
+  switchTheme: () => {},
+});
 
 type PropsType = {
   children: React.ReactNode;
@@ -20,7 +22,6 @@ export const ThemeProvider = ({ children }: PropsType) => {
   const [selectedTheme, setSelectedTheme] = useState<themeType>("dark");
 
   const switchTheme = () => {
-    
     setSelectedTheme(selectedTheme == "dark" ? "light" : "dark");
   };
 

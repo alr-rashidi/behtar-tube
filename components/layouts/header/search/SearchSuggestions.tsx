@@ -48,7 +48,7 @@ const SearchSuggestions = ({ inputText }: PropsType) => {
           data?.suggestions
           && data.suggestions.map((item, index) => (
             <li
-              className={`text-trim text-lines-1 border-gray-300 dark:border-gray-700 ${
+              className={`text-trim text-lines-1 border-neutral-300 dark:border-neutral-700 ${
                 index + 1 != data.suggestions.length ? "border-b" : ""
               } py-0.5`}
               key={item}

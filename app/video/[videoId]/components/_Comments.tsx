@@ -1,9 +1,9 @@
 "use client";
 
-import CommentCard from "@/components/cards/CommentCard";
 import { getCommentsData } from "@/api/getYTData";
-import numberCounter from "@/utils/numberCounter";
+import CommentCard from "@/components/cards/CommentCard";
 import { CommentsType, DetailedVideoType } from "@/types";
+import numberCounter from "@/utils/numberCounter";
 import React, { useEffect, useState } from "react";
 
 const Comments = ({ data: propData }: { data: DetailedVideoType }) => {
@@ -54,9 +54,7 @@ const Comments = ({ data: propData }: { data: DetailedVideoType }) => {
           {numberCounter(data.commentCount ? data.commentCount : 0)} Comments
         </div>
         <div>
-          {data.comments.map(comment => (
-            <CommentCard key={comment.commentId} comment={comment} />
-          ))}
+          {data.comments.map(comment => <CommentCard key={comment.commentId} comment={comment} />)}
           {/* <InfiniteScroll videoId={propData.videoId} /> */}
         </div>
       </div>

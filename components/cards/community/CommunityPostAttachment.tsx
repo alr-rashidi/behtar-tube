@@ -1,7 +1,7 @@
-import { CommunityPostAttachmentType, ImageObjectType } from "@/types";
 import { PlaylistListItem, VideoListItem } from "@/components/listItems";
-import Image from "next/image";
+import { CommunityPostAttachmentType, ImageObjectType } from "@/types";
 import numberCounter from "@/utils/numberCounter";
+import Image from "next/image";
 
 const Attachment = ({
   attachment,
@@ -14,7 +14,7 @@ const Attachment = ({
         src={image[0].url}
         width={image[0].width}
         height={image[0].height}
-        className="bg-gray-600 min-w-[5rem] w-fit rounded-xl"
+        className="bg-neutral-600 min-w-[5rem] w-fit rounded-xl"
         alt="Attachment image"
       />
       <div className="absolute bottom-0 flex flex-row max-w-full gap-2 px-2 pb-2 overflow-x-scroll rtl:right-0 ltr:left-0">
@@ -43,9 +43,7 @@ const Attachment = ({
     } else if (attachment.type == "multiImage") {
       return (
         <div className="relative">
-          {attachment.images.map((image) => (
-            <ImageAttachmentElement key={image[0].url} image={image} />
-          ))}
+          {attachment.images.map((image) => <ImageAttachmentElement key={image[0].url} image={image} />)}
         </div>
       );
     } else if (attachment.type == "poll") {
@@ -59,7 +57,7 @@ const Attachment = ({
             {attachment.choices.map((choice) => (
               <div
                 key={choice.text}
-                className="flex-grow p-2 border border-gray-300 dark:border-gray-600"
+                className="flex-grow p-2 border border-neutral-300 dark:border-neutral-600"
               >
                 <div className="flex flex-row items-center gap-2 cursor-default whitespace-nowrap">
                   {choice.image && (

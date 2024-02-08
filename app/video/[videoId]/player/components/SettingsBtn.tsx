@@ -21,7 +21,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
   };
 
   return (
-    <DivWithHelpBubble text="Settings" bubbleClassName={`bottom-10 ${showSettings ? 'hidden' : ''}`}>
+    <DivWithHelpBubble text="Settings" bubbleClassName={`bottom-10 ${showSettings ? "hidden" : ""}`}>
       <MdSettings className="w-8 h-full px-1 cursor-pointer peer" onClick={handleSettingsClick} />
       <div
         className={`absolute bottom-10 right-0 min-w-[10rem] transition w-min min-h-40 overflow-y-scroll max-h-60 overflow-scroll flex flex-row py-2 gap-1 bg-black bg-opacity-80 rounded-t-xl ${
@@ -55,7 +55,7 @@ const SettingsBtn = ({ settings, setVideoSelectedSettings }: PropsType) => {
             </button>
             <div className="my-1">{setting.name}:</div>
             <div className="flex flex-col gap-1">
-              <hr className="my-1 border-gray-600" />
+              <hr className="my-1 border-neutral-600" />
               {setting.items.map((item) => {
                 if (item) {
                   return (

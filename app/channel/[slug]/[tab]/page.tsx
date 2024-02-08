@@ -1,16 +1,25 @@
 import { getChannelInfo } from "@/api/getYTData";
+import Button from "@/components/ui/Button";
 import { ChannelType } from "@/types";
+import { Database } from "@/types/supabase";
 import numberCounter from "@/utils/numberCounter";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import React from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { Community, Playlists, Shorts, Streams, Tabs, Videos } from "./components/";
+import { Community, Playlists, Shorts, Streams, SubscribeBtn, Tabs, Videos } from "./components/";
 
 const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   const channelId = params.slug;
   const tab = params.tab;
 
+  const supabase = createServerComponentClient<Database>({ cookies });
+
   const data: ChannelType = await getChannelInfo(channelId);
+  const {
+    data: { user: userAuth },
+  } = await supabase.auth.getUser();
 
   // Switch/Case bad support in NextJS
   const SelectedTabPage = ({ channelId }: { channelId: string }) => {
@@ -28,13 +37,13 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   };
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col px-0 md:px-4">
       <Image
         src={data.authorBanners[1].url}
         width={data.authorBanners[1].width}
         height={data.authorBanners[1].height}
         alt="Channel thumbnail"
-        className="w-full bg-gray-500 md:rounded-xl"
+        className="w-full bg-neutral-500 sm:rounded-xl"
       />
       <div className="flex flex-row gap-4 p-4">
         <Image
@@ -42,7 +51,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
           width={data.authorThumbnails[4].width}
           height={data.authorThumbnails[4].height}
           alt="Profile pic"
-          className="w-1/3 h-fit max-w-[11rem] bg-gray-500 rounded-full"
+          className="w-1/3 h-fit max-w-[11rem] bg-neutral-500 rounded-full"
         />
         <div className="flex flex-col justify-center gap-2">
           <div className="text-3xl font-extrabold md:text-4xl">{data.author}</div>
@@ -59,7 +68,9 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
             </div>
           )}
           <div>
-            {/* <button className="subButton">Subscribe</button> */}
+            {userAuth
+              ? <SubscribeBtn userId={userAuth!.id} channelId={data.authorId} />
+              : <Button className="!p-3" disabled>Need login your account to subscribe</Button>}
           </div>
         </div>
       </div>

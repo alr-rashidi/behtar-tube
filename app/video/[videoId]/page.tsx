@@ -1,14 +1,14 @@
 import { getVideoData } from "@/api/getYTData";
 import { DetailedVideoType, VideoType } from "@/types";
 import "plyr-react/plyr.css";
-import React from "react";
-import Player from "./player/Player";
-import Image from "next/image";
 import { VideoListItem } from "@/components/listItems";
-import numberCounter from "@/utils/numberCounter";
 import dateCounter from "@/utils/dateCounter";
-import Description from "./components/Description";
+import numberCounter from "@/utils/numberCounter";
+import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import Description from "./components/Description";
+import Player from "./player/Player";
 // import Comments from "./components/Comments";
 
 const page = async ({ params }: { params: { videoId: string } }) => {
@@ -16,7 +16,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
   const data: DetailedVideoType = await getVideoData(videoId);
 
   return (
-    <div className="flex flex-col justify-center w-full gap-5 xl:flex-row">
+    <div className="flex flex-col justify-center w-full gap-5 xl:flex-row px-0 md:px-4">
       <div className="basis-2/3">
         <Player data={data} />
         <div aria-label="Info" className="flex flex-col gap-4 p-4">
@@ -54,16 +54,14 @@ const page = async ({ params }: { params: { videoId: string } }) => {
               {numberCounter(data.viewCount)} views -&nbsp;
               {dateCounter(data.published)}
             </div>
-            {data.description && (
-              <Description description={data.descriptionHtml} />
-            )}
+            {data.description && <Description description={data.descriptionHtml} />}
           </div>
           {/* <Comments data={data} /> */}
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 px-2 xl:w-96">
-        <p className="text-xl font-bold text-gray-400">Recommended videos:</p>
+      <div className="flex flex-col gap-3 px-4 xl:w-96">
+        <p className="text-xl px-2 font-bold text-neutral-400">Recommended videos:</p>
         {data.recommendedVideos.map((video) => (
           <VideoListItem
             key={video.videoId}

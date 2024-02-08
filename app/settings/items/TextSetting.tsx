@@ -52,7 +52,7 @@ const TextSetting = ({
             {helper}
           </Link>
         )
-        : <p className="mt-2 text-sm text-gray-500">{helper}</p>}
+        : <p className="mt-2 text-sm text-neutral-500">{helper}</p>}
     </div>
   );
 };

@@ -6,7 +6,7 @@ const nextConfig = {
         source: "/channel/:slug",
         destination: "/channel/:slug/videos",
         permanent: true,
-      }
+      },
     ];
   },
   images: {
@@ -40,6 +40,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "vid.puffyan.us",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
         pathname: "/**",
       },
     ],

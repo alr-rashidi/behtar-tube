@@ -10,10 +10,14 @@ const getYTData = async (
 
   try {
     const data = await response.json();
-    return data;
-  } catch (err) {
+    if (data.error) {
+      throw new Error(`YouTube API error: ${data.error}`);
+    } else {
+      return data;
+    }
+  } catch (err: any) {
     console.log("Get Data Error: ", err);
-    return null;
+    throw err.message;
   }
 };
 

@@ -1,8 +1,8 @@
+import Button from "@/components/ui/Button";
 import React from "react";
 import CheckboxSetting from "./items/CheckboxSetting";
-import TextSetting from "./items/TextSetting";
 import SelectSetting, { SelectSettingListType } from "./items/SelectSetting";
-import Button from "@/components/ui/Button";
+import TextSetting from "./items/TextSetting";
 
 const page = () => {
   const sectionClassName = "flex flex-col gap-3";

@@ -4,7 +4,7 @@ import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useContext } from "react";
 import { IconType } from "react-icons";
-import { MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
+import { MdGroup, MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
 import Logo from "./header/Logo";
 
 type itemType = {
@@ -12,7 +12,10 @@ type itemType = {
   icon: IconType;
 };
 
-const Sidebar = () => {
+type PropsType = {
+  userAuth: any;
+};
+const Sidebar = ({ userAuth }: PropsType) => {
   const items: itemType[] = [
     { id: "trending", icon: MdStar },
     { id: "gaming", icon: MdVideogameAsset },
@@ -57,7 +60,7 @@ const Sidebar = () => {
       <div
         className={`z-40 py-1 transition dark:bg-darkBG bg-white w-64 fixed md:ltr:translate-x-0 md:rtl:translate-x-0 ${
           sidebarState
-            ? "translate-x-0"
+            ? "translate-0"
             : "ltr:-translate-x-full rtl:translate-x-full"
         } md:rtl:right-0 md:ltr:left-0 top-0 h-full text-right`}
       >
@@ -72,6 +75,19 @@ const Sidebar = () => {
               onClick={handleClickItem}
             />
           ))}
+          {userAuth
+            ? (
+              <>
+                <Divider />
+                <SidebarItem
+                  itemId={"subscribes"}
+                  Icon={MdGroup}
+                  selected={"/subscribes" == pathname}
+                  onClick={handleClickItem}
+                />
+              </>
+            )
+            : null}
           <Divider />
           <SidebarItem
             itemId={"settings"}
@@ -111,6 +127,6 @@ const SidebarItem = ({
   </button>
 );
 
-const Divider = () => <hr className="border-gray-200 dark:border-gray-800 my-2 border" />;
+const Divider = () => <hr className="my-2 border border-neutral-200 dark:border-neutral-800" />;
 
 export default Sidebar;

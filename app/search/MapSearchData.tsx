@@ -1,8 +1,4 @@
-import {
-  ChannelListItem,
-  PlaylistListItem,
-  VideoListItem,
-} from "@/components/listItems";
+import { ChannelListItem, PlaylistListItem, VideoListItem } from "@/components/listItems";
 import { searchDataType } from "@/types";
 import React from "react";
 

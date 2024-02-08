@@ -3,18 +3,17 @@
 import Button from "@/components/ui/Button";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { themeContext } from "@/contexts/themeContext";
+import { Database } from "@/types/supabase";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  MdArrowBack,
-  MdOutlineAccountCircle,
-  MdOutlineDarkMode,
-  MdOutlineLightMode,
-  MdSearch,
-} from "react-icons/md";
+import { MdArrowBack, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from "react-icons/md";
 import Logo from "./Logo";
 import SearchBar from "./search/SearchBar";
+import LoginBtn from "./LoginBtn";
 
-const Header = () => {
+type PropsType = {
+  user: Database["public"]["Tables"]["profiles"]["Row"];
+};
+const Header = ({ user }: PropsType) => {
   const { theme, switchTheme } = useContext(themeContext);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [smallScreenSearching, setSmallScreenSearching] = useState<boolean>(false);
@@ -37,6 +36,7 @@ const Header = () => {
       window.removeEventListener("resize", windowWidthHandler);
     };
   }, [windowWidth]);
+
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 flex flex-row items-center justify-between h-12 py-2 transition bg-white md:h-14 dark:bg-darkBG">
@@ -61,14 +61,7 @@ const Header = () => {
                   ? <MdOutlineLightMode className="w-5 h-5" />
                   : <MdOutlineDarkMode className="w-5 h-5" />}
               </Button>
-              <Button
-                className="flex flex-row items-center gap-1"
-                onClick={() =>
-                  alert("Coming soon...")}
-              >
-                <MdOutlineAccountCircle className="w-6 h-6" />
-                <span className="text-sm md:text-base">Login</span>
-              </Button>
+              <LoginBtn user={user} />
             </div>
           </>
         )
