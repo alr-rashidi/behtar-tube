@@ -23,7 +23,7 @@ const page = async ({ params, searchParams }: any) => {
   const data: searchDataType | null = await getSearchData(query);
 
   return (
-    <div className="container flex flex-col gap-6 p-4">
+    <div className="container flex flex-col gap-6 px-4">
       {data?.[0]
         ? (
           <>

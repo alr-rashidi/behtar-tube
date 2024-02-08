@@ -16,7 +16,7 @@ const page = async ({ params }: { params: { videoId: string } }) => {
   const data: DetailedVideoType = await getVideoData(videoId);
 
   return (
-    <div className="flex flex-col justify-center w-full gap-5 xl:flex-row">
+    <div className="flex flex-col justify-center w-full gap-5 xl:flex-row px-0 md:px-4">
       <div className="basis-2/3">
         <Player data={data} />
         <div aria-label="Info" className="flex flex-col gap-4 p-4">
@@ -60,8 +60,8 @@ const page = async ({ params }: { params: { videoId: string } }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 px-2 xl:w-96">
-        <p className="text-xl font-bold text-neutral-400">Recommended videos:</p>
+      <div className="flex flex-col gap-3 px-4 xl:w-96">
+        <p className="text-xl px-2 font-bold text-neutral-400">Recommended videos:</p>
         {data.recommendedVideos.map((video) => (
           <VideoListItem
             key={video.videoId}

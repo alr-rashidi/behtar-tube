@@ -18,7 +18,7 @@ const page = async ({ params }: any) => {
     <div>
       {data
         ? (
-          <div className="flex flex-col px-4">
+          <div className="flex flex-col p-4">
             <div aria-label="imageBox" className="relative mb-10">
               <Image
                 src={validVideos[0].videoThumbnails[0].url}

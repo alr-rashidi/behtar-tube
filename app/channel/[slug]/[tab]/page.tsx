@@ -37,7 +37,7 @@ const page = async ({ params }: { params: { slug: string; tab: string } }) => {
   };
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col px-0 md:px-4">
       <Image
         src={data.authorBanners[1].url}
         width={data.authorBanners[1].width}
