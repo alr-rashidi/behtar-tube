@@ -71,7 +71,7 @@ const SearchBar = () => {
           <>
             <SearchSuggestions inputText={inputText} />
             <button
-              className="absolute top-0 left-0 w-10 h-10 p-2"
+              className="absolute top-0 left-0 w-10 h-full p-1 md:p-2"
               onClick={handleReset}
             >
               <MdClose className="w-full h-full" />
