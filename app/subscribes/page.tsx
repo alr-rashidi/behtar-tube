@@ -6,7 +6,7 @@ import { VideoListItem } from "@/components/listItems";
 import { VideoType } from "@/types";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Loading from "../Loading";
 import Pagination from "./components/Pagination";
 
@@ -21,6 +21,7 @@ const Page = () => {
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [videos, setVideos] = useState<VideosStateType>({ error: false, loading: true });
   const supabase = createClientComponentClient<Database>();
+  const videosPerPage = useMemo(() => 30, []);
 
   const getVideosList = useCallback(async (signal: AbortSignal) => {
     const {
@@ -34,7 +35,9 @@ const Page = () => {
 
       if (data?.videos) {
         setNumberOfPages(value =>
-          value != 0 ? Math.floor(value + (data.videos.length / 20)) : Math.floor(data.videos.length / 20)
+          value != 0
+            ? Math.floor(value + (data.videos.length / videosPerPage))
+            : Math.floor(data.videos.length / videosPerPage)
         );
 
         setVideos(value => {
@@ -49,9 +52,7 @@ const Page = () => {
       }
     });
     setVideos(value => ({ ...value, loading: false }));
-  }, [supabase.auth]);
-
-  
+  }, [supabase.auth, videosPerPage]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -68,7 +69,7 @@ const Page = () => {
     <div className="flex flex-col">
       <ul className="flex flex-col gap-4 p-4">
         {videos.data?.map((item, index) => {
-          if (index <= currentPage * 20) {
+          if (index > (currentPage - 1) * videosPerPage && index <= currentPage * videosPerPage) {
             return (
               <li key={item.title}>
                 <VideoListItem video={item} />

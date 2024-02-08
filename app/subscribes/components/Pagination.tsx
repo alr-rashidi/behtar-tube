@@ -8,25 +8,47 @@ type PropsType = {
 const Pagination = ({ currentPage, numberOfPages, setCurrentPage }: PropsType) => {
   type paginationItemsType = (number | "...")[];
   const [paginationItems, setPaginationItems] = useState<paginationItemsType>();
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleClickNumber = (item: number) => {
+    setCurrentPage(item);
+    scrollTop();
+  };
+  const handleClickNext = () => {
+    setCurrentPage(currentPage + 1);
+    scrollTop();
+  };
+  const handleClickPrev = () => {
+    setCurrentPage(currentPage - 1);
+    scrollTop();
+  };
+
   const calculatePaginationItems = useCallback(() => {
     let items: paginationItemsType = [1];
-    if (currentPage <= 4) {
-      for (let i = 2; i < numberOfPages && i < 4; i++) {
+    if (numberOfPages <= 6) {
+      for (let i = 2; i < numberOfPages && i <= 6; i++) {
         items.push(i);
       }
-      if (numberOfPages > 4) {
+    } else {
+      if (currentPage < 4) {
+        for (let i = 2; i < numberOfPages && i <= 4; i++) {
+          items.push(i);
+        }
+        items.push("...");
+      } else if (currentPage >= numberOfPages - 3) {
+        items.push("...");
+        items.push(numberOfPages - 4, numberOfPages - 3, numberOfPages - 2, numberOfPages - 1);
+      } else {
+        items.push("...");
+        items.push(currentPage - 1, currentPage);
+        if (currentPage < numberOfPages) {
+          items.push(currentPage + 1);
+        }
         items.push("...");
       }
-    } else if (currentPage >= numberOfPages - 3) {
-      items.push("...");
-      items.push(numberOfPages - 3, numberOfPages - 2, numberOfPages - 1);
-    } else {
-      items.push("...");
-      items.push(currentPage - 1, currentPage);
-      if (currentPage < numberOfPages) {
-        items.push(currentPage + 1);
-      }
-      items.push("...");
     }
     items.push(numberOfPages);
     setPaginationItems(items);
@@ -39,8 +61,9 @@ const Pagination = ({ currentPage, numberOfPages, setCurrentPage }: PropsType) =
     <nav className="flex justify-center items-center gap-x-1 p-4">
       <button
         type="button"
-        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-        disabled
+        onClick={handleClickPrev}
+        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-neutral-800 hover:bg-neutral-100 focus:outline-none focus:bg-neutral-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        disabled={currentPage == 1}
       >
         <svg
           className="flex-shrink-0 w-3.5 h-3.5"
@@ -66,8 +89,12 @@ const Pagination = ({ currentPage, numberOfPages, setCurrentPage }: PropsType) =
               <button
                 type="button"
                 key={item}
-                onClick={() => setCurrentPage(item)}
-                className="min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-600 dark:text-white dark:focus:bg-gray-500"
+                onClick={() => handleClickNumber(item)}
+                className={`${
+                  currentPage == item
+                    ? "bg-neutral-300 dark:bg-neutral-700 font-bold"
+                    : "bg-neutral-200 dark:bg-neutral-800"
+                } min-h-[38px] min-w-[38px] flex justify-center items-center text-neutral-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-neutral-300 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:focus:bg-neutral-700`}
                 aria-current="page"
               >
                 {item}
@@ -77,7 +104,9 @@ const Pagination = ({ currentPage, numberOfPages, setCurrentPage }: PropsType) =
       </div>
       <button
         type="button"
-        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        onClick={handleClickNext}
+        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-neutral-800 hover:bg-neutral-100 focus:outline-none focus:bg-neutral-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        disabled={currentPage == numberOfPages}
       >
         <span>Next</span>
         <svg
