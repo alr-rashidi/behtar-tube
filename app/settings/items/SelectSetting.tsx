@@ -27,7 +27,7 @@ const SelectSetting = ({
 
   useEffect(() => {
     setLocalStorageSetting(itemId, selectedItem);
-  }, [selectedItem]);
+  }, [selectedItem, itemId]);
 
   return (
     <div>

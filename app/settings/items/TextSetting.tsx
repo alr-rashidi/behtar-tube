@@ -28,7 +28,7 @@ const TextSetting = ({
 
   useEffect(() => {
     setLocalStorageSetting(itemId, inputValue);
-  }, [inputValue]);
+  }, [inputValue, itemId]);
 
   return (
     <div className="my-2">
