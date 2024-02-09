@@ -17,12 +17,6 @@ export const metadata: Metadata = {
   description: "Unofficial Youtube Client",
 };
 
-const lato = Vazirmatn({
-  weight: ["100", "300", "400", "700", "900"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export default async function RootLayout({
   children,
 }: {
@@ -42,7 +36,7 @@ export default async function RootLayout({
       <head>
         <meta charSet="utf-8" />
       </head>
-      <body className={`rtl:${lato.className} font-[Arial]`}>
+      <body className="font-[Arial]">
         <ThemeProvider>
           <SidebarToggleProvider>
             <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">

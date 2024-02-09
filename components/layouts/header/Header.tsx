@@ -35,6 +35,7 @@ const Header = ({ user }: PropsType) => {
     return () => {
       window.removeEventListener("resize", windowWidthHandler);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windowWidth]);
 
 
