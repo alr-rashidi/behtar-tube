@@ -20,8 +20,8 @@ export default function AuthForm() {
   const tabNames = ["Email Login", "Magic Link login"];
 
   const providerBtnClassName =
-    "flex flex-row gap-2 items-center justify-center border dark:border-transparent text-neutral-500 dark:text-neutral-200 dark:bg-neutral-800 p-2 rounded hover:bg-neutral-100 hover:dark:bg-neutral-700 transition";
-  const textInputClassname = "text-sm text-neutral-500 dark:text-neutral-400";
+    "flex flex-row gap-2 items-center justify-center text-neutral-500 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800 p-2 rounded hover:bg-neutral-100 hover:dark:bg-neutral-700 active:brightness-95 transition";
+  const textInputLabelClassName = "text-sm text-neutral-500 dark:text-neutral-400";
 
   return (
     <div className="p-2">
@@ -78,11 +78,11 @@ export default function AuthForm() {
             <div className="h-[1px] bg-neutral-300 dark:bg-neutral-700"></div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-neutral-500 dark:text-neutral-400" htmlFor="email">Email address</label>
+                <label className={textInputLabelClassName} htmlFor="email">Email address</label>
                 <TextInput id="email" ref={email} />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-neutral-500 dark:text-neutral-400" htmlFor="password">
+                <label className={textInputLabelClassName} htmlFor="password">
                   Your password
                 </label>
                 <TextInput id="password" ref={password} />
