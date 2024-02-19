@@ -1,5 +1,8 @@
 import { Database } from "@/types/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient, SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Provider } from "@supabase/supabase-js";
+import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
+import { SupabaseAuthClientOptions } from "@supabase/supabase-js/dist/module/lib/types";
 
 const supabase = createClientComponentClient<Database>();
 
@@ -145,5 +148,23 @@ export const getSubscribesList = async (userId: string, signal: AbortSignal) => 
     return data;
   } catch (error) {
     console.log("Check subscribe failed: ", error);
+  }
+};
+
+export const loginThroughOAuth = async (provider: Provider) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.protocol}://${window.location.host}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    console.log("Login failed: ", error);
   }
 };
