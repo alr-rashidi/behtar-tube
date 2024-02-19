@@ -1,15 +1,13 @@
 "use client";
-import { loginThroughOAuth } from "@/api/supabase";
+import { emailLogin, OAuthLogin } from "@/api/supabase";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { Provider } from "@supabase/supabase-js";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { MdInfo } from "react-icons/md";
 
 export default function AuthForm() {
-  const router = useRouter();
   const [selectedPage, setSelectedPage] = useState<PagesType>("login");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -21,9 +19,15 @@ export default function AuthForm() {
   const textInputLabelClassName = "text-sm text-neutral-500 dark:text-neutral-400";
   const anchorItemClassName = "text-sm underline text-neutral-500 dark:text-neutral-500";
 
-  const loginOauthHandler = (provider: Provider) => {
-    loginThroughOAuth(provider)
-      .catch(err => alert(`Login with ${provider} failed!`));
+  const OauthLoginHandler = (provider: Provider) => {
+    OAuthLogin(provider)
+      .catch(err => alert(`Login with ${provider} failed: ${JSON.stringify(err)}`));
+  };
+
+  const emailLoginHandler = () => {
+    emailLogin(email, password)
+      .then(() => alert(`You logged in Successfully!`))
+      .catch(err => alert(`Login failed: ${err}`));
   };
 
   return (
@@ -32,10 +36,10 @@ export default function AuthForm() {
         ? (
           <div className="flex flex-col gap-4 p-4">
             <div className="flex flex-col gap-1">
-              <button onClick={() => loginOauthHandler("google")} className={providerBtnClassName}>
+              <button onClick={() => OauthLoginHandler("google")} className={providerBtnClassName}>
                 <FaGoogle /> Login with Google
               </button>
-              <button onClick={() => loginOauthHandler("github")} className={providerBtnClassName}>
+              <button onClick={() => OauthLoginHandler("github")} className={providerBtnClassName}>
                 <FaGithub /> Login with Github
               </button>
             </div>
@@ -52,7 +56,7 @@ export default function AuthForm() {
                 <TextInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
             </div>
-            <Button Theme="red" className="p-2">Login</Button>
+            <Button Theme="red" className="p-2" onClick={emailLoginHandler}>Login</Button>
 
             <div className="flex flex-col gap-1 items-center">
               <button className={anchorItemClassName} onClick={() => setSelectedPage("magicLink")}>

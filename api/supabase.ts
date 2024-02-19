@@ -151,7 +151,7 @@ export const getSubscribesList = async (userId: string, signal: AbortSignal) => 
   }
 };
 
-export const loginThroughOAuth = async (provider: Provider) => {
+export const OAuthLogin = async (provider: Provider) => {
   try {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -165,6 +165,23 @@ export const loginThroughOAuth = async (provider: Provider) => {
     }
     return data;
   } catch (error) {
-    console.log("Login failed: ", error);
+    console.log("Oauth Login failed: ", error);
   }
+};
+
+export const emailLogin = async (email: string, password: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+      .then(({data, error}) => {
+        if (data.user === null) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      })
+      .catch(error => reject(error));
+  });
 };
