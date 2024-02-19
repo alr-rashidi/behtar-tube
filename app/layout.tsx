@@ -8,7 +8,6 @@ import { ThemeProvider } from "@/contexts/themeContext";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
 import { cookies } from "next/headers";
 
 const supabase = createServerComponentClient<Database>({ cookies });
