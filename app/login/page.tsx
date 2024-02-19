@@ -22,6 +22,7 @@ export default function AuthForm() {
   const providerBtnClassName =
     "flex flex-row gap-2 items-center justify-center text-neutral-500 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800 p-2 rounded hover:bg-neutral-100 hover:dark:bg-neutral-700 active:brightness-95 transition";
   const textInputLabelClassName = "text-sm text-neutral-500 dark:text-neutral-400";
+  const anchorItemClassName = "text-sm text-neutral-500 dark:text-neutral-500"
 
   return (
     <div className="p-2">
@@ -91,10 +92,10 @@ export default function AuthForm() {
             <Button Theme="red" className="p-2">Login</Button>
 
             <div className="flex flex-col gap-1 items-center">
-              <Link href="#" className="text-sm text-neutral-500 dark:text-neutral-500">
+              <Link href="#" className={anchorItemClassName}>
                 Forgot your password?
               </Link>
-              <Link href="#" className="text-sm text-neutral-500 dark:text-neutral-500">
+              <Link href="#" className={anchorItemClassName}>
                 Don&apos;t have an account? Sign up
               </Link>
             </div>
