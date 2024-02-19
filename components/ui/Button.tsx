@@ -1,11 +1,8 @@
 import React from "react";
 
-type PropsType = {
-  children: React.ReactNode;
-  Theme?: ThemesNamesType;
-  className?: string;
-  [key: string]: any;
-};
+interface PropsType extends React.ComponentPropsWithRef<"button"> {
+  Theme?: ThemesNamesType
+}
 
 type ThemesNamesType = "red" | "sharp";
 
