@@ -175,7 +175,7 @@ export const emailLogin = async (email: string, password: string) => {
       email,
       password,
     })
-      .then(({data, error}) => {
+      .then(({ data, error }) => {
         if (data.user === null) {
           reject(error);
         } else {
@@ -184,4 +184,25 @@ export const emailLogin = async (email: string, password: string) => {
       })
       .catch(error => reject(error));
   });
+};
+
+export const createAccount = async (email: string, password: string) => {
+  try {
+    const { data, error } = await supabase.auth.signUp(
+      {
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.protocol}://${window.location.host}/account`,
+        },
+      },
+    );
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    console.log("Oauth Login failed: ", error);
+  }
 };

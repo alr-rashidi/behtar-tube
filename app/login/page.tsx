@@ -1,13 +1,15 @@
 "use client";
-import { emailLogin, OAuthLogin } from "@/api/supabase";
+import { createAccount, emailLogin, OAuthLogin } from "@/api/supabase";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { Provider } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { MdInfo } from "react-icons/md";
 
 export default function AuthForm() {
+  const router = useRouter();
   const [selectedPage, setSelectedPage] = useState<PagesType>("login");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -19,15 +21,30 @@ export default function AuthForm() {
   const textInputLabelClassName = "text-sm text-neutral-500 dark:text-neutral-400";
   const anchorItemClassName = "text-sm underline text-neutral-500 dark:text-neutral-500";
 
+  const redirectToHome = () => {
+    window.location.href = "/account";
+  };
+
   const OauthLoginHandler = (provider: Provider) => {
     OAuthLogin(provider)
+      .then(redirectToHome)
       .catch(err => alert(`Login with ${provider} failed: ${JSON.stringify(err)}`));
   };
 
   const emailLoginHandler = () => {
     emailLogin(email, password)
-      .then(() => alert(`You logged in Successfully!`))
+      .then(() => {
+        alert(`You logged in Successfully!`);
+        redirectToHome();
+      })
       .catch(err => alert(`Login failed: ${err}`));
+  };
+
+  const signUpHandler = () => {
+    createAccount(email, password)
+      .then(() => alert(`Successfully!`))
+      .catch(err => alert(`Register failed: ${err}`));
+    setSelectedPage("login");
   };
 
   return (
@@ -87,7 +104,7 @@ export default function AuthForm() {
                 <TextInput id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
             </div>
-            <Button Theme="red" className="p-2">Register</Button>
+            <Button Theme="red" className="p-2" onClick={signUpHandler}>Register</Button>
 
             <div className="flex flex-col gap-1 items-center">
               <button className={anchorItemClassName} onClick={() => setSelectedPage("login")}>
