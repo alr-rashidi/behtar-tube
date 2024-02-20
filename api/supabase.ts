@@ -203,6 +203,6 @@ export const createAccount = async (email: string, password: string) => {
     }
     return data;
   } catch (error) {
-    console.log("Oauth Login failed: ", error);
+    console.log("Create account failed: ", error);
   }
 };
