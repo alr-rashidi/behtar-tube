@@ -77,7 +77,7 @@ export default function AuthForm() {
 
             <div className="flex flex-col gap-1 items-center">
               <button className={anchorItemClassName} onClick={() => setSelectedPage("magicLink")}>
-                Send a magic link via email (passwordLess)
+                Login using magicLink (One-time password)
               </button>
               <button className={anchorItemClassName} onClick={() => setSelectedPage("resetPassword")}>
                 Forgot your password?
