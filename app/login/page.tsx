@@ -27,7 +27,7 @@ export default function AuthForm() {
 
   const OauthLoginHandler = (provider: Provider) => {
     OAuthLogin(provider)
-      .then(redirectToHome)
+      .then(() => {alert("Successfully")})
       .catch(err => alert(`Login with ${provider} failed: ${JSON.stringify(err)}`));
   };
 

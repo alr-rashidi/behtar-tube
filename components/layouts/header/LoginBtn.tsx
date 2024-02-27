@@ -1,7 +1,10 @@
 "use client";
 
 import { getProfilePictureURL } from "@/api/supabase";
+import { getUserData } from "@/api/supabase";
 import Button from "@/components/ui/Button";
+import { Database } from "@/types/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -10,9 +13,25 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 type PropsType = {
   user: any;
 };
-const LoginBtn = ({ user }: PropsType) => {
+const supabase = createClientComponentClient<Database>();
+const LoginBtn = ({}: PropsType) => {
   const router = useRouter();
   const [ProfilePicURL, setProfilePicURL] = useState<string>();
+  const [user, setUser] = useState<Database["public"]["Tables"]["profiles"]["Row"]>();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const {
+        data: { user: userAuth },
+      } = await supabase.auth.getUser();
+
+      let userInfo: Database["public"]["Tables"]["profiles"]["Row"] | undefined;
+      if (userAuth) {
+        setUser(await getUserData(userAuth!.id));
+      }
+    };
+    checkLogin();
+  }, []);
 
   useEffect(() => {
     if (user) {
