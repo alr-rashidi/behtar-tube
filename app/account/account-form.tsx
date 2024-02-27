@@ -73,21 +73,21 @@ export default function AccountForm({ user }: { user: User | null }) {
         <TextInput id="email" type="text" value={user?.email} disabled />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="fullName">Full Name</label>
-        <TextInput
-          id="fullName"
-          type="text"
-          value={fullName || ""}
-          onChange={(e: any) => setFullName(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col">
         <label htmlFor="username">Username</label>
         <TextInput
           id="username"
           type="text"
           value={username || ""}
           onChange={(e: any) => setUsername(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="fullName">Full Name</label>
+        <TextInput
+          id="fullName"
+          type="text"
+          value={fullName || ""}
+          onChange={(e: any) => setFullName(e.target.value)}
         />
       </div>
       <div className="flex flex-row h-10 p-1 gap-2">
