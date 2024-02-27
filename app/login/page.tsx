@@ -1,5 +1,5 @@
 "use client";
-import { createAccount, emailLogin, OAuthLogin } from "@/api/supabase";
+import { createAccount, emailLogin, magicLinkLogin, OAuthLogin } from "@/api/supabase";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { Provider } from "@supabase/supabase-js";
@@ -38,6 +38,15 @@ export default function AuthForm() {
         redirectToHome();
       })
       .catch(err => alert(`Login failed: ${err}`));
+  };
+
+  const magicLinkLoginHandler = () => {
+    magicLinkLogin(email)
+      .then(() => {
+        alert("The magicLink was successfully sent to your Email");
+        redirectToHome();
+      })
+      .catch(err => alert(`MagicLink login failed: ${err}`));
   };
 
   const signUpHandler = () => {
@@ -126,7 +135,7 @@ export default function AuthForm() {
               <label className={textInputLabelClassName} htmlFor="email">Email address</label>
               <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <Button Theme="red" className="p-2">Send magic link</Button>
+            <Button Theme="red" className="p-2" onClick={magicLinkLoginHandler}>Send magic link</Button>
             <div className="flex flex-col gap-1 items-center">
               <button className={anchorItemClassName} onClick={() => setSelectedPage("login")}>
                 Already have an account? Login

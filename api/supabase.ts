@@ -206,3 +206,22 @@ export const createAccount = async (email: string, password: string) => {
     console.log("Create account failed: ", error);
   }
 };
+
+export const magicLinkLogin = async (email: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.protocol}://${window.location.host}/account`,
+      },
+    })
+      .then(({ data, error }) => {
+        if (data.user === null) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      })
+      .catch(error => reject(error));
+  });
+};
