@@ -1,13 +1,13 @@
 "use client";
 import { deleteProfilePic, getProfilePictureURL } from "@/api/supabase";
 import Button from "@/components/ui/Button";
-import { Database } from "@/types/supabase";
+import { Database, UserType } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit, MdOpenInBrowser, MdOpenInNew, MdOutlineAccountCircle, MdUpload } from "react-icons/md";
-type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
+type Profiles = UserType;
 
 export default function Avatar({
   uid,

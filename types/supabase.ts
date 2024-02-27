@@ -86,6 +86,8 @@ export interface Database {
   };
 }
 
+export type UserType = Database["public"]["Tables"]["profiles"]["Row"];
+
 export type Tables<
   PublicTableNameOrOptions extends
     | keyof (Database["public"]["Tables"] & Database["public"]["Views"])

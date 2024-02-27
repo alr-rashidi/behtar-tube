@@ -5,7 +5,7 @@ import Header from "@/components/layouts/header/Header";
 import Sidebar from "@/components/layouts/Sidebar";
 import { SidebarToggleProvider } from "@/contexts/sidebarToggleContext";
 import { ThemeProvider } from "@/contexts/themeContext";
-import { Database } from "@/types/supabase";
+import { Database, UserType } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -25,7 +25,7 @@ export default async function RootLayout({
     data: { user: userAuth },
   } = await supabase.auth.getUser();
 
-  let userInfo: Database["public"]["Tables"]["profiles"]["Row"] | undefined;
+  let userInfo: UserType | undefined;
   if (userAuth) {
     userInfo = await getUserData(userAuth!.id);
   }
@@ -41,7 +41,7 @@ export default async function RootLayout({
             <div className="overflow-scroll text-black transition bg-white dark:bg-darkBG dark:text-white">
               <Header user={userInfo!} />
               <div className="flex flex-col min-h-screen pt-8 md:pt-14 md:ltr:pl-64 md:rtl:pr-64">
-                <Sidebar userAuth={userAuth} />
+                <Sidebar />
                 <div className="container pt-4 mx-auto cursor-default">
                   {children}
                 </div>

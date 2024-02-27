@@ -3,7 +3,7 @@
 import Button from "@/components/ui/Button";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
 import { themeContext } from "@/contexts/themeContext";
-import { Database } from "@/types/supabase";
+import { Database, UserType } from "@/types/supabase";
 import React, { useContext, useEffect, useState } from "react";
 import { MdArrowBack, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from "react-icons/md";
 import Logo from "./Logo";
@@ -11,7 +11,7 @@ import SearchBar from "./search/SearchBar";
 import LoginBtn from "./LoginBtn";
 
 type PropsType = {
-  user: Database["public"]["Tables"]["profiles"]["Row"];
+  user: UserType;
 };
 const Header = ({ user }: PropsType) => {
   const { theme, switchTheme } = useContext(themeContext);
