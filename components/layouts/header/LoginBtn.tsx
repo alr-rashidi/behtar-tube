@@ -2,13 +2,14 @@
 
 import { getProfilePictureURL } from "@/api/supabase";
 import Button from "@/components/ui/Button";
+import { UserType } from "@/types/supabase";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdOutlineAccountCircle } from "react-icons/md";
 
 type PropsType = {
-  user: any;
+  user: UserType;
 };
 const LoginBtn = ({ user }: PropsType) => {
   const router = useRouter();

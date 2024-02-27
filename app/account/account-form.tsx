@@ -1,11 +1,12 @@
 "use client";
 
+import { getUserData, updateUserData } from "@/api/supabase";
 import { ErrorCard } from "@/components/cards";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { User } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { getUserData, updateUserData } from "@/api/supabase";
 import Avatar from "./avatar";
 
 export default function AccountForm({ user }: { user: User | null }) {
@@ -13,6 +14,8 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [fullName, setFullName] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const getProfile = useCallback(async () => {
     try {
@@ -53,7 +56,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       avatar_url,
       updated_at: new Date().toISOString(),
     }).then(() => alert("Profile updated!"))
-      .catch((data) => alert("Error updating the data!"+ JSON.stringify(data)));
+      .catch((data) => alert("Error updating the data!" + JSON.stringify(data)));
     setLoading(false);
   }
 
@@ -73,6 +76,15 @@ export default function AccountForm({ user }: { user: User | null }) {
         <TextInput id="email" type="text" value={user?.email} disabled />
       </div>
       <div className="flex flex-col">
+        <label htmlFor="username">Username</label>
+        <TextInput
+          id="username"
+          type="text"
+          value={username || ""}
+          onChange={(e: any) => setUsername(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col">
         <label htmlFor="fullName">Full Name</label>
         <TextInput
           id="fullName"
@@ -82,13 +94,17 @@ export default function AccountForm({ user }: { user: User | null }) {
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="username">Username</label>
-        <TextInput
-          id="username"
-          type="text"
-          value={username || ""}
-          onChange={(e: any) => setUsername(e.target.value)}
-        />
+        <label htmlFor="Password">Password</label>
+        <div className="flex flex-row gap-4">
+          <TextInput
+            id="Password"
+            className="w-full"
+            disabled
+            type="text"
+            value="********"
+          />
+          <Button Theme="red" className="h-full p-2.5 text-sm" onClick={() => router.push("/account/changePassword")}>Change</Button>
+        </div>
       </div>
       <div className="flex flex-row h-10 p-1 gap-2">
         <Button

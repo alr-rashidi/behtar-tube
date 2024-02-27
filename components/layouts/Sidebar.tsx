@@ -1,8 +1,11 @@
 "use client";
 
+import { getUserData } from "@/api/supabase";
 import { SidebarToggleContext } from "@/contexts/sidebarToggleContext";
+import { Database, UserType } from "@/types/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import { MdGroup, MdMovie, MdMusicNote, MdSettings, MdStar, MdVideogameAsset } from "react-icons/md";
 import Logo from "./header/Logo";
@@ -12,10 +15,8 @@ type itemType = {
   icon: IconType;
 };
 
-type PropsType = {
-  userAuth: any;
-};
-const Sidebar = ({ userAuth }: PropsType) => {
+const supabase = createClientComponentClient<Database>();
+const Sidebar = () => {
   const items: itemType[] = [
     { id: "trending", icon: MdStar },
     { id: "gaming", icon: MdVideogameAsset },
@@ -28,6 +29,21 @@ const Sidebar = ({ userAuth }: PropsType) => {
   const pathname = usePathname();
 
   const { sidebarState, toggleSidebar } = useContext(SidebarToggleContext);
+  const [user, setUser] = useState<UserType>();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const {
+        data: { user: userAuth },
+      } = await supabase.auth.getUser();
+
+      let userInfo: UserType | undefined;
+      if (userAuth) {
+        setUser(await getUserData(userAuth!.id));
+      }
+    };
+    checkLogin();
+  }, []);
 
   let category: string;
   if (pathname == "/") {
@@ -75,7 +91,7 @@ const Sidebar = ({ userAuth }: PropsType) => {
               onClick={handleClickItem}
             />
           ))}
-          {userAuth
+          {user
             ? (
               <>
                 <Divider />

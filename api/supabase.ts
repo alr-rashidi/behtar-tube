@@ -1,5 +1,8 @@
 import { Database } from "@/types/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient, SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Provider } from "@supabase/supabase-js";
+import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
+import { SupabaseAuthClientOptions } from "@supabase/supabase-js/dist/module/lib/types";
 
 const supabase = createClientComponentClient<Database>();
 
@@ -146,4 +149,109 @@ export const getSubscribesList = async (userId: string, signal: AbortSignal) => 
   } catch (error) {
     console.log("Check subscribe failed: ", error);
   }
+};
+
+export const OAuthLogin = async (provider: Provider) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.protocol}://${window.location.host}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    console.log("Oauth Login failed: ", error);
+  }
+};
+
+export const emailLogin = async (email: string, password: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+      .then(({ data, error }) => {
+        if (data.user === null) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      })
+      .catch(error => reject(error));
+  });
+};
+
+export const createAccount = async (email: string, password: string) => {
+  try {
+    const { data, error } = await supabase.auth.signUp(
+      {
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.protocol}://${window.location.host}/account`,
+        },
+      },
+    );
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    console.log("Create account failed: ", error);
+  }
+};
+
+export const magicLinkLogin = async (email: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.protocol}://${window.location.host}/account`,
+      },
+    })
+      .then(({ data, error }) => {
+        if (data.user === null) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      })
+      .catch(error => reject(error));
+  });
+};
+
+export const sendResetPasswordRequest = async (email: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://example.com/update-password",
+    }).then(({ data, error }) => {
+      if (data === null) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    })
+      .catch(error => reject(error));
+  });
+};
+
+export const changePassword = async (password: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.updateUser({
+      password
+    }).then(({ data, error }) => {
+      if (data === null) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    })
+      .catch(error => reject(error));
+  });
 };

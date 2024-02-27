@@ -1,8 +1,5 @@
 import React from "react";
-
-type PropsType = {
-  [key: string]: any;
-};
+type PropsType = React.ComponentPropsWithRef<"input">
 const Checkbox = ({ ...attributes }: PropsType) => {
   return (
     <div className="relative flex items-center p-3 rounded-full cursor-pointer">

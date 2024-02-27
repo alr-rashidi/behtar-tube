@@ -1,9 +1,5 @@
 import React from "react";
-
-type PropsType = {
-  className?: string;
-  [key: string]: any;
-};
+type PropsType = React.ComponentPropsWithRef<"select">
 const SelectInput = ({ className: classNameProp, children, ...attributes }: PropsType) => {
   return (
     <select
