@@ -240,3 +240,18 @@ export const sendResetPasswordRequest = async (email: string) => {
       .catch(error => reject(error));
   });
 };
+
+export const changePassword = async (password: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.updateUser({
+      password
+    }).then(({ data, error }) => {
+      if (data === null) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    })
+      .catch(error => reject(error));
+  });
+};
