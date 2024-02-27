@@ -225,3 +225,18 @@ export const magicLinkLogin = async (email: string) => {
       .catch(error => reject(error));
   });
 };
+
+export const sendResetPasswordRequest = async (email: string) => {
+  return new Promise((resolve, reject) => {
+    supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://example.com/update-password",
+    }).then(({ data, error }) => {
+      if (data === null) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    })
+      .catch(error => reject(error));
+  });
+};

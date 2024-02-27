@@ -1,5 +1,5 @@
 "use client";
-import { createAccount, emailLogin, magicLinkLogin, OAuthLogin } from "@/api/supabase";
+import { createAccount, emailLogin, magicLinkLogin, OAuthLogin, sendResetPasswordRequest } from "@/api/supabase";
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
 import { Provider } from "@supabase/supabase-js";
@@ -47,6 +47,14 @@ export default function AuthForm() {
         redirectToHome();
       })
       .catch(err => alert(`MagicLink login failed: ${err}`));
+  };
+
+  const resetPassword = () => {
+    sendResetPasswordRequest(email)
+      .then(() => {
+        alert("The reset password link was successfully sent to your Email");
+      })
+      .catch(err => alert(`Rest password request failed: ${err}`));
   };
 
   const signUpHandler = () => {
@@ -151,7 +159,7 @@ export default function AuthForm() {
               <label className={textInputLabelClassName} htmlFor="email">Email address</label>
               <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <Button Theme="red" className="p-2">Send reset password instructions</Button>
+            <Button Theme="red" className="p-2" onClick={() => resetPassword()}>Send reset password instructions</Button>
             <div className="flex flex-col gap-1 items-center">
               <button className={anchorItemClassName} onClick={() => setSelectedPage("login")}>
                 Already have an account? Login
