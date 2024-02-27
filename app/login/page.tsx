@@ -85,9 +85,9 @@ export default function AuthForm() {
             <Button Theme="red" className="p-2" onClick={emailLoginHandler}>Login</Button>
 
             <div className="flex flex-col gap-1 items-center">
-              <button className={anchorItemClassName} onClick={() => setSelectedPage("magicLink")}>
+              {/* <button className={anchorItemClassName} onClick={() => setSelectedPage("magicLink")}>
                 Login using magicLink (One-time password)
-              </button>
+              </button> */}
               <button className={anchorItemClassName} onClick={() => setSelectedPage("resetPassword")}>
                 Forgot your password?
               </button>
